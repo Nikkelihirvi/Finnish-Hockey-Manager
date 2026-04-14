@@ -205,7 +205,51 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
   </div>
   <div class="s-sect">Valitse joukkue</div>
   <div class="team-grid" id="team-grid"></div>
+
+  <!-- Team preview panel — shown when team selected -->
+  <div id="team-preview" style="display:none;width:100%;max-width:430px;background:#0c1120;border:1px solid var(--bd);border-radius:8px;padding:10px;margin-bottom:10px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--ac)" id="prev-name">—</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:var(--mu)" id="prev-style">—</div>
+    </div>
+    <!-- Strength bar -->
+    <div style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;font-size:.68rem;color:var(--mu);margin-bottom:3px">
+        <span>Joukkueen taso</span><span id="prev-str-num" style="color:var(--ac)">—</span>
+      </div>
+      <div style="height:6px;background:var(--bd);border-radius:3px;overflow:hidden">
+        <div id="prev-str-bar" style="height:100%;border-radius:3px;background:var(--ac);transition:width .3s"></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:.72rem;margin-bottom:8px">
+      <div style="color:var(--mu)">Budjetti: <span id="prev-budget" style="color:var(--tx)">—</span></div>
+      <div style="color:var(--mu)">Salary cap: <span id="prev-cap" style="color:var(--tx)">—</span></div>
+      <div style="color:var(--mu)">Stadion: <span id="prev-stad" style="color:var(--tx)">—</span></div>
+      <div style="color:var(--mu)">Tyyli: <span id="prev-sty" style="color:var(--tx)">—</span></div>
+    </div>
+    <!-- Predicted position -->
+    <div style="font-size:.68rem;color:var(--mu);margin-bottom:2px">Ennustettu sijoitus</div>
+    <div id="prev-pos" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--ac)">—</div>
+  </div>
+
   <button class="btn-start" id="start-btn" disabled onclick="startGame()">VALITSE JOUKKUE</button>
+  <button class="btn" style="width:100%;max-width:430px;margin-top:6px;background:var(--sf);border:1px solid var(--bd);color:var(--mu);font-family:Bebas Neue;font-size:.9rem" onclick="showSeasonPreview()">📋 KAUSIENNAKKO</button>
+</div>
+
+<!-- SEASON PREVIEW OVERLAY -->
+<div id="spov" style="position:fixed;inset:0;background:rgba(4,6,12,.97);z-index:450;overflow-y:auto;padding:12px;display:none;">
+  <div style="max-width:460px;margin:0 auto;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--ac);text-align:center;margin-bottom:10px">📋 KAUSIENNAKKO 2024–25</div>
+    <div class="pnl" style="margin-bottom:8px">
+      <div class="pt">🏆 ENNUSTETTU JÄRJESTYS</div>
+      <div id="spov-standings"></div>
+    </div>
+    <div class="pnl" style="margin-bottom:8px">
+      <div class="pt">⭐ SARJAN PARHAAT</div>
+      <div id="spov-best"></div>
+    </div>
+    <button class="btn bp bw" onclick="document.getElementById('spov').style.display='none'">SULJE ✕</button>
+  </div>
 </div>
 
 <!-- GAME -->
@@ -256,14 +300,19 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
       </div>
 
       <div class="pnl" id="news-pnl">
-        <div class="pt">📰 Uutiset</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+          <div class="pt" style="margin-bottom:0">📰 Uutiset</div>
+          <button class="btn bo bsm" onclick="showSeasonPreview()">📋 Kausiennakko</button>
+        </div>
         <div id="news-list"></div>
       </div>
 
       <div class="pnl">
-        <div class="pt">🏋️ Harjoittelu</div>
+        <div class="pt">🏋️ Harjoittelu tällä viikolla</div>
         <div id="training-cards"></div>
-        <div style="font-size:.68rem;color:var(--mu);margin-top:5px">Valittu: <span id="train-lbl" style="color:var(--ac)">Ei harjoittelua</span></div>
+        <div style="font-size:.68rem;color:var(--mu);margin-top:5px;display:flex;justify-content:space-between">
+          <span>Valittu: <span id="train-lbl" style="color:var(--ac)">Ei valintaa (oletuspalautuminen +5)</span></span>
+        </div>
       </div>
 
       <div class="pnl" id="next-pnl">
@@ -289,6 +338,11 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
         <div style="font-family:'Bebas Neue',sans-serif;font-size:.95rem;color:var(--ac)">KETJUT & KOKOONPANO</div>
         <button class="btn bg bsm" onclick="aiOptimize()">🤖 AI OPTIMOI</button>
+      </div>
+      <div class="stabs" style="margin-bottom:8px;">
+        <button class="stab on" id="ch-tab-reg" onclick="setChTab('reg')">NORMAALIT</button>
+        <button class="stab" id="ch-tab-pp" onclick="setChTab('pp')">⚡ YLIVOIMA</button>
+        <button class="stab" id="ch-tab-pk" onclick="setChTab('pk')">🛡️ ALIVOIMA</button>
       </div>
       <div id="ch-content"></div>
     </div>
@@ -380,6 +434,7 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
       <div class="stabs">
         <button class="stab on" onclick="setSaTab('sc')">PISTEPÖRSSI</button>
         <button class="stab" onclick="setSaTab('gk')">MAALIVAHTIT</button>
+        <button class="stab" onclick="setSaTab('st')">YV/AV</button>
       </div>
       <div class="pnl" id="sa-content"></div>
     </div>
@@ -422,6 +477,23 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
     <div class="press-title" id="press-title">LEHDISTÖTILAISUUS</div>
     <div id="press-result" style="font-size:.84rem;color:var(--mu);text-align:center;margin-bottom:12px"></div>
     <div id="press-opts"></div>
+  </div>
+</div>
+
+<!-- WEEKLY SUMMARY OVERLAY -->
+<div id="wov" style="position:fixed;inset:0;background:rgba(4,6,12,.96);z-index:305;overflow-y:auto;padding:12px;display:none;">
+  <div style="max-width:460px;margin:0 auto;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--ac);text-align:center;margin-bottom:10px" id="wov-title">VIIKON TULOKSET</div>
+    <div class="pnl" id="wov-my-result" style="margin-bottom:8px;text-align:center;"></div>
+    <div class="pnl" style="margin-bottom:8px;">
+      <div class="pt">📋 MUUT TULOKSET</div>
+      <div id="wov-other-results"></div>
+    </div>
+    <div class="pnl" style="margin-bottom:8px;">
+      <div class="pt">📊 SARJATAULUKKO (TOP 10)</div>
+      <div id="wov-standings"></div>
+    </div>
+    <button class="btn bp bw" onclick="closeWeeklySummary()">JATKA →</button>
   </div>
 </div>
 
@@ -468,22 +540,25 @@ const SPONSOR_TYPES=[
   {name:'Platinasponsori',icon:'💎',income:110000,minPos:1,stability:.9},
 ];
 
+const LEAGUE_SALARY_CAP_BASE = 4200000; // SM-liigan yhteinen salary cap (€/v)
+const LEAGUE_CAP_GROWTH = 0.025; // +2.5% per kausi
+
 const TEAMS=[
-  {id:'hifk',   name:'HIFK',        city:'Helsinki',    em:'🔴',stadium:'Helsinki Areena',  cap:13512,occ:.88,budget:600000,salCap:3800000,style:'fyysinen'},
-  {id:'tps',    name:'TPS',         city:'Turku',       em:'🔵',stadium:'Turkuhalli',       cap:12500,occ:.82,budget:550000,salCap:3600000,style:'tasapainoinen'},
-  {id:'ilves',  name:'Ilves',       city:'Tampere',     em:'🐆',stadium:'Nokia Arena',      cap:15000,occ:.85,budget:700000,salCap:4500000,style:'hyökkäävä'},
-  {id:'tappara',name:'Tappara',     city:'Tampere',     em:'⚫',stadium:'Nokia Arena',      cap:15000,occ:.87,budget:750000,salCap:4800000,style:'puolustava'},
-  {id:'karpat', name:'Kärpät',      city:'Oulu',        em:'🐻',stadium:'Raksilahalli',     cap:6626, occ:.91,budget:500000,salCap:3400000,style:'hyökkäävä'},
-  {id:'jyp',    name:'JYP',         city:'Jyväskylä',  em:'🟣',stadium:'Synergia-areena',  cap:8500, occ:.80,budget:400000,salCap:3000000,style:'tasapainoinen'},
-  {id:'pelicans',name:'Pelicans',   city:'Lahti',       em:'🦅',stadium:'Isku Areena',      cap:6800, occ:.75,budget:350000,salCap:2800000,style:'fyysinen'},
-  {id:'saipa',  name:'SaiPa',       city:'Lappeenranta',em:'🟡',stadium:'Kisapuisto',       cap:5000, occ:.72,budget:280000,salCap:2200000,style:'puolustava'},
-  {id:'sport',  name:'Sport',       city:'Vaasa',       em:'🟢',stadium:'Vaasan areena',    cap:5000, occ:.70,budget:260000,salCap:2100000,style:'tasapainoinen'},
-  {id:'lukko',  name:'Lukko',       city:'Rauma',       em:'🔒',stadium:'Kivikylän areena', cap:5500, occ:.78,budget:320000,salCap:2500000,style:'puolustava'},
-  {id:'assa',   name:'Ässät',       city:'Pori',        em:'🦁',stadium:'Isomäki Areena',   cap:5500, occ:.73,budget:300000,salCap:2400000,style:'hyökkäävä'},
-  {id:'hpk',    name:'HPK',         city:'Hämeenlinna', em:'🟠',stadium:'HLinnan Jäähalli', cap:5500, occ:.76,budget:340000,salCap:2600000,style:'tasapainoinen'},
-  {id:'kalpa',  name:'KalPa',       city:'Kuopio',      em:'⚪',stadium:'Olvi-areena',      cap:5200, occ:.74,budget:300000,salCap:2300000,style:'puolustava'},
-  {id:'jokerit',name:'Jokerit',     city:'Helsinki',    em:'🃏',stadium:'Hartwall Areena',  cap:13512,occ:.80,budget:450000,salCap:3200000,style:'hyökkäävä'},
-  {id:'espoo',  name:'Kiekko-Espoo',city:'Espoo',       em:'🔷',stadium:'Metro Areena',     cap:5200, occ:.71,budget:240000,salCap:2000000,style:'tasapainoinen'},
+  {id:'hifk',   name:'HIFK',        city:'Helsinki',    em:'🔴',stadium:'Helsinki Areena',  cap:13512,occ:.88,budget:600000,style:'fyysinen',   prestige:9},
+  {id:'tps',    name:'TPS',         city:'Turku',       em:'🔵',stadium:'Turkuhalli',       cap:12500,occ:.82,budget:520000,style:'tasapainoinen',prestige:8},
+  {id:'ilves',  name:'Ilves',       city:'Tampere',     em:'🐆',stadium:'Nokia Arena',      cap:15000,occ:.85,budget:680000,style:'hyökkäävä',   prestige:8},
+  {id:'tappara',name:'Tappara',     city:'Tampere',     em:'⚫',stadium:'Nokia Arena',      cap:15000,occ:.87,budget:720000,style:'puolustava',   prestige:10},
+  {id:'karpat', name:'Kärpät',      city:'Oulu',        em:'🐻',stadium:'Raksilahalli',     cap:6626, occ:.91,budget:500000,style:'hyökkäävä',   prestige:9},
+  {id:'jyp',    name:'JYP',         city:'Jyväskylä',  em:'🟣',stadium:'Synergia-areena',  cap:8500, occ:.80,budget:380000,style:'tasapainoinen',prestige:6},
+  {id:'pelicans',name:'Pelicans',   city:'Lahti',       em:'🦅',stadium:'Isku Areena',      cap:6800, occ:.75,budget:340000,style:'fyysinen',     prestige:5},
+  {id:'saipa',  name:'SaiPa',       city:'Lappeenranta',em:'🟡',stadium:'Kisapuisto',       cap:5000, occ:.72,budget:270000,style:'puolustava',   prestige:4},
+  {id:'sport',  name:'Sport',       city:'Vaasa',       em:'🟢',stadium:'Vaasan areena',    cap:5000, occ:.70,budget:250000,style:'tasapainoinen',prestige:3},
+  {id:'lukko',  name:'Lukko',       city:'Rauma',       em:'🔒',stadium:'Kivikylän areena', cap:5500, occ:.78,budget:310000,style:'puolustava',   prestige:6},
+  {id:'assa',   name:'Ässät',       city:'Pori',        em:'🦁',stadium:'Isomäki Areena',   cap:5500, occ:.73,budget:290000,style:'hyökkäävä',   prestige:5},
+  {id:'hpk',    name:'HPK',         city:'Hämeenlinna', em:'🟠',stadium:'HLinnan Jäähalli', cap:5500, occ:.76,budget:330000,style:'tasapainoinen',prestige:6},
+  {id:'kalpa',  name:'KalPa',       city:'Kuopio',      em:'⚪',stadium:'Olvi-areena',      cap:5200, occ:.74,budget:290000,style:'puolustava',   prestige:5},
+  {id:'jokerit',name:'Jokerit',     city:'Helsinki',    em:'🃏',stadium:'Hartwall Areena',  cap:13512,occ:.80,budget:440000,style:'hyökkäävä',   prestige:8},
+  {id:'espoo',  name:'Kiekko-Espoo',city:'Espoo',       em:'🔷',stadium:'Metro Areena',     cap:5200, occ:.71,budget:230000,style:'tasapainoinen',prestige:3},
 ];
 
 const MESTIS=[
@@ -521,11 +596,12 @@ const PRESS_OPTS_LOSS=[
 ];
 
 const TRAINING_OPTIONS=[
-  {id:'rest',   icon:'😴',name:'Lepopäivä',       desc:'Kunto +8%, loukkaantumisriski pienenee.',            cost:0,    effect:{fitness:8,injMod:-0.5}},
-  {id:'fitness',icon:'🏃',name:'Kuntovalmennus',   desc:'Kunto +5%, pieni vammariski.',                       cost:12000,effect:{fitness:5,injMod:0.3}},
-  {id:'attack', icon:'⚡',name:'Hyökkäysharjoitus',desc:'+15% maalinteko seuraavaan otteluun.',               cost:18000,effect:{attackBoost:0.15}},
-  {id:'defense',icon:'🛡️',name:'Puolustusharjoitus',desc:'-15% päästettyä maalia seuraavassa.',              cost:18000,effect:{defenseBoost:0.15}},
-  {id:'tactics',icon:'📋',name:'Taktinen harjoitus',desc:'Kotietu +10%, joukkueen yhteispeli paranee.',       cost:22000,effect:{tacBoost:0.10}},
+  {id:'rest',   icon:'😴',name:'Täysi lepo',        desc:'Kunto palautuu eniten (+12 kaikille). Ei peliboosteja.',           cost:0,    effect:{recovery:12,injMod:-0.5}},
+  {id:'light',  icon:'🚶',name:'Kevyt harjoitus',   desc:'Hyvä palautuminen (+8 kaikille). Sopii tiheään pelitahtiin.',      cost:0,    effect:{recovery:8,injMod:-0.2}},
+  {id:'fitness',icon:'🏃',name:'Kuntovalmennus',    desc:'Kohtalainen palautuminen (+5). Parantaa kestävyyttä.',             cost:12000,effect:{recovery:5,injMod:0.2}},
+  {id:'attack', icon:'⚡',name:'Hyökkäysharjoitus', desc:'Vähän palautumista (+3). +15% maalinteko seuraavaan otteluun.',    cost:18000,effect:{recovery:3,attackBoost:0.15,injMod:0.1}},
+  {id:'defense',icon:'🛡️',name:'Puolustusharjoitus',desc:'Vähän palautumista (+3). -15% päästettyä seuraavassa.',           cost:18000,effect:{recovery:3,defenseBoost:0.15,injMod:0.1}},
+  {id:'tactics',icon:'📋',name:'Taktinen harjoitus',desc:'Vähän palautumista (+3). Kotietu +10% seuraavassa.',              cost:22000,effect:{recovery:3,tacBoost:0.10,injMod:0.1}},
 ];
 
 let G={};
@@ -556,7 +632,7 @@ function mkPlayer(tid,pos,boost=0,isYouth=false){
   const wage=Math.round(clamp((rating-50)*350+rnd(-1000,1000),2000,22000)/500)*500;
   const contractYears=rnd(1,3);
   return{id:Math.random().toString(36).slice(2,9),name:pname(isYouth),pos,age,rating,wage,foreign:!isYouth&&Math.random()<0.1,
-    team:tid,fitness:rnd(isYouth?60:78,100),goals:0,assists:0,gamesPlayed:0,
+    team:tid,fitness:rnd(isYouth?75:85,100),goals:0,assists:0,gamesPlayed:0,
     mvGoalsAgainst:0,mvGames:0,captain:false,injured:false,injuryWeeks:0,
     contractYears, isYouth:isYouth||false,
     goal:{type:pick(['playoffs','scoring','defense']),achieved:false}};
@@ -636,13 +712,53 @@ function genSchedule(includePreseason=false){
 // SETUP UI
 // ══════════════════════════════════════
 let selTeam=null;
-function renderSetup(){
-  document.getElementById('team-grid').innerHTML=TEAMS.map(t=>`
-    <div class="tbtn" id="opt-${t.id}" onclick="selT('${t.id}')">
-      <span class="em">${t.em}</span>
-      <div><div class="nm">${t.name}</div><div class="cy">${t.city}</div></div>
-    </div>`).join('');
+
+function teamStrengthRating(t){
+  // If game is running, use actual player ratings
+  if(G&&G.players&&G.players.length>0){
+    const squad=G.players.filter(p=>p.team===t.id&&!p.injured);
+    if(squad.length>0){
+      const top18=squad.slice().sort((a,b)=>b.rating-a.rating).slice(0,18);
+      const avg=top18.reduce((s,p)=>s+p.rating,0)/top18.length;
+      return Math.min(99,Math.round((avg-52)/(86-52)*64+35));
+    }
+  }
+  // Setup screen: estimate from prestige
+  const prestige=G&&G.prestige?G.prestige[t.id]:t.prestige;
+  return Math.min(99,Math.round((prestige-1)/9*60+35));
 }
+
+function predictedFinish(t){
+  // Sort teams by strength for predicted standings
+  const ranked=TEAMS.slice().sort((a,b)=>teamStrengthRating(b)-teamStrengthRating(a));
+  const pos=ranked.findIndex(x=>x.id===t.id)+1;
+  if(pos<=2) return pos+'. sija — Mestaruusfavoriitti 🏆';
+  if(pos<=4) return pos+'. sija — Playoff-suosikki ⭐';
+  if(pos<=8) return pos+'. sija — Playoff-haastaja';
+  if(pos<=11) return pos+'. sija — Keskikasti';
+  return pos+'. sija — Sarjanpitotaistelu';
+}
+
+function renderSetup(){
+  document.getElementById('team-grid').innerHTML=TEAMS.map(t=>{
+    const str=teamStrengthRating(t);
+    const col=str>=75?'var(--gr)':str>=55?'var(--ac)':'var(--rd)';
+    return`<div class="tbtn" id="opt-${t.id}" onclick="selT('${t.id}')">
+      <span class="em">${t.em}</span>
+      <div style="flex:1">
+        <div class="nm">${t.name}</div>
+        <div class="cy">${t.city}</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-top:3px">
+          <div style="flex:1;height:3px;background:var(--bd);border-radius:2px;overflow:hidden">
+            <div style="width:${str}%;height:100%;background:${col};border-radius:2px"></div>
+          </div>
+          <span style="font-size:.6rem;color:${col};font-family:'Barlow Condensed',sans-serif">${str}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 function selT(id){
   selTeam=id;
   document.querySelectorAll('.tbtn').forEach(e=>e.classList.remove('sel'));
@@ -650,6 +766,91 @@ function selT(id){
   const btn=document.getElementById('start-btn');
   btn.disabled=false;
   btn.textContent='ALOITA — '+TEAMS.find(t=>t.id===id).name.toUpperCase();
+  showTeamPreview(id);
+}
+
+function showTeamPreview(id){
+  const t=TEAMS.find(x=>x.id===id);
+  const str=teamStrengthRating(t);
+  const col=str>=75?'var(--gr)':str>=55?'var(--ac)':'var(--rd)';
+  document.getElementById('prev-name').textContent=t.em+' '+t.name;
+  document.getElementById('prev-style').textContent=t.city;
+  document.getElementById('prev-str-num').textContent=str+' / 100';
+  document.getElementById('prev-str-num').style.color=col;
+  document.getElementById('prev-str-bar').style.width=str+'%';
+  document.getElementById('prev-str-bar').style.background=col;
+  document.getElementById('prev-budget').textContent='€'+Math.round(t.budget/1000)+'k';
+  document.getElementById('prev-cap').textContent='Prestige: '+t.prestige+'/10';
+  document.getElementById('prev-stad').textContent=t.cap.toLocaleString('fi-FI')+' hlö';
+  const styleMap={hyökkäävä:'⚡ Hyökkäävä',puolustava:'🛡️ Puolustava',tasapainoinen:'⚖️ Tasapainoinen'};
+  document.getElementById('prev-sty').textContent=styleMap[t.style]||t.style;
+  document.getElementById('prev-pos').textContent=predictedFinish(t);
+  document.getElementById('team-preview').style.display='block';
+}
+
+function showSeasonPreview(){
+  const inGame=G&&G.players&&G.players.length>0;
+  const ranked=TEAMS.slice().sort((a,b)=>teamStrengthRating(b)-teamStrengthRating(a));
+  const caps=TEAMS.map(t=>t.salCap);
+  const minC=Math.min(...caps),maxC=Math.max(...caps);
+
+  // Title
+  const season=inGame?G.season:'2024–25';
+  document.querySelector('#spov > div > div:first-child').textContent='📋 KAUSIENNAKKO '+season;
+
+  // Predicted standings
+  document.getElementById('spov-standings').innerHTML=
+    ranked.map((t,i)=>{
+      const str=teamStrengthRating(t);
+      const col=str>=75?'var(--gr)':str>=55?'var(--ac)':'var(--rd)';
+      const isSel=inGame?(t.id===G.myId):(t.id===selTeam);
+      return`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #141f2e;${isSel?'background:rgba(240,165,0,.06);border-radius:4px;padding:5px 4px':''}">
+        <span style="font-family:'Barlow Condensed',sans-serif;color:var(--mu);min-width:20px;font-size:.8rem">${i+1}${i<8?'<span style="color:var(--gr);font-size:.5rem"> ●</span>':''}</span>
+        <span style="flex:1;font-size:.8rem">${t.em} ${t.name}${isSel?' 👈':''}</span>
+        <div style="display:flex;align-items:center;gap:4px">
+          <div style="width:50px;height:4px;background:var(--bd);border-radius:2px;overflow:hidden">
+            <div style="width:${str}%;height:100%;background:${col};border-radius:2px"></div>
+          </div>
+          <span style="font-size:.68rem;color:${col};font-family:'Barlow Condensed',sans-serif;min-width:24px">${str}</span>
+        </div>
+      </div>`;
+    }).join('');
+
+  // Best players — use real data if in game, estimated if setup
+  let bestHtml='';
+  if(inGame){
+    const scorers=G.players.filter(p=>p.pos==='V'&&p.team).sort((a,b)=>b.rating-a.rating)[0];
+    const defenders=G.players.filter(p=>p.pos==='P'&&p.team).sort((a,b)=>b.rating-a.rating)[0];
+    const goalies=G.players.filter(p=>p.pos==='M'&&p.team).sort((a,b)=>b.rating-a.rating)[0];
+    [[scorers,'Paras hyökkääjä ⚡'],[defenders,'Paras puolustaja 🛡️'],[goalies,'Paras maalivahti 🧤']].forEach(([p,lbl])=>{
+      if(!p) return;
+      const t=TEAMS.find(x=>x.id===p.team);
+      bestHtml+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #141f2e">
+        <div>
+          <div style="font-size:.68rem;color:var(--mu)">${lbl}</div>
+          <div style="font-size:.82rem;font-weight:600">${p.name}</div>
+          <div style="font-size:.68rem;color:var(--mu)">${t?t.em+' '+t.name:''}</div>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;color:var(--ac);font-size:1rem">${p.rating}</div>
+      </div>`;
+    });
+  } else {
+    const topTeams=ranked.slice(0,3);
+    [[topTeams[0],'Paras hyökkääjä ⚡'],[topTeams[1],'Paras puolustaja 🛡️'],[topTeams[2],'Paras maalivahti 🧤']].forEach(([t,lbl])=>{
+      const prestige=t.prestige||5;
+      const rating=Math.round(prestige/10*20+70);
+      bestHtml+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #141f2e">
+        <div>
+          <div style="font-size:.68rem;color:var(--mu)">${lbl}</div>
+          <div style="font-size:.82rem">${t.em} ${t.name}</div>
+          <div style="font-size:.68rem;color:var(--mu)">Arvioitu · Prestige ${prestige}/10</div>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;color:var(--ac);font-size:1rem">~${rating}</div>
+      </div>`;
+    });
+  }
+  document.getElementById('spov-best').innerHTML=bestHtml;
+  document.getElementById('spov').style.display='block';
 }
 
 // ══════════════════════════════════════
@@ -676,28 +877,34 @@ function startGame(){
     history:[],news:[],
     crisis:false,crisisWeeks:0,
     transferWindowOpen:true,
-    salCap:td.salCap,
+    salCap:LEAGUE_SALARY_CAP_BASE, // liigakohtainen, sama kaikille
     lastMatchResult:null,
+    aiMorale:{},aiTrainingBoost:{},
+    ppLineup:{},pkLineup:{},chTab:'reg',
+    seasonCount:0,
+    prestige:{}, // joukkuekohtainen prestige
   };
 
-  // Compute per-team budget boost based on salCap (range -8 to +8)
-  const caps=TEAMS.map(t=>t.salCap);
-  const minCap=Math.min(...caps),maxCap=Math.max(...caps);
-  function capBoost(tid){
-    const t=TEAMS.find(x=>x.id===tid);
-    const base=Math.round(((t.salCap-minCap)/(maxCap-minCap))*16-8); // -8..+8
-    // Add small random variance so small teams can have 1-2 standout players
-    return base;
+  // Initialize prestige from TEAMS base values
+  TEAMS.forEach(t=>{ G.prestige[t.id]=t.prestige; });
+
+  // Compute per-team rating boost based on prestige (range -8 to +8)
+  function prestigeBoost(tid){
+    const p=G.prestige[tid]||5;
+    return Math.round((p-1)/9*16-8); // prestige 1→-8, 10→+8
   }
 
   TEAMS.forEach(t=>{
-    const base=capBoost(t.id);
+    const base=prestigeBoost(t.id);
     const diffAdj=t.id===selTeam?diffCfg.myBoost:diffCfg.aiPenalty;
     G.players.push(...genSquad(t.id,base+diffAdj));
   });
   G.freeAgents=genFreeAgents();
   G.fixtures=genSchedule(true);
-  TEAMS.forEach(t=>{G.standings[t.id]={W:0,OTW:0,OTL:0,L:0,GF:0,GA:0,pts:0,played:0};});
+  TEAMS.forEach(t=>{
+    G.standings[t.id]={W:0,OTW:0,OTL:0,L:0,GF:0,GA:0,pts:0,played:0};
+    if(t.id!==selTeam) G.aiMorale[t.id]=65;
+  });
 
   // Starting sponsors
   G.sponsors=[{...SPONSOR_TYPES[0],id:'sp0',active:true,weeksLeft:24}];
@@ -787,12 +994,18 @@ function triggerRandomEvent(){
 function renderTrainingCards(){
   const el=document.getElementById('training-cards');
   if(!el) return;
-  el.innerHTML=TRAINING_OPTIONS.map(t=>`
-    <div class="tr-card ${G.trainingId===t.id?'sel':''}" onclick="selectTraining('${t.id}')">
-      <div class="tr-title">${t.icon} ${t.name}</div>
+  el.innerHTML=TRAINING_OPTIONS.map(t=>{
+    const recov=t.effect.recovery||0;
+    const recovCol=recov>=10?'var(--gr)':recov>=6?'var(--ac)':'var(--mu)';
+    return`<div class="tr-card ${G.trainingId===t.id?'sel':''}" onclick="selectTraining('${t.id}')">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="tr-title">${t.icon} ${t.name}</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.8rem;color:${recovCol}">+${recov} kunto</div>
+      </div>
       <div class="tr-desc">${t.desc}</div>
       <div class="tr-cost">${t.cost>0?'Kustannus: '+fmt(t.cost):'Ilmainen'}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 function selectTraining(id){
   const opt=TRAINING_OPTIONS.find(t=>t.id===id);
@@ -800,21 +1013,22 @@ function selectTraining(id){
   if(opt.cost>0&&G.budget<opt.cost){notify('⛔ Ei budjettia harjoitteluun!');return;}
   G.trainingId=id;
   const lbl=document.getElementById('train-lbl');
-  if(lbl) lbl.textContent=opt.icon+' '+opt.name;
+  const recov=opt.effect.recovery||0;
+  if(lbl) lbl.textContent=opt.icon+' '+opt.name+' (kunto +'+recov+')';
   renderTrainingCards();
 }
 function applyTraining(){
-  if(!G.trainingId) return;
-  const opt=TRAINING_OPTIONS.find(t=>t.id===G.trainingId);
-  if(!opt) return;
-  if(opt.cost>0) G.budget=Math.max(0,G.budget-opt.cost);
-  const mine=G.players.filter(p=>p.team===G.myId);
-  const e=opt.effect;
-  if(e.fitness) mine.forEach(p=>{p.fitness=clamp(p.fitness+e.fitness,0,100);});
+  const opt=G.trainingId?TRAINING_OPTIONS.find(t=>t.id===G.trainingId):null;
+  const e=opt?opt.effect:{recovery:5}; // default: no training = moderate recovery
+  if(opt&&opt.cost>0) G.budget=Math.max(0,G.budget-opt.cost);
+
+  // Store this week's recovery value — used in developPlayers
+  G.trainingBoost.recovery=e.recovery||5;
   if(e.injMod!==undefined) G.trainingBoost.injMod=e.injMod;
   if(e.attackBoost) G.trainingBoost.attack=e.attackBoost;
   if(e.defenseBoost) G.trainingBoost.defense=e.defenseBoost;
   if(e.tacBoost) G.trainingBoost.tac=e.tacBoost;
+
   G.trainingId=null;
   const lbl=document.getElementById('train-lbl');
   if(lbl) lbl.textContent='Ei harjoittelua';
@@ -850,7 +1064,10 @@ function renderOverview(){
   document.getElementById('ov-cf').style.cssText=`width:${capPct}%;background:${capCol}`;
   const repTxt=G.reputation>=80?'⭐ Legenda':G.reputation>=60?'👍 Arvostettu':G.reputation>=40?'😐 Tuntematon':'👎 Epäilyttävä';
   document.getElementById('ov-rep').textContent=repTxt+' ('+G.reputation+')';
-  document.getElementById('ov-phase').textContent=G.phase==='preseason'?'🏒 Esikausi (Mestis-ottelut)':G.phase==='regular'?'📅 Runkosarja':G.phase==='playoffs'?'🏆 Playoffs':'✅ Kausi päättyi';
+  // Show prestige
+  const myPrestige=G.prestige[G.myId]||5;
+  const prestigeStars='⭐'.repeat(Math.round(myPrestige/2));
+  document.getElementById('ov-phase').textContent=(G.phase==='preseason'?'🏒 Esikausi':G.phase==='regular'?'📅 Runkosarja':G.phase==='playoffs'?'🏆 Playoffs':'✅ Päättyi')+' · Prestige '+myPrestige+'/10 '+prestigeStars;
 
   // Crisis banner
   const cb=document.getElementById('crisis-div');
@@ -893,6 +1110,8 @@ function renderNextMatch(){
   if(G.phase==='regular'){
     const next=G.fixtures.find(f=>!f.played&&!f.preseason&&(f.home===G.myId||f.away===G.myId));
     if(!next){
+      // Simulate all remaining AI fixtures before playoffs
+      G.fixtures.filter(f=>!f.played&&!f.preseason).forEach(f=>simFix(f,false));
       pnl.innerHTML='<div class="pt">✅ Runkosarja päättyi</div>'+
         '<p style="color:var(--ac);font-family:Barlow Condensed;font-size:.9rem;margin-bottom:8px">Siirrytään pudotuspeleihin!</p>'+
         '<button class="btn bp bw" onclick="endRegularSeason()">🏆 KAUDEN PALKINNOT & PLAYOFFS</button>';
@@ -973,11 +1192,23 @@ function playNext(){
   }
 
   applyTraining();
+  // AI teams get equivalent random training boosts each week
+  G.aiTrainingBoost={};
+  TEAMS.filter(t=>t.id!==G.myId).forEach(t=>{
+    const roll=Math.random();
+    if(roll<0.20) G.aiTrainingBoost[t.id]={attack:0.15};
+    else if(roll<0.40) G.aiTrainingBoost[t.id]={defense:0.15};
+    else if(roll<0.55) G.aiTrainingBoost[t.id]={tac:0.10};
+    // else no boost this week (same probability as player choosing rest/no training)
+  });
   triggerRandomEvent();
   G.week++;
   updateHdr();
   simFix(next,true);
+  // Reset game boosts but keep recovery for developPlayers (already applied above)
+  const savedRecovery=G.trainingBoost.recovery;
   G.trainingBoost={};
+  G.aiTrainingBoost={};
 }
 
 function processFinances(){
@@ -1028,27 +1259,26 @@ function processFinances(){
 // AI TRANSFERS
 // ══════════════════════════════════════
 function doAiTransfers(){
-  const caps=TEAMS.map(t=>t.salCap);
-  const minCap=Math.min(...caps),maxCap=Math.max(...caps);
   TEAMS.filter(t=>t.id!==G.myId).forEach(t=>{
     const squad=G.players.filter(p=>p.team===t.id);
     const annualWages=squad.reduce((s,p)=>s+p.wage,0)*12;
-    const capRoom=t.salCap-annualWages;
-    const capBoostVal=Math.round(((t.salCap-minCap)/(maxCap-minCap))*16-8);
+    const capRoom=G.salCap-annualWages;
+    const prestige=G.prestige[t.id]||5;
+    // Max rating willing to join based on prestige (high prestige attracts better players)
+    const maxAttrRating=Math.round(prestige/10*30+60); // prestige 1→63, 10→90
 
-    // Sell: occasionally offload weakest player (10% chance)
+    // Sell: occasionally offload weakest player
     if(squad.length>18&&Math.random()<0.10){
-      const worst=squad.sort((a,b)=>a.rating-b.rating)[0];
+      const worst=squad.slice().sort((a,b)=>a.rating-b.rating)[0];
       if(worst){worst.team=null;G.freeAgents.push(worst);}
     }
 
-    // Buy: sign a free agent if cap room and squad is thin or injured
+    // Buy: sign a free agent if cap room and squad is thin
     const injured=squad.filter(p=>p.injured).length;
     const needsPlayer=squad.length<19||injured>=2;
     if(needsPlayer&&capRoom>0&&Math.random()<0.20){
-      // Pick best affordable free agent that fits cap
       const candidate=G.freeAgents
-        .filter(p=>p.wage*12<capRoom&&p.rating<=70+capBoostVal)
+        .filter(p=>p.wage*12<capRoom&&p.rating<=maxAttrRating)
         .sort((a,b)=>b.rating-a.rating)[0];
       if(candidate){
         candidate.team=t.id;
@@ -1087,51 +1317,170 @@ function showMatchAnimPreseason(f){
   document.getElementById('mov').style.display='block';
 }
 
+function positionPenalty(p,slotPos){
+  // slotPos: 'M', 'P', 'V'
+  if(!slotPos||p.pos===slotPos) return p.rating;
+  // Wrong position — heavy penalty
+  return 40;
+}
+
 // ══════════════════════════════════════
 // TEAM STRENGTH
 // ══════════════════════════════════════
 function teamStr(tid,isHome){
   const pl=G.players.filter(p=>p.team===tid&&!p.injured);
   if(!pl.length) return 58;
+
   let avg;
   if(tid===G.myId){
-    const inL=Object.values(G.lineup).map(id=>G.players.find(p=>p.id===id)).filter(Boolean);
-    const active=inL.length>=5?inL:pl;
-    avg=active.reduce((s,p)=>s+p.rating*(p.fitness/100),0)/active.length;
+    // Player: use selected lineup if set, else full squad
+    const inL=Object.entries(G.lineup).map(([k,id])=>{
+      const p=G.players.find(x=>x.id===id);
+      if(!p) return null;
+      // Determine expected position from slot key
+      const slotPos=k.startsWith('mv')?'M':k.startsWith('d')?'P':'V';
+      const effRating=positionPenalty(p,slotPos);
+      const fitMod=p.fitness>=85?1.02:p.fitness/100;
+      return{...p,effRating:effRating*fitMod};
+    }).filter(Boolean);
+    const active=inL.length>=5?inL:pl.map(p=>({...p,effRating:p.rating*(p.fitness>=85?1.02:p.fitness/100)}));
+    avg=active.reduce((s,p)=>s+(p.effRating||p.rating),0)/active.length;
   } else {
-    avg=pl.reduce((s,p)=>s+p.rating*(p.fitness/100),0)/pl.length;
-    // AI style bonus
-    const td=TEAMS.find(x=>x.id===tid);
-    if(td&&td.style==='puolustava') avg+=2;
+    // AI: use top players by rating (simulates smart lineup selection)
+    const sorted=pl.slice().sort((a,b)=>b.rating-a.rating);
+    const starters=sorted.slice(0,Math.min(18,sorted.length));
+    avg=starters.reduce((s,p)=>{
+      const fitMod=p.fitness>=85?1.02:p.fitness/100;
+      return s+p.rating*fitMod;
+    },0)/starters.length;
   }
+
   let mod=0;
   if(tid===G.myId){
+    // Player tactics
     if(G.tactic==='hyökkäävä') mod+=5;
     if(G.tactic==='puolustava') mod-=3;
+    // Player morale
     mod+=G.morale/20;
+    // Player training boost
     if(G.trainingBoost.tac&&isHome) mod+=avg*G.trainingBoost.tac;
+  } else {
+    // AI tactics — based on team style
+    const td=TEAMS.find(x=>x.id===tid);
+    if(td){
+      if(td.style==='hyökkäävä') mod+=5;
+      else if(td.style==='puolustava') mod-=3;
+      // else tasapainoinen: no mod, same as player's balanced
+    }
+    // AI morale — same scale as player
+    const aiMor=G.aiMorale[tid]||65;
+    mod+=aiMor/20;
+    // AI training boost — random weekly boost equivalent to player's training
+    const aiBoost=G.aiTrainingBoost[tid]||{};
+    if(aiBoost.tac&&isHome) mod+=avg*aiBoost.tac;
   }
+
   return avg+mod;
 }
 
 function simGoals(tid,isHome,vsId){
   const str=teamStr(tid,isHome);
   let hm=isHome?0.5:0;
+  // Attack/defense training boosts — same for both player and AI
   if(tid===G.myId&&G.trainingBoost.attack) hm+=G.trainingBoost.attack;
   if(vsId===G.myId&&G.trainingBoost.defense) hm-=G.trainingBoost.defense;
+  const aiAtk=G.aiTrainingBoost[tid];
+  if(aiAtk&&aiAtk.attack) hm+=aiAtk.attack;
+  const aiDef=G.aiTrainingBoost[vsId];
+  if(aiDef&&aiDef.defense) hm-=aiDef.defense;
   const target=clamp((str-60)/6+2.9+hm,1.0,6.0);
   let g=0;for(let i=0;i<12;i++) if(Math.random()<target/12) g++;
   return g;
 }
 
 // ══════════════════════════════════════
+// SPECIAL TEAMS — PP / PK
+// ══════════════════════════════════════
+function getSpecialTeamsStrength(type,tid){
+  // type: 'pp' or 'pk'
+  // Returns 0-100 strength value based on lineup or auto-pick for AI
+  let players=[];
+  if(tid===G.myId){
+    const lineup=type==='pp'?G.ppLineup:G.pkLineup;
+    players=Object.values(lineup).map(id=>G.players.find(p=>p.id===id)).filter(Boolean);
+    // If no special teams lineup set, fall back to top players
+    if(players.length<3){
+      const fwds=getPool('V').slice(0,type==='pp'?3:2);
+      const defs=getPool('P').slice(0,2);
+      players=[...fwds,...defs];
+    }
+  } else {
+    // AI: auto-pick best available players
+    const squad=G.players.filter(p=>p.team===tid&&!p.injured);
+    const fwds=squad.filter(p=>p.pos==='V').sort((a,b)=>b.rating-a.rating).slice(0,type==='pp'?3:2);
+    const defs=squad.filter(p=>p.pos==='P').sort((a,b)=>b.rating-a.rating).slice(0,2);
+    players=[...fwds,...defs];
+  }
+  if(!players.length) return 60;
+  return players.reduce((s,p)=>s+p.rating*(p.fitness/100),0)/players.length;
+}
+
+function calcSpecialTeamsPct(type,tid){
+  // Returns {pp: %, pk: %} as human-readable percentages out of 10 opportunities
+  const ppStr=getSpecialTeamsStrength('pp',tid);
+  const pkStr=getSpecialTeamsStrength('pk',tid);
+  // PP%: 10-35% range based on strength (realistic SM-liiga range)
+  const pp=clamp((ppStr-55)/2+15,10,35);
+  // PK%: 65-90% range (inverse — stronger PK = more kills)
+  const pk=clamp((pkStr-55)/2+72,65,90);
+  return{pp,pk};
+}
+
+function simSpecialTeams(homeTid,awayTid){
+  // Returns {homeExtraGoals, awayExtraGoals, homePen, awayPen} from PP/PK situations
+  const homePen=rnd(2,5); // jäähyt kotijoukkueelle
+  const awayPen=rnd(2,5); // jäähyt vierasjoukkueelle
+
+  const homePP=calcSpecialTeamsPct('pp',homeTid);
+  const awayPP=calcSpecialTeamsPct('pp',awayTid);
+
+  // Away team gets PP when home commits penalty, home team gets PP when away commits
+  let homeExtra=0,awayExtra=0;
+  for(let i=0;i<awayPen;i++) if(Math.random()<homePP.pp/100) homeExtra++;
+  for(let i=0;i<homePen;i++) if(Math.random()<awayPP.pp/100) awayExtra++;
+
+  // Track stats
+  if(!G.standings[homeTid].ppGoals) G.standings[homeTid].ppGoals=0;
+  if(!G.standings[awayTid].ppGoals) G.standings[awayTid].ppGoals=0;
+  if(!G.standings[homeTid].pkGoalsAgainst) G.standings[homeTid].pkGoalsAgainst=0;
+  if(!G.standings[awayTid].pkGoalsAgainst) G.standings[awayTid].pkGoalsAgainst=0;
+  if(!G.standings[homeTid].ppOpps) G.standings[homeTid].ppOpps=0;
+  if(!G.standings[awayTid].ppOpps) G.standings[awayTid].ppOpps=0;
+
+  G.standings[homeTid].ppGoals+=homeExtra;
+  G.standings[awayTid].ppGoals+=awayExtra;
+  G.standings[homeTid].ppOpps+=awayPen;
+  G.standings[awayTid].ppOpps+=homePen;
+  G.standings[homeTid].pkGoalsAgainst+=awayExtra;
+  G.standings[awayTid].pkGoalsAgainst+=homeExtra;
+
+  return{homeExtra,awayExtra,homePen,awayPen};
+}
+
+// ══════════════════════════════════════
 // SIMULATE FIXTURE
 // ══════════════════════════════════════
 function simFix(f,live){
-  // Skip preseason fixtures in regular sim
   if(f.preseason) return;
   let hg=simGoals(f.home,true,f.away);
   let ag=simGoals(f.away,false,f.home);
+
+  // Add special teams goals
+  const st=simSpecialTeams(f.home,f.away);
+  hg+=st.homeExtra;
+  ag+=st.awayExtra;
+  f.homePen=st.homePen;f.awayPen=st.awayPen;
+  f.homePP=st.homeExtra;f.awayPP=st.awayExtra;
   f.ot=false;f.so=false;
   if(hg===ag){
     if(Math.random()<0.55){f.ot=true;if(Math.random()<0.5)hg++;else ag++;}
@@ -1154,10 +1503,19 @@ function simFix(f,live){
   }
   assignScorers(f.home,hg);assignScorers(f.away,ag);
   developPlayers();
+  // Update morale for both teams — same logic for player and AI
+  [f.home,f.away].forEach(tid=>{
+    const won=(tid===f.home)?hg>ag:ag>hg;
+    const drew=hg===ag;
+    if(tid===G.myId){
+      G.morale=clamp(G.morale+(won?8:drew?1:-6),0,100);
+    } else {
+      G.aiMorale[tid]=clamp((G.aiMorale[tid]||65)+(won?8:drew?1:-6),0,100);
+    }
+  });
   if(f.home===G.myId||f.away===G.myId){
     const myG=f.home===G.myId?hg:ag,oppG=f.home===G.myId?ag:hg;
     const won=myG>oppG;
-    G.morale=clamp(G.morale+(won?8:myG<oppG?-6:1),0,100);
     G.lastMatchResult={won,myG,oppG,home:f.home,away:f.away};
   }
   if(live) showMatchAnim(f);
@@ -1176,12 +1534,57 @@ function assignScorers(tid,goals){
   if(mvs.length){const mv=pick(mvs);mv.mvGames++;mv.mvGoalsAgainst+=goals;}
 }
 
+function getPlayerChainLevel(pid){
+  // First check manual lineup
+  for(let c=0;c<4;c++) for(let s=0;s<3;s++) if(G.lineup[`f${c}${s}`]===pid) return c+1;
+  for(let c=0;c<3;c++) for(let s=0;s<2;s++) if(G.lineup[`d${c}${s}`]===pid) return c+1;
+  if(G.lineup['mv0']===pid) return 1;
+  if(G.lineup['mv1']===pid) return 4;
+
+  // Fallback: if lineup is mostly empty, auto-assign by rating rank
+  const lineupSize=Object.keys(G.lineup).length;
+  if(lineupSize<5){
+    const p=G.players.find(x=>x.id===pid);
+    if(!p) return 5;
+    const samePos=G.players.filter(x=>x.team===G.myId&&x.pos===p.pos&&!x.injured).sort((a,b)=>b.rating-a.rating);
+    const rank=samePos.findIndex(x=>x.id===pid);
+    if(p.pos==='V'){
+      if(rank<3) return 1;
+      if(rank<6) return 2;
+      if(rank<9) return 3;
+      return 4;
+    }
+    if(p.pos==='P'){
+      if(rank<2) return 1;
+      if(rank<4) return 2;
+      return 3;
+    }
+    if(p.pos==='M') return rank===0?1:4;
+  }
+
+  return 5; // explicitly not in lineup
+}
+
+function fitnessDrop(chainLevel){
+  if(chainLevel===1) return rnd(4,5);
+  if(chainLevel===2) return rnd(3,5);
+  if(chainLevel===3) return rnd(3,4);
+  if(chainLevel===4) return rnd(3,4);
+  return rnd(0,1); // ei kokoonpanossa
+}
+
 function developPlayers(){
   const injBase=0.003+(G.trainingBoost.injMod||0)*0.001;
+  const weeklyRecovery=G.trainingBoost.recovery||5; // harjoittelun valitsema palautuminen
+
   G.players.forEach(p=>{
     if(!p.team) return;
+
+    // Rating development
     if(p.age<23&&Math.random()<0.02) p.rating=clamp(p.rating+1,35,96);
     if(p.age>33&&Math.random()<0.03) p.rating=clamp(p.rating-1,35,96);
+
+    // Injury — higher risk with intense training
     if(!p.injured&&Math.random()<injBase){
       p.injured=true;p.injuryWeeks=rnd(1,5);
       if(p.team===G.myId) notify('🚑 '+p.name+' loukkaantui!');
@@ -1190,15 +1593,94 @@ function developPlayers(){
       p.injuryWeeks--;
       if(p.injuryWeeks===0){p.injured=false;if(p.team===G.myId)notify('✅ '+p.name+' palasi!');}
     }
-    p.fitness=clamp(p.fitness-rnd(0,2),55,100);
+
+    // FITNESS
+    if(p.team===G.myId){
+      const chainLevel=getPlayerChainLevel(p.id);
+      const drop=fitnessDrop(chainLevel);
+      // Training recovery replaces base recovery — this is the key FM-style mechanic
+      p.fitness=clamp(p.fitness-drop+weeklyRecovery,60,100);
+    } else {
+      // AI: automatic rotation by rank
+      const squad=G.players.filter(x=>x.team===p.team&&!x.injured).sort((a,b)=>b.rating-a.rating);
+      const rank=squad.findIndex(x=>x.id===p.id);
+      let aiChain=4;
+      if(rank<6) aiChain=1;
+      else if(rank<12) aiChain=2;
+      else if(rank<18) aiChain=3;
+      if(p.fitness<75) aiChain=Math.min(aiChain+2,5);
+      const drop=fitnessDrop(aiChain);
+      const aiRecovery=5; // AI käyttää aina kohtalaista palautumista
+      p.fitness=clamp(p.fitness-drop+aiRecovery,60,100);
+    }
+
     if(p.age>40) p.team=null;
   });
+
   // Academy development
   G.academy.players.forEach(p=>{
     if(Math.random()<0.15) p.rating=clamp(p.rating+1,35,85);
     p.age++;
     if(p.age>=20&&p.rating>=60){
-      // Graduate to main squad
+      if(G.players.filter(x=>x.team===G.myId).length<25){
+        p.team=G.myId;p.isYouth=false;
+        G.players.push(p);
+        addNews('green',`🌟 Akatemian kasvatti ${p.name} (${p.rating}) ylennettiin edustusjoukkueeseen!`);
+        G.academy.players=G.academy.players.filter(x=>x.id!==p.id);
+      }
+    }
+  });
+}
+
+function developPlayers(){
+  const injBase=0.003+(G.trainingBoost.injMod||0)*0.001;
+
+  G.players.forEach(p=>{
+    if(!p.team) return;
+
+    // Rating development
+    if(p.age<23&&Math.random()<0.02) p.rating=clamp(p.rating+1,35,96);
+    if(p.age>33&&Math.random()<0.03) p.rating=clamp(p.rating-1,35,96);
+
+    // Injury
+    if(!p.injured&&Math.random()<injBase){
+      p.injured=true;p.injuryWeeks=rnd(1,5);
+      if(p.team===G.myId) notify('🚑 '+p.name+' loukkaantui!');
+    }
+    if(p.injured&&p.injuryWeeks>0){
+      p.injuryWeeks--;
+      if(p.injuryWeeks===0){p.injured=false;if(p.team===G.myId)notify('✅ '+p.name+' palasi!');}
+    }
+
+    // FITNESS — chain-based for player's team
+    if(p.team===G.myId){
+      const chainLevel=getPlayerChainLevel(p.id);
+      const drop=fitnessDrop(chainLevel);
+      const weeklyRecover=3; // kaikille sama peruspalautuminen
+      p.fitness=clamp(p.fitness-drop+weeklyRecover,35,100);
+    } else {
+      // AI teams: auto-rotate — best players get more fatigue
+      const squad=G.players.filter(x=>x.team===p.team&&!x.injured).sort((a,b)=>b.rating-a.rating);
+      const rank=squad.findIndex(x=>x.id===p.id);
+      let aiChain=4;
+      if(rank<6) aiChain=1;
+      else if(rank<12) aiChain=2;
+      else if(rank<18) aiChain=3;
+      // Auto-rest AI players below 70% fitness
+      if(p.fitness<75) aiChain=Math.min(aiChain+2,5);
+      const drop=fitnessDrop(aiChain);
+      const weeklyRecover=3;
+      p.fitness=clamp(p.fitness-drop+weeklyRecover,35,100);
+    }
+
+    if(p.age>40) p.team=null;
+  });
+
+  // Academy development
+  G.academy.players.forEach(p=>{
+    if(Math.random()<0.15) p.rating=clamp(p.rating+1,35,85);
+    p.age++;
+    if(p.age>=20&&p.rating>=60){
       if(G.players.filter(x=>x.team===G.myId).length<25){
         p.team=G.myId;p.isYouth=false;
         G.players.push(p);
@@ -1291,6 +1773,56 @@ function selectPress(idx,wonInt){
   G.reputation=clamp(G.reputation+o.repBonus,0,100);
   document.getElementById('pov').style.display='none';
   G.lastMatchResult=null;
+  showWeeklySummary();
+}
+
+function showWeeklySummary(){
+  const week=G.week-1; // already incremented
+  const weekFixtures=G.fixtures.filter(f=>f.played&&!f.preseason&&f.week===week);
+  const myF=weekFixtures.find(f=>f.home===G.myId||f.away===G.myId);
+
+  // My result box
+  let myHtml='<p style="color:var(--mu);font-size:.78rem">Ei omaa ottelua tällä viikolla</p>';
+  if(myF){
+    const ht=TEAMS.find(x=>x.id===myF.home),at=TEAMS.find(x=>x.id===myF.away);
+    const myG=myF.home===G.myId?myF.hg:myF.ag;
+    const oppG=myF.home===G.myId?myF.ag:myF.hg;
+    const won=myG>oppG,draw=myG===oppG;
+    const col=won?'var(--gr)':draw?'var(--ac)':'var(--rd)';
+    const suf=myF.ot?' (JA)':myF.so?' (RL)':'';
+    myHtml=`<div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--ac);margin-bottom:4px">OMA OTTELU — VIIKKO ${week}</div>
+      <div style="font-size:.9rem;margin-bottom:4px">${ht.em} ${ht.name} <span style="color:${col};font-family:'Bebas Neue',sans-serif;font-size:1.2rem"> ${myF.hg}–${myF.ag}</span>${suf} ${at.em} ${at.name}</div>`;
+  }
+  document.getElementById('wov-my-result').innerHTML=myHtml;
+
+  // Other results
+  const others=weekFixtures.filter(f=>f!==myF);
+  document.getElementById('wov-other-results').innerHTML=others.length
+    ?others.map(f=>{
+      const ht=TEAMS.find(x=>x.id===f.home),at=TEAMS.find(x=>x.id===f.away);
+      const suf=f.ot?' JA':f.so?' RL':'';
+      return `<div class="fix"><div class="fix-t">${ht.em} ${ht.name} – ${at.em} ${at.name}</div>
+        <span class="fix-r">${f.hg}–${f.ag}${suf}</span></div>`;
+    }).join('')
+    :'<p style="color:var(--mu);font-size:.76rem">Ei muita otteluita</p>';
+
+  // Mini standings top 10
+  const sorted=getSorted().slice(0,10);
+  document.getElementById('wov-standings').innerHTML=`<table class="tbl" style="font-size:.72rem">
+    <thead><tr><th>#</th><th>Joukkue</th><th class="c">O</th><th class="c">P</th></tr></thead>
+    <tbody>${sorted.map((t,i)=>`<tr class="${t.id===G.myId?'me':''}">
+      <td>${i+1}${i<8?'<span style="color:var(--gr);font-size:.55rem"> ●</span>':''}</td>
+      <td>${t.em} ${t.name}</td>
+      <td class="c">${t.played}</td>
+      <td class="r" style="color:var(--ac);font-weight:700">${t.pts}</td>
+    </tr>`).join('')}</tbody></table>`;
+
+  document.getElementById('wov-title').textContent=`VIIKKO ${week} — TULOKSET`;
+  document.getElementById('wov').style.display='block';
+}
+
+function closeWeeklySummary(){
+  document.getElementById('wov').style.display='none';
   renderOverview();renderStandings();
 }
 
@@ -1309,10 +1841,19 @@ function renderSquad(){
       <td class="c"><span class="badge b${p.pos}">${p.pos}</span></td>
       <td class="c">${p.age}</td>
       <td class="r"><div class="rbar" style="justify-content:flex-end"><div class="rbg"><div class="rbf" style="width:${pct}%;background:${col}"></div></div><span>${p.rating}</span></div></td>
-      <td class="r" style="color:${p.fitness<70?'var(--rd)':p.fitness<85?'var(--ac)':'var(--gr)'}">${p.fitness}%</td>
+      <td class="r" style="color:${p.fitness<75?'var(--rd)':p.fitness<85?'var(--ac)':'var(--gr)'}">${p.fitness}%</td>
       <td class="r" style="color:var(--ac)">${fmt(p.wage)}</td>
       <td class="r" style="color:var(--mu)">${p.contractYears}v</td></tr>`;
   }).join('');
+}
+
+function setChTab(tab){
+  G.chTab=tab;
+  ['reg','pp','pk'].forEach(t=>{
+    const el=document.getElementById('ch-tab-'+t);
+    if(el) el.classList.toggle('on',t===tab);
+  });
+  renderChains();
 }
 
 // ══════════════════════════════════════
@@ -1324,7 +1865,25 @@ function setLineup(k,id){
   if(id)G.lineup[k]=id;else delete G.lineup[k];
   renderChains();
 }
+function setPPLineup(k,id){
+  Object.keys(G.ppLineup).forEach(x=>{if(G.ppLineup[x]===id&&x!==k)delete G.ppLineup[x];});
+  if(id)G.ppLineup[k]=id;else delete G.ppLineup[k];
+  renderChains();
+}
+function setPKLineup(k,id){
+  Object.keys(G.pkLineup).forEach(x=>{if(G.pkLineup[x]===id&&x!==k)delete G.pkLineup[x];});
+  if(id)G.pkLineup[k]=id;else delete G.pkLineup[k];
+  renderChains();
+}
+
 function renderChains(){
+  const tab=G.chTab||'reg';
+  if(tab==='pp'){renderChainsSpecial('pp');return;}
+  if(tab==='pk'){renderChainsSpecial('pk');return;}
+  renderChainsRegular();
+}
+
+function renderChainsRegular(){
   const mvs=getPool('M'),defs=getPool('P'),fwds=getPool('V');
   const used=new Set(Object.values(G.lineup));
   function opts(pool,k){
@@ -1334,7 +1893,15 @@ function renderChains(){
   function slot(lbl,k,pool){
     const pid=G.lineup[k]||'';
     const p=pid?G.players.find(x=>x.id===pid):null;
-    return `<div class="csl"><span class="clb">${lbl}</span><select class="csel" onchange="setLineup('${k}',this.value)">${opts(pool,k)}</select>${p?`<span style="font-size:.66rem;color:var(--mu);min-width:20px;text-align:right">${p.rating}</span>`:''}</div>`;
+    const fitCol=p?(p.fitness>=85?'var(--gr)':p.fitness>=75?'var(--ac)':'var(--rd)'):'';
+    const fitWarn=p&&p.fitness<75?'⚠️ ':'';
+    const fitTxt=p?`<span style="font-size:.66rem;color:${fitCol};min-width:36px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700">${fitWarn}${p.fitness}%</span>`:'';
+    const ratingTxt=p?`<span style="font-size:.66rem;color:var(--mu);min-width:20px;text-align:right">${p.rating}</span>`:'';
+    // Position mismatch warning
+    const expectedPos=k.startsWith('mv')?'M':k.startsWith('d')?'P':'V';
+    const posMismatch=p&&p.pos!==expectedPos;
+    const posTxt=posMismatch?`<span style="font-size:.6rem;color:var(--rd);margin-left:2px" title="Väärä pelipaikka! Rating alennettu 40:een">⛔</span>`:'';
+    return `<div class="csl"><span class="clb">${lbl}</span><select class="csel" onchange="setLineup('${k}',this.value)">${opts(pool,k)}</select>${ratingTxt}${fitTxt}${posTxt}</div>`;
   }
   let html='';
   html+=`<div class="cbox"><div class="ct">🧤 Maalivahtit</div>${slot('Aloittaja','mv0',mvs)}${slot('Vara','mv1',mvs)}</div>`;
@@ -1351,18 +1918,98 @@ function renderChains(){
   const bench=G.players.filter(p=>p.team===G.myId&&!used.has(p.id)).sort((a,b)=>{const o={M:0,P:1,V:2};return o[a.pos]-o[b.pos]||b.rating-a.rating;});
   html+=`<div class="cbox"><div class="ct">🪑 Varapelaajat (${bench.length})</div>`;
   bench.forEach(p=>{
-    html+=`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #141f2e;font-size:.76rem"><span><span class="badge b${p.pos}" style="margin-right:3px">${p.pos}</span>${p.name}${p.injured?` 🚑${p.injuryWeeks}vk`:''}</span><span style="color:var(--mu);font-size:.7rem">${p.rating}</span></div>`;
+    const fitCol=p.fitness>=85?'var(--gr)':p.fitness>=75?'var(--ac)':'var(--rd)';
+    const fitWarn=p.fitness<75?'⚠️ ':'';
+    html+=`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #141f2e;font-size:.76rem">
+      <span><span class="badge b${p.pos}" style="margin-right:3px">${p.pos}</span>${p.name}${p.injured?` 🚑${p.injuryWeeks}vk`:''}</span>
+      <span style="display:flex;gap:8px;align-items:center">
+        <span style="color:var(--mu);font-size:.7rem">${p.rating}</span>
+        <span style="color:${fitCol};font-size:.7rem;font-family:'Barlow Condensed',sans-serif;font-weight:700">${fitWarn}${p.fitness}%</span>
+      </span>
+    </div>`;
   });
   html+='</div>';
   document.getElementById('ch-content').innerHTML=html;
 }
+
+function renderChainsSpecial(type){
+  // PP: 2 defenders + 3 forwards. PK: 2 defenders + 2 forwards
+  const isPP=type==='pp';
+  const lineup=isPP?G.ppLineup:G.pkLineup;
+  const setFn=isPP?'setPPLineup':'setPKLineup';
+  const defs=getPool('P'),fwds=getPool('V');
+  const used=new Set(Object.values(lineup));
+
+  function opts(pool,k){
+    const cur=lineup[k]||'';
+    return '<option value="">— Ei valittu —</option>'+pool.map(p=>`<option value="${p.id}" ${p.id===cur?'selected':''} ${used.has(p.id)&&p.id!==cur?'disabled':''}>${p.name} (${p.rating})</option>`).join('');
+  }
+  function slot(lbl,k,pool){
+    const pid=lineup[k]||'';
+    const p=pid?G.players.find(x=>x.id===pid):null;
+    const fitCol=p?(p.fitness>=85?'var(--gr)':p.fitness>=75?'var(--ac)':'var(--rd)'):'';
+    const fitWarn=p&&p.fitness<75?'⚠️ ':'';
+    const fitTxt=p?`<span style="font-size:.66rem;color:${fitCol};min-width:36px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700">${fitWarn}${p.fitness}%</span>`:'';
+    const ratingTxt=p?`<span style="font-size:.66rem;color:var(--mu);min-width:20px;text-align:right">${p.rating}</span>`:'';
+    return `<div class="csl"><span class="clb">${lbl}</span><select class="csel" onchange="${setFn}('${k}',this.value)">${opts(pool,k)}</select>${ratingTxt}${fitTxt}</div>`;
+  }
+
+  const fwdSlots=isPP?['LW','C','RW']:['LW','RW'];
+  const ppPct=calcSpecialTeamsPct(type,G.myId);
+
+  let html=`<div class="pnl" style="margin-bottom:8px;text-align:center;">
+    <div style="font-size:.72rem;color:var(--mu)">${isPP?'Ylivoima-% (YV%)':'Alivoima-% (AV%)'}</div>
+    <div style="font-family:Bebas Neue;font-size:1.4rem;color:${isPP?'var(--gr)':'var(--ac)'}">
+      ${isPP?ppPct.pp.toFixed(1)+'%':ppPct.pk.toFixed(1)+'%'}
+    </div>
+    <div style="font-size:.68rem;color:var(--mu)">${isPP?'maalia per 10 ylivoimaa':'torjuntaa per 10 alivoimaa'}</div>
+  </div>`;
+
+  html+=`<div class="cbox"><div class="ct">${isPP?'⚡ Ylivoimaketju':'🛡️ Alivoimaketju'}</div>`;
+  fwdSlots.forEach((l,s)=>{html+=slot(l,`${type}f${s}`,fwds);});
+  ['LD','RD'].forEach((l,s)=>{html+=slot(l,`${type}d${s}`,defs);});
+  html+='</div>';
+
+  html+=`<div class="cbox"><div class="ct">${isPP?'⚡ Ylivoimaketju 2':'🛡️ Alivoimaketju 2'}</div>`;
+  fwdSlots.forEach((l,s)=>{html+=slot(l,`${type}f${s+3}`,fwds);});
+  ['LD','RD'].forEach((l,s)=>{html+=slot(l,`${type}d${s+2}`,defs);});
+  html+='</div>';
+
+  document.getElementById('ch-content').innerHTML=html;
+}
 function aiOptimize(){
-  G.lineup={};
+  G.lineup={};G.ppLineup={};G.pkLineup={};
   const mvs=getPool('M'),defs=getPool('P'),fwds=getPool('V');
+
+  // Sort by rating but demote players below 70% fitness by one chain level
+  function effectiveRank(players){
+    return players.slice().sort((a,b)=>{
+      const aRating=a.fitness<75?a.rating-10:a.rating;
+      const bRating=b.fitness<75?b.rating-10:b.rating;
+      return bRating-aRating;
+    });
+  }
+
+  const rankedFwds=effectiveRank(fwds);
+  const rankedDefs=effectiveRank(defs);
+
   mvs.slice(0,2).forEach((p,i)=>G.lineup[`mv${i}`]=p.id);
-  for(let c=0;c<4;c++)for(let s=0;s<3;s++){const p=fwds[c*3+s];if(p)G.lineup[`f${c}${s}`]=p.id;}
-  for(let c=0;c<3;c++)for(let s=0;s<2;s++){const p=defs[c*2+s];if(p)G.lineup[`d${c}${s}`]=p.id;}
-  renderChains();notify('🤖 AI optimoi kokoonpanon!');
+  for(let c=0;c<4;c++) for(let s=0;s<3;s++){const p=rankedFwds[c*3+s];if(p)G.lineup[`f${c}${s}`]=p.id;}
+  for(let c=0;c<3;c++) for(let s=0;s<2;s++){const p=rankedDefs[c*2+s];if(p)G.lineup[`d${c}${s}`]=p.id;}
+
+  // PP: best 3 forwards + 2 defense (fitness-aware)
+  rankedFwds.slice(0,3).forEach((p,i)=>G.ppLineup[`ppf${i}`]=p.id);
+  rankedDefs.slice(0,2).forEach((p,i)=>G.ppLineup[`ppd${i}`]=p.id);
+  rankedFwds.slice(3,6).forEach((p,i)=>G.ppLineup[`ppf${i+3}`]=p.id);
+  rankedDefs.slice(2,4).forEach((p,i)=>G.ppLineup[`ppd${i+2}`]=p.id);
+
+  // PK: best 2 forwards + 2 defense (fitness-aware)
+  rankedFwds.slice(0,2).forEach((p,i)=>G.pkLineup[`pkf${i}`]=p.id);
+  rankedDefs.slice(0,2).forEach((p,i)=>G.pkLineup[`pkd${i}`]=p.id);
+  rankedFwds.slice(2,4).forEach((p,i)=>G.pkLineup[`pkf${i+3}`]=p.id);
+  rankedDefs.slice(2,4).forEach((p,i)=>G.pkLineup[`pkd${i+2}`]=p.id);
+
+  renderChains();notify('🤖 AI optimoi kokoonpanon (kunto huomioitu)!');
 }
 
 // ══════════════════════════════════════
@@ -1427,7 +2074,7 @@ function renderStandings(){
 function renderTransfers(){
   const wages=myWages();
   document.getElementById('tr-b').textContent=fmt(G.budget);
-  document.getElementById('tr-c').textContent=fmt(G.salCap);
+  document.getElementById('tr-c').textContent=fmt(G.salCap)+'/v (liigakohtainen)';
   document.getElementById('tr-w').textContent=fmt(wages)+'/kk';
   document.getElementById('tr-ti').textContent=fmt(ticketIncome())+'/ottelu';
   document.getElementById('tr-sp').textContent=fmt(sponsorIncome())+'/kk';
@@ -1635,7 +2282,7 @@ function upgradeAcademy(){
 // ══════════════════════════════════════
 // STATS
 // ══════════════════════════════════════
-function setSaTab(t){G.saTab=t;document.querySelectorAll('#s-sa .stab').forEach((b,i)=>b.classList.toggle('on',(i===0&&t==='sc')||(i===1&&t==='gk')));renderStats();}
+function setSaTab(t){G.saTab=t;document.querySelectorAll('#s-sa .stab').forEach((b,i)=>b.classList.toggle('on',(i===0&&t==='sc')||(i===1&&t==='gk')||(i===2&&t==='st')));renderStats();}
 function renderStats(){
   const tab=G.saTab||'sc';
   let html='';
@@ -1643,10 +2290,24 @@ function renderStats(){
     const pl=G.players.filter(p=>p.pos!=='M'&&p.gamesPlayed>0).sort((a,b)=>(b.goals+b.assists)-(a.goals+a.assists)).slice(0,25);
     html='<table class="tbl"><thead><tr><th>#</th><th>Pelaaja</th><th>Joukkue</th><th class="c">M</th><th class="c">S</th><th class="c">P</th></tr></thead><tbody>'+
       pl.map((p,i)=>{const t=TEAMS.find(x=>x.id===p.team);return`<tr class="${p.team===G.myId?'me':''}"><td>${i+1}</td><td>${p.name}</td><td>${t?t.em+' '+t.name:'—'}</td><td class="c">${p.goals}</td><td class="c">${p.assists}</td><td class="c" style="color:var(--ac);font-weight:700">${p.goals+p.assists}</td></tr>`;}).join('')+'</tbody></table>';
-  }else{
+  } else if(tab==='gk'){
     const pl=G.players.filter(p=>p.pos==='M'&&p.mvGames>0).sort((a,b)=>(a.mvGoalsAgainst/Math.max(1,a.mvGames))-(b.mvGoalsAgainst/Math.max(1,b.mvGames))).slice(0,15);
     html='<table class="tbl"><thead><tr><th>#</th><th>Maalivahti</th><th>Joukkue</th><th class="c">O</th><th class="r">PM/O</th></tr></thead><tbody>'+
       pl.map((p,i)=>{const t=TEAMS.find(x=>x.id===p.team);return`<tr class="${p.team===G.myId?'me':''}"><td>${i+1}</td><td>${p.name}</td><td>${t?t.em+' '+t.name:'—'}</td><td class="c">${p.mvGames}</td><td class="r">${(p.mvGoalsAgainst/p.mvGames).toFixed(2)}</td></tr>`;}).join('')+'</tbody></table>';
+  } else {
+    // Special teams stats
+    const teams=getSorted().map(t=>({
+      ...t,
+      ppGoals:G.standings[t.id].ppGoals||0,
+      ppOpps:G.standings[t.id].ppOpps||0,
+      pkGoalsAgainst:G.standings[t.id].pkGoalsAgainst||0,
+    }));
+    html='<table class="tbl"><thead><tr><th>Joukkue</th><th class="c">YVM</th><th class="c">YV-tilanteet</th><th class="r">YV%</th><th class="r">AV%</th></tr></thead><tbody>'+
+      teams.map(t=>{
+        const ppPct=t.ppOpps>0?(t.ppGoals/t.ppOpps*100).toFixed(1):'-';
+        const pkPct=t.ppOpps>0?(100-t.pkGoalsAgainst/Math.max(1,t.ppOpps)*100).toFixed(1):'-';
+        return`<tr class="${t.id===G.myId?'me':''}"><td>${t.em} ${t.name}</td><td class="c">${t.ppGoals}</td><td class="c">${t.ppOpps}</td><td class="r" style="color:var(--gr)">${ppPct}%</td><td class="r" style="color:var(--ac)">${pkPct}%</td></tr>`;
+      }).join('')+'</tbody></table>';
   }
   document.getElementById('sa-content').innerHTML=html;
 }
@@ -1963,14 +2624,49 @@ function newSeason(){
   const yr=G.season.split('–');
   const nextY=parseInt(yr[1])+1;
   G.season=(parseInt(yr[1]))+'-'+(nextY);
-  // Build proper Finnish season format e.g. 2025–26
   const startY=parseInt(yr[1]);
   G.season=startY+'–'+(startY+1).toString().slice(-2);
+
+  G.seasonCount=(G.seasonCount||0)+1;
+
+  // Salary cap grows each season
+  G.salCap=Math.round(LEAGUE_SALARY_CAP_BASE*Math.pow(1+LEAGUE_CAP_GROWTH,G.seasonCount));
+  addNews('green',`📈 SM-liigan salary cap nousi: ${fmt(G.salCap)}/v`);
+
+  // Update prestige based on last season results
+  const sorted=getSorted();
+  TEAMS.forEach(t=>{
+    const pos=sorted.findIndex(x=>x.id===t.id)+1;
+    let prestigeDelta=0;
+    if(t.id===G.myId){
+      // Check if champion
+      const wasChamp=G.history.length&&G.history[G.history.length-1].champion;
+      if(wasChamp) prestigeDelta=1.5;
+      else if(pos<=2) prestigeDelta=0.8;
+      else if(pos<=4) prestigeDelta=0.4;
+      else if(pos<=8) prestigeDelta=0.1;
+      else if(pos<=11) prestigeDelta=-0.3;
+      else prestigeDelta=-0.6;
+    } else {
+      if(pos<=2) prestigeDelta=0.5;
+      else if(pos<=8) prestigeDelta=0.1;
+      else if(pos<=11) prestigeDelta=-0.2;
+      else prestigeDelta=-0.4;
+    }
+    G.prestige[t.id]=clamp(+(G.prestige[t.id]+prestigeDelta).toFixed(1),1,10);
+  });
+
+  // Notify player of prestige change
+  const myOldPrestige=G.history.length?null:null;
+  const myPrestige=G.prestige[G.myId];
+  addNews('',`⭐ Joukkueesi prestige: ${myPrestige}/10`);
 
   G.week=1;G.phase='preseason';G.playoffs=null;G.lineup={};
   G.trainingBoost={};G.trainingId=null;G.faRefreshWeek=1;
   G.lastMatchResult=null;G.news=[];G.crisis=false;G.crisisWeeks=0;
   G.transferWindowOpen=true;
+  G.aiTrainingBoost={};G.ppLineup={};G.pkLineup={};G.chTab='reg';
+  TEAMS.filter(t=>t.id!==G.myId).forEach(t=>{G.aiMorale[t.id]=65;});
 
   G.fixtures=genSchedule(true);
   TEAMS.forEach(t=>{G.standings[t.id]={W:0,OTW:0,OTL:0,L:0,GF:0,GA:0,pts:0,played:0};});
