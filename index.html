@@ -311,7 +311,7 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
         <div class="pt">🏋️ Harjoittelu tällä viikolla</div>
         <div id="training-cards"></div>
         <div style="font-size:.68rem;color:var(--mu);margin-top:5px;display:flex;justify-content:space-between">
-          <span>Valittu: <span id="train-lbl" style="color:var(--ac)">Ei valintaa (oletuspalautuminen +5)</span></span>
+          <span>Valittu: <span id="train-lbl" style="color:var(--ac)">Ei valintaa (oletuspalautuminen -8 rasitusta)</span></span>
         </div>
       </div>
 
@@ -327,7 +327,7 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
       <div class="pnl">
         <div class="pt">👥 Pelaajat</div>
         <table class="tbl">
-          <thead><tr><th>Pelaaja</th><th class="c">Pos</th><th class="c">Ikä</th><th class="r">Arvio</th><th class="r">Kunto</th><th class="r">Palkka/kk</th><th class="r">Sopimus</th></tr></thead>
+          <thead><tr><th>Pelaaja</th><th class="c">Pos</th><th class="c">Ikä</th><th class="r">Arvio</th><th class="r">Rasitus</th><th class="r">Palkka/kk</th><th class="r">Sopimus</th></tr></thead>
           <tbody id="sq-body"></tbody>
         </table>
       </div>
@@ -596,12 +596,12 @@ const PRESS_OPTS_LOSS=[
 ];
 
 const TRAINING_OPTIONS=[
-  {id:'rest',   icon:'😴',name:'Täysi lepo',        desc:'Kunto palautuu eniten (+12 kaikille). Ei peliboosteja.',           cost:0,    effect:{recovery:12,injMod:-0.5}},
-  {id:'light',  icon:'🚶',name:'Kevyt harjoitus',   desc:'Hyvä palautuminen (+8 kaikille). Sopii tiheään pelitahtiin.',      cost:0,    effect:{recovery:8,injMod:-0.2}},
-  {id:'fitness',icon:'🏃',name:'Kuntovalmennus',    desc:'Kohtalainen palautuminen (+5). Parantaa kestävyyttä.',             cost:12000,effect:{recovery:5,injMod:0.2}},
-  {id:'attack', icon:'⚡',name:'Hyökkäysharjoitus', desc:'Vähän palautumista (+3). +15% maalinteko seuraavaan otteluun.',    cost:18000,effect:{recovery:3,attackBoost:0.15,injMod:0.1}},
-  {id:'defense',icon:'🛡️',name:'Puolustusharjoitus',desc:'Vähän palautumista (+3). -15% päästettyä seuraavassa.',           cost:18000,effect:{recovery:3,defenseBoost:0.15,injMod:0.1}},
-  {id:'tactics',icon:'📋',name:'Taktinen harjoitus',desc:'Vähän palautumista (+3). Kotietu +10% seuraavassa.',              cost:22000,effect:{recovery:3,tacBoost:0.10,injMod:0.1}},
+  {id:'rest',   icon:'😴',name:'Täysi lepo',        desc:'Rasitus -20 kaikille. Loukkaantumisriski pienenee.',              cost:0,    effect:{fatigueRed:20,injMod:-0.5}},
+  {id:'light',  icon:'🚶',name:'Kevyt harjoitus',   desc:'Rasitus -12 kaikille. Sopii tiheään pelitahtiin.',               cost:0,    effect:{fatigueRed:12,injMod:-0.2}},
+  {id:'fitness',icon:'🏃',name:'Kuntovalmennus',    desc:'Rasitus -8. Parantaa kestävyyttä pitkällä tähtäimellä.',         cost:12000,effect:{fatigueRed:8,injMod:0.1}},
+  {id:'attack', icon:'⚡',name:'Hyökkäysharjoitus', desc:'Rasitus -5. +15% maalinteko seuraavaan otteluun.',               cost:18000,effect:{fatigueRed:5,attackBoost:0.15,injMod:0.1}},
+  {id:'defense',icon:'🛡️',name:'Puolustusharjoitus',desc:'Rasitus -5. -15% päästettyä seuraavassa.',                      cost:18000,effect:{fatigueRed:5,defenseBoost:0.15,injMod:0.1}},
+  {id:'tactics',icon:'📋',name:'Taktinen harjoitus',desc:'Rasitus -5. Kotietu +10% seuraavassa.',                         cost:22000,effect:{fatigueRed:5,tacBoost:0.10,injMod:0.1}},
 ];
 
 let G={};
@@ -628,13 +628,12 @@ function setDiff(d){
 function mkPlayer(tid,pos,boost=0,isYouth=false){
   const rating=clamp(rnd(isYouth?40:52,isYouth?68:86)+boost,35,96);
   const age=isYouth?rnd(16,20):rnd(19,37);
-  // Realistic wages: ~4000-20000€/month based on rating
   const wage=Math.round(clamp((rating-50)*350+rnd(-1000,1000),2000,22000)/500)*500;
   const contractYears=rnd(1,3);
   return{id:Math.random().toString(36).slice(2,9),name:pname(isYouth),pos,age,rating,wage,foreign:!isYouth&&Math.random()<0.1,
-    team:tid,fitness:rnd(isYouth?75:85,100),goals:0,assists:0,gamesPlayed:0,
+    team:tid,fatigue:0,goals:0,assists:0,gamesPlayed:0,
     mvGoalsAgainst:0,mvGames:0,captain:false,injured:false,injuryWeeks:0,
-    contractYears, isYouth:isYouth||false,
+    contractYears,isYouth:isYouth||false,
     goal:{type:pick(['playoffs','scoring','defense']),achieved:false}};
 }
 
@@ -995,12 +994,12 @@ function renderTrainingCards(){
   const el=document.getElementById('training-cards');
   if(!el) return;
   el.innerHTML=TRAINING_OPTIONS.map(t=>{
-    const recov=t.effect.recovery||0;
-    const recovCol=recov>=10?'var(--gr)':recov>=6?'var(--ac)':'var(--mu)';
+    const red=t.effect.fatigueRed||0;
+    const redCol=red>=15?'var(--gr)':red>=8?'var(--ac)':'var(--mu)';
     return`<div class="tr-card ${G.trainingId===t.id?'sel':''}" onclick="selectTraining('${t.id}')">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div class="tr-title">${t.icon} ${t.name}</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.8rem;color:${recovCol}">+${recov} kunto</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.8rem;color:${redCol}">-${red} rasitus</div>
       </div>
       <div class="tr-desc">${t.desc}</div>
       <div class="tr-cost">${t.cost>0?'Kustannus: '+fmt(t.cost):'Ilmainen'}</div>
@@ -1013,17 +1012,22 @@ function selectTraining(id){
   if(opt.cost>0&&G.budget<opt.cost){notify('⛔ Ei budjettia harjoitteluun!');return;}
   G.trainingId=id;
   const lbl=document.getElementById('train-lbl');
-  const recov=opt.effect.recovery||0;
-  if(lbl) lbl.textContent=opt.icon+' '+opt.name+' (kunto +'+recov+')';
+  const red=opt.effect.fatigueRed||0;
+  if(lbl) lbl.textContent=opt.icon+' '+opt.name+' (rasitus -'+red+')';
   renderTrainingCards();
 }
 function applyTraining(){
   const opt=G.trainingId?TRAINING_OPTIONS.find(t=>t.id===G.trainingId):null;
-  const e=opt?opt.effect:{recovery:5}; // default: no training = moderate recovery
+  const e=opt?opt.effect:{fatigueRed:8}; // default: light recovery if no training selected
   if(opt&&opt.cost>0) G.budget=Math.max(0,G.budget-opt.cost);
 
-  // Store this week's recovery value — used in developPlayers
-  G.trainingBoost.recovery=e.recovery||5;
+  // Reduce fatigue for all my players
+  const fatigueRed=e.fatigueRed||8;
+  G.players.filter(p=>p.team===G.myId).forEach(p=>{
+    p.fatigue=clamp((p.fatigue||0)-fatigueRed,0,100);
+  });
+
+  G.trainingBoost.fatigueRed=fatigueRed;
   if(e.injMod!==undefined) G.trainingBoost.injMod=e.injMod;
   if(e.attackBoost) G.trainingBoost.attack=e.attackBoost;
   if(e.defenseBoost) G.trainingBoost.defense=e.defenseBoost;
@@ -1031,7 +1035,7 @@ function applyTraining(){
 
   G.trainingId=null;
   const lbl=document.getElementById('train-lbl');
-  if(lbl) lbl.textContent='Ei harjoittelua';
+  if(lbl) lbl.textContent='Ei valintaa (oletuspalautuminen -8 rasitusta)';
 }
 
 // ══════════════════════════════════════
@@ -1199,13 +1203,13 @@ function playNext(){
     if(roll<0.20) G.aiTrainingBoost[t.id]={attack:0.15};
     else if(roll<0.40) G.aiTrainingBoost[t.id]={defense:0.15};
     else if(roll<0.55) G.aiTrainingBoost[t.id]={tac:0.10};
-    // else no boost this week (same probability as player choosing rest/no training)
   });
   triggerRandomEvent();
   G.week++;
   updateHdr();
   simFix(next,true);
-  // Reset game boosts but keep recovery for developPlayers (already applied above)
+  // developPlayers called once per week after all matches
+  developPlayers();
   const savedRecovery=G.trainingBoost.recovery;
   G.trainingBoost={};
   G.aiTrainingBoost={};
@@ -1340,18 +1344,16 @@ function teamStr(tid,isHome){
       // Determine expected position from slot key
       const slotPos=k.startsWith('mv')?'M':k.startsWith('d')?'P':'V';
       const effRating=positionPenalty(p,slotPos);
-      const fitMod=p.fitness>=85?1.02:p.fitness/100;
-      return{...p,effRating:effRating*fitMod};
+      return{...p,effRating:effRating*fatigueMod(p)};
     }).filter(Boolean);
-    const active=inL.length>=5?inL:pl.map(p=>({...p,effRating:p.rating*(p.fitness>=85?1.02:p.fitness/100)}));
+    const active=inL.length>=5?inL:pl.map(p=>({...p,effRating:p.rating*fatigueMod(p)}));
     avg=active.reduce((s,p)=>s+(p.effRating||p.rating),0)/active.length;
   } else {
     // AI: use top players by rating (simulates smart lineup selection)
     const sorted=pl.slice().sort((a,b)=>b.rating-a.rating);
     const starters=sorted.slice(0,Math.min(18,sorted.length));
     avg=starters.reduce((s,p)=>{
-      const fitMod=p.fitness>=85?1.02:p.fitness/100;
-      return s+p.rating*fitMod;
+      return s+p.rating*fatigueMod(p);
     },0)/starters.length;
   }
 
@@ -1422,7 +1424,7 @@ function getSpecialTeamsStrength(type,tid){
     players=[...fwds,...defs];
   }
   if(!players.length) return 60;
-  return players.reduce((s,p)=>s+p.rating*(p.fitness/100),0)/players.length;
+  return players.reduce((s,p)=>s+p.rating*fatigueMod(p),0)/players.length;
 }
 
 function calcSpecialTeamsPct(type,tid){
@@ -1502,7 +1504,6 @@ function simFix(f,live){
     }
   }
   assignScorers(f.home,hg);assignScorers(f.away,ag);
-  developPlayers();
   // Update morale for both teams — same logic for player and AI
   [f.home,f.away].forEach(tid=>{
     const won=(tid===f.home)?hg>ag:ag>hg;
@@ -1565,118 +1566,68 @@ function getPlayerChainLevel(pid){
   return 5; // explicitly not in lineup
 }
 
-function fitnessDrop(chainLevel){
-  if(chainLevel===1) return rnd(4,5);
-  if(chainLevel===2) return rnd(3,5);
-  if(chainLevel===3) return rnd(3,4);
-  if(chainLevel===4) return rnd(3,4);
-  return rnd(0,1); // ei kokoonpanossa
+function fatigueMod(p){
+  const f=p.fatigue||0;
+  if(f<=40) return 1.0;
+  if(f<=70) return 0.95;
+  if(f<=90) return 0.85;
+  return 0.75;
+}
+
+function fatigueGain(chainLevel){
+  if(chainLevel===1) return rnd(5,8);
+  if(chainLevel===2) return rnd(4,6);
+  if(chainLevel===3) return rnd(3,5);
+  if(chainLevel===4) return rnd(2,4);
+  return rnd(0,1);
 }
 
 function developPlayers(){
-  const injBase=0.003+(G.trainingBoost.injMod||0)*0.001;
-  const weeklyRecovery=G.trainingBoost.recovery||5; // harjoittelun valitsema palautuminen
+  const injBase=0.002+(G.trainingBoost.injMod||0)*0.001;
 
   G.players.forEach(p=>{
     if(!p.team) return;
+    if(p.fatigue===undefined) p.fatigue=0;
 
-    // Rating development
     if(p.age<23&&Math.random()<0.02) p.rating=clamp(p.rating+1,35,96);
     if(p.age>33&&Math.random()<0.03) p.rating=clamp(p.rating-1,35,96);
 
-    // Injury — higher risk with intense training
-    if(!p.injured&&Math.random()<injBase){
+    const fatigueInjBonus=p.fatigue>70?0.004:p.fatigue>40?0.001:0;
+    if(!p.injured&&Math.random()<injBase+fatigueInjBonus){
       p.injured=true;p.injuryWeeks=rnd(1,5);
       if(p.team===G.myId) notify('🚑 '+p.name+' loukkaantui!');
     }
     if(p.injured&&p.injuryWeeks>0){
       p.injuryWeeks--;
-      if(p.injuryWeeks===0){p.injured=false;if(p.team===G.myId)notify('✅ '+p.name+' palasi!');}
-    }
-
-    // FITNESS
-    if(p.team===G.myId){
-      const chainLevel=getPlayerChainLevel(p.id);
-      const drop=fitnessDrop(chainLevel);
-      // Training recovery replaces base recovery — this is the key FM-style mechanic
-      p.fitness=clamp(p.fitness-drop+weeklyRecovery,60,100);
-    } else {
-      // AI: automatic rotation by rank
-      const squad=G.players.filter(x=>x.team===p.team&&!x.injured).sort((a,b)=>b.rating-a.rating);
-      const rank=squad.findIndex(x=>x.id===p.id);
-      let aiChain=4;
-      if(rank<6) aiChain=1;
-      else if(rank<12) aiChain=2;
-      else if(rank<18) aiChain=3;
-      if(p.fitness<75) aiChain=Math.min(aiChain+2,5);
-      const drop=fitnessDrop(aiChain);
-      const aiRecovery=5; // AI käyttää aina kohtalaista palautumista
-      p.fitness=clamp(p.fitness-drop+aiRecovery,60,100);
-    }
-
-    if(p.age>40) p.team=null;
-  });
-
-  // Academy development
-  G.academy.players.forEach(p=>{
-    if(Math.random()<0.15) p.rating=clamp(p.rating+1,35,85);
-    p.age++;
-    if(p.age>=20&&p.rating>=60){
-      if(G.players.filter(x=>x.team===G.myId).length<25){
-        p.team=G.myId;p.isYouth=false;
-        G.players.push(p);
-        addNews('green',`🌟 Akatemian kasvatti ${p.name} (${p.rating}) ylennettiin edustusjoukkueeseen!`);
-        G.academy.players=G.academy.players.filter(x=>x.id!==p.id);
+      if(p.injuryWeeks===0){
+        p.injured=false;
+        p.fatigue=Math.max(0,p.fatigue-20);
+        if(p.team===G.myId) notify('✅ '+p.name+' palasi!');
       }
     }
-  });
-}
 
-function developPlayers(){
-  const injBase=0.003+(G.trainingBoost.injMod||0)*0.001;
-
-  G.players.forEach(p=>{
-    if(!p.team) return;
-
-    // Rating development
-    if(p.age<23&&Math.random()<0.02) p.rating=clamp(p.rating+1,35,96);
-    if(p.age>33&&Math.random()<0.03) p.rating=clamp(p.rating-1,35,96);
-
-    // Injury
-    if(!p.injured&&Math.random()<injBase){
-      p.injured=true;p.injuryWeeks=rnd(1,5);
-      if(p.team===G.myId) notify('🚑 '+p.name+' loukkaantui!');
-    }
-    if(p.injured&&p.injuryWeeks>0){
-      p.injuryWeeks--;
-      if(p.injuryWeeks===0){p.injured=false;if(p.team===G.myId)notify('✅ '+p.name+' palasi!');}
-    }
-
-    // FITNESS — chain-based for player's team
     if(p.team===G.myId){
-      const chainLevel=getPlayerChainLevel(p.id);
-      const drop=fitnessDrop(chainLevel);
-      const weeklyRecover=3; // kaikille sama peruspalautuminen
-      p.fitness=clamp(p.fitness-drop+weeklyRecover,35,100);
+      if(!p.injured){
+        const chainLevel=getPlayerChainLevel(p.id);
+        p.fatigue=clamp(p.fatigue+fatigueGain(chainLevel),0,100);
+      }
     } else {
-      // AI teams: auto-rotate — best players get more fatigue
-      const squad=G.players.filter(x=>x.team===p.team&&!x.injured).sort((a,b)=>b.rating-a.rating);
-      const rank=squad.findIndex(x=>x.id===p.id);
-      let aiChain=4;
-      if(rank<6) aiChain=1;
-      else if(rank<12) aiChain=2;
-      else if(rank<18) aiChain=3;
-      // Auto-rest AI players below 70% fitness
-      if(p.fitness<75) aiChain=Math.min(aiChain+2,5);
-      const drop=fitnessDrop(aiChain);
-      const weeklyRecover=3;
-      p.fitness=clamp(p.fitness-drop+weeklyRecover,35,100);
+      if(!p.injured){
+        const squad=G.players.filter(x=>x.team===p.team&&!x.injured).sort((a,b)=>b.rating-a.rating);
+        const rank=squad.findIndex(x=>x.id===p.id);
+        let aiChain=4;
+        if(rank<6) aiChain=1;
+        else if(rank<12) aiChain=2;
+        else if(rank<18) aiChain=3;
+        if(p.fatigue>70) aiChain=Math.min(aiChain+2,5);
+        p.fatigue=clamp(p.fatigue+fatigueGain(aiChain),0,100);
+      }
+      p.fatigue=clamp(p.fatigue-8,0,100);
     }
 
     if(p.age>40) p.team=null;
   });
 
-  // Academy development
   G.academy.players.forEach(p=>{
     if(Math.random()<0.15) p.rating=clamp(p.rating+1,35,85);
     p.age++;
@@ -1893,9 +1844,9 @@ function renderChainsRegular(){
   function slot(lbl,k,pool){
     const pid=G.lineup[k]||'';
     const p=pid?G.players.find(x=>x.id===pid):null;
-    const fitCol=p?(p.fitness>=85?'var(--gr)':p.fitness>=75?'var(--ac)':'var(--rd)'):'';
-    const fitWarn=p&&p.fitness<75?'⚠️ ':'';
-    const fitTxt=p?`<span style="font-size:.66rem;color:${fitCol};min-width:36px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700">${fitWarn}${p.fitness}%</span>`:'';
+    const fitCol=p?((p.fatigue||0)<=40?'var(--gr)':(p.fatigue||0)<=70?'var(--ac)':'var(--rd)'):'';
+    const fitWarn=p&&(p.fatigue||0)>70?'⚠️ ':'';
+    const fitTxt=p?`<span style="font-size:.66rem;color:${fitCol};min-width:36px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700">${fitWarn}${p.fatigue||0}%</span>`:'';
     const ratingTxt=p?`<span style="font-size:.66rem;color:var(--mu);min-width:20px;text-align:right">${p.rating}</span>`:'';
     // Position mismatch warning
     const expectedPos=k.startsWith('mv')?'M':k.startsWith('d')?'P':'V';
@@ -1918,13 +1869,13 @@ function renderChainsRegular(){
   const bench=G.players.filter(p=>p.team===G.myId&&!used.has(p.id)).sort((a,b)=>{const o={M:0,P:1,V:2};return o[a.pos]-o[b.pos]||b.rating-a.rating;});
   html+=`<div class="cbox"><div class="ct">🪑 Varapelaajat (${bench.length})</div>`;
   bench.forEach(p=>{
-    const fitCol=p.fitness>=85?'var(--gr)':p.fitness>=75?'var(--ac)':'var(--rd)';
-    const fitWarn=p.fitness<75?'⚠️ ':'';
+    const fitCol=(p.fatigue||0)<=40?'var(--gr)':(p.fatigue||0)<=70?'var(--ac)':'var(--rd)';
+    const fitWarn=(p.fatigue||0)>70?'⚠️ ':'';
     html+=`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #141f2e;font-size:.76rem">
       <span><span class="badge b${p.pos}" style="margin-right:3px">${p.pos}</span>${p.name}${p.injured?` 🚑${p.injuryWeeks}vk`:''}</span>
       <span style="display:flex;gap:8px;align-items:center">
         <span style="color:var(--mu);font-size:.7rem">${p.rating}</span>
-        <span style="color:${fitCol};font-size:.7rem;font-family:'Barlow Condensed',sans-serif;font-weight:700">${fitWarn}${p.fitness}%</span>
+        <span style="color:${fitCol};font-size:.7rem;font-family:'Barlow Condensed',sans-serif;font-weight:700">${fitWarn}${p.fatigue||0}%</span>
       </span>
     </div>`;
   });
@@ -1947,9 +1898,9 @@ function renderChainsSpecial(type){
   function slot(lbl,k,pool){
     const pid=lineup[k]||'';
     const p=pid?G.players.find(x=>x.id===pid):null;
-    const fitCol=p?(p.fitness>=85?'var(--gr)':p.fitness>=75?'var(--ac)':'var(--rd)'):'';
-    const fitWarn=p&&p.fitness<75?'⚠️ ':'';
-    const fitTxt=p?`<span style="font-size:.66rem;color:${fitCol};min-width:36px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700">${fitWarn}${p.fitness}%</span>`:'';
+    const fitCol=p?((p.fatigue||0)<=40?'var(--gr)':(p.fatigue||0)<=70?'var(--ac)':'var(--rd)'):'';
+    const fitWarn=p&&(p.fatigue||0)>70?'⚠️ ':'';
+    const fitTxt=p?`<span style="font-size:.66rem;color:${fitCol};min-width:36px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700">${fitWarn}${p.fatigue||0}%</span>`:'';
     const ratingTxt=p?`<span style="font-size:.66rem;color:var(--mu);min-width:20px;text-align:right">${p.rating}</span>`:'';
     return `<div class="csl"><span class="clb">${lbl}</span><select class="csel" onchange="${setFn}('${k}',this.value)">${opts(pool,k)}</select>${ratingTxt}${fitTxt}</div>`;
   }
@@ -2445,15 +2396,15 @@ function playNextPlayoff(){
   const r=G.playoffs.rounds[G.playoffs.currentRound];
   const myM=r.matches.find(m=>!m.done&&(m.t1===G.myId||m.t2===G.myId));
   if(!myM){renderOverview();return;}
-  // Monthly finances during playoffs too
   if(G.week%4===0) processFinances();
   G.week++;
   updateHdr();
-  // Simulate one game for AI matches at same or fewer games played
   const myGames=myM.w1+myM.w2;
   r.matches.filter(m=>!m.done&&m.t1!==G.myId&&m.t2!==G.myId&&(m.w1+m.w2)<=myGames)
     .forEach(m=>simPOGame(m,false));
   simPOGame(myM,true);
+  // developPlayers once per playoff game week
+  developPlayers();
 }
 
 function simPOGame(m,live){
@@ -2677,6 +2628,7 @@ function newSeason(){
   G.players.forEach(p=>{
     p.goals=0;p.assists=0;p.gamesPlayed=0;p.mvGames=0;p.mvGoalsAgainst=0;
     p.age++;
+    p.fatigue=0; // rasitus nollautuu kauden alussa
     p.contractYears=Math.max(0,(p.contractYears||1)-1);
     if(p.age<23&&Math.random()<0.4) p.rating=clamp(p.rating+rnd(0,2),35,96);
     if(p.age>33&&Math.random()<0.4) p.rating=clamp(p.rating-rnd(0,2),35,96);
