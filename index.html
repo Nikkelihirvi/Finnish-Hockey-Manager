@@ -1387,16 +1387,17 @@ function teamStr(tid,isHome){
 
 function simGoals(tid,isHome,vsId){
   const str=teamStr(tid,isHome);
-  let hm=isHome?0.5:0;
-  // Attack/defense training boosts — same for both player and AI
-  if(tid===G.myId&&G.trainingBoost.attack) hm+=G.trainingBoost.attack;
-  if(vsId===G.myId&&G.trainingBoost.defense) hm-=G.trainingBoost.defense;
+  let hm=isHome?0.3:0;
+  if(tid===G.myId&&G.trainingBoost.attack) hm+=G.trainingBoost.attack*0.5;
+  if(vsId===G.myId&&G.trainingBoost.defense) hm-=G.trainingBoost.defense*0.5;
   const aiAtk=G.aiTrainingBoost[tid];
-  if(aiAtk&&aiAtk.attack) hm+=aiAtk.attack;
+  if(aiAtk&&aiAtk.attack) hm+=aiAtk.attack*0.5;
   const aiDef=G.aiTrainingBoost[vsId];
-  if(aiDef&&aiDef.defense) hm-=aiDef.defense;
-  const target=clamp((str-60)/6+2.9+hm,1.0,6.0);
-  let g=0;for(let i=0;i<12;i++) if(Math.random()<target/12) g++;
+  if(aiDef&&aiDef.defense) hm-=aiDef.defense*0.5;
+  // Realistic: SM-liiga averages ~2.8 goals per team per game
+  // str ~60=average, scale tightly so strong teams score ~3.2, weak ~2.3
+  const target=clamp((str-60)/15+2.8+hm,1.2,4.5);
+  let g=0;for(let i=0;i<10;i++) if(Math.random()<target/10) g++;
   return g;
 }
 
@@ -1440,8 +1441,8 @@ function calcSpecialTeamsPct(type,tid){
 
 function simSpecialTeams(homeTid,awayTid){
   // Returns {homeExtraGoals, awayExtraGoals, homePen, awayPen} from PP/PK situations
-  const homePen=rnd(2,5); // jäähyt kotijoukkueelle
-  const awayPen=rnd(2,5); // jäähyt vierasjoukkueelle
+  const homePen=rnd(1,3); // jäähyt kotijoukkueelle
+  const awayPen=rnd(1,3); // jäähyt vierasjoukkueelle
 
   const homePP=calcSpecialTeamsPct('pp',homeTid);
   const awayPP=calcSpecialTeamsPct('pp',awayTid);
@@ -1622,6 +1623,8 @@ function developPlayers(){
         if(p.fatigue>70) aiChain=Math.min(aiChain+2,5);
         p.fatigue=clamp(p.fatigue+fatigueGain(aiChain),0,100);
       }
+      // AI gets same default recovery as player (equivalent to "no training selected" = -8)
+      // This mirrors player's default recovery — no unfair advantage
       p.fatigue=clamp(p.fatigue-8,0,100);
     }
 
