@@ -251,7 +251,7 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
       <div id="spov-standings"></div>
     </div>
     <div class="pnl" style="margin-bottom:8px">
-      <div class="pt">⭐ SARJAN PARHAAT</div>
+      <div class="pt">⭐ SUOSIKIT & TIETOA</div>
       <div id="spov-best"></div>
     </div>
     <button class="btn bp bw" onclick="document.getElementById('spov').style.display='none'">SULJE ✕</button>
@@ -665,7 +665,8 @@ const PROFILES=[
 ];
 
 function mkPlayer(tid,pos,boost=0,isYouth=false){
-  const rating=clamp(rnd(isYouth?40:52,isYouth?68:86)+boost,35,96);
+  // Tighter rating range so prestige boost (-8 to +8) has more impact
+  const rating=clamp(rnd(isYouth?40:56,isYouth?68:80)+boost,35,96);
   const age=isYouth?rnd(16,20):rnd(19,37);
   const wage=Math.round(clamp((rating-50)*350+rnd(-1000,1000),2000,22000)/500)*500;
   const contractYears=rnd(1,3);
@@ -758,18 +759,21 @@ function genSchedule(includePreseason=false){
 let selTeam=null;
 
 function teamStrengthRating(t){
-  // If game is running, use actual player ratings
+  // If game is running, use actual player ratings directly
   if(G&&G.players&&G.players.length>0){
     const squad=G.players.filter(p=>p.team===t.id&&!p.injured);
     if(squad.length>0){
       const top18=squad.slice().sort((a,b)=>b.rating-a.rating).slice(0,18);
       const avg=top18.reduce((s,p)=>s+p.rating,0)/top18.length;
-      return Math.min(99,Math.round((avg-52)/(86-52)*64+35));
+      // Scale: avg 56 (weak) → ~35, avg 80 (strong) → ~99
+      return clamp(Math.round((avg-56)/(80-56)*64+35),1,99);
     }
   }
-  // Setup screen: estimate from prestige
-  const prestige=G&&G.prestige?G.prestige[t.id]:t.prestige;
-  return Math.min(99,Math.round((prestige-1)/9*60+35));
+  // Setup screen: estimate from prestige using same scale
+  // prestige 1 → avg~56 → rating 35, prestige 10 → avg~80 → rating 99
+  const prestige=G&&G.prestige&&G.prestige[t.id]?G.prestige[t.id]:t.prestige;
+  const estimatedAvg=56+(prestige-1)/9*24; // prestige 1→56, 10→80
+  return clamp(Math.round((estimatedAvg-56)/(80-56)*64+35),1,99);
 }
 
 function predictedFinish(t){
@@ -835,12 +839,11 @@ function showTeamPreview(id){
 function showSeasonPreview(){
   const inGame=G&&G.players&&G.players.length>0;
   const ranked=TEAMS.slice().sort((a,b)=>teamStrengthRating(b)-teamStrengthRating(a));
-  const caps=TEAMS.map(t=>t.salCap);
-  const minC=Math.min(...caps),maxC=Math.max(...caps);
-
-  // Title
   const season=inGame?G.season:'2024–25';
-  document.querySelector('#spov > div > div:first-child').textContent='📋 KAUSIENNAKKO '+season;
+
+  // Fix title safely
+  const titleEl=document.querySelector('#spov > div > div:first-child');
+  if(titleEl) titleEl.textContent='📋 KAUSIENNAKKO '+season;
 
   // Predicted standings
   document.getElementById('spov-standings').innerHTML=
@@ -880,18 +883,35 @@ function showSeasonPreview(){
     });
   } else {
     const topTeams=ranked.slice(0,3);
-    [[topTeams[0],'Paras hyökkääjä ⚡'],[topTeams[1],'Paras puolustaja 🛡️'],[topTeams[2],'Paras maalivahti 🧤']].forEach(([t,lbl])=>{
-      const prestige=t.prestige||5;
-      const rating=Math.round(prestige/10*20+70);
-      bestHtml+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #141f2e">
-        <div>
-          <div style="font-size:.68rem;color:var(--mu)">${lbl}</div>
-          <div style="font-size:.82rem">${t.em} ${t.name}</div>
-          <div style="font-size:.68rem;color:var(--mu)">Arvioitu · Prestige ${prestige}/10</div>
+    const styleDesc={
+      hyökkäävä:'Aggressiivinen hyökkäyspeli, paljon maaleja',
+      puolustava:'Tiivis puolustus, matala maalimäärä',
+      tasapainoinen:'Monipuolinen peli, sopeutuu tilanteeseen'
+    };
+    bestHtml=`<div style="font-size:.72rem;color:var(--mu);margin-bottom:8px">Vahvimmat joukkueet kaudelle ${season}:</div>`;
+    topTeams.forEach((t,i)=>{
+      const prestige=G&&G.prestige?G.prestige[t.id]:t.prestige;
+      const str=teamStrengthRating(t);
+      const col=str>=75?'var(--gr)':str>=55?'var(--ac)':'var(--rd)';
+      const medals=['🥇','🥈','🥉'];
+      bestHtml+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #141f2e">
+        <span style="font-size:1.1rem">${medals[i]}</span>
+        <div style="flex:1">
+          <div style="font-size:.82rem;font-weight:600">${t.em} ${t.name}</div>
+          <div style="font-size:.68rem;color:var(--mu)">${styleDesc[t.style]||t.style}</div>
         </div>
-        <div style="font-family:'Barlow Condensed',sans-serif;color:var(--ac);font-size:1rem">~${rating}</div>
+        <div style="text-align:right">
+          <div style="font-family:'Barlow Condensed',sans-serif;color:${col};font-size:.9rem">${str}/99</div>
+          <div style="font-size:.62rem;color:var(--mu)">Prestige ${prestige}/10</div>
+        </div>
       </div>`;
     });
+
+    // Add salary cap info
+    const capYear=G&&G.salCap?G.salCap:LEAGUE_SALARY_CAP_BASE;
+    bestHtml+=`<div style="margin-top:8px;padding:6px;background:rgba(255,255,255,.04);border-radius:4px;font-size:.72rem;color:var(--mu)">
+      💰 Liigan salary cap: <span style="color:var(--ac)">${fmt(capYear)}/v</span> (sama kaikille)
+    </div>`;
   }
   document.getElementById('spov-best').innerHTML=bestHtml;
   document.getElementById('spov').style.display='block';
@@ -937,7 +957,7 @@ function startGame(){
   // Compute per-team rating boost based on prestige (range -8 to +8)
   function prestigeBoost(tid){
     const p=G.prestige[tid]||5;
-    return Math.round((p-1)/9*16-8); // prestige 1→-8, 10→+8
+    return Math.round((p-1)/9*20-10); // prestige 1→-10, 10→+10
   }
 
   TEAMS.forEach(t=>{
@@ -1182,9 +1202,23 @@ function renderOverview(){
 
   // Crisis banner
   const cb=document.getElementById('crisis-div');
+  const injured=G.players.filter(p=>p.team===G.myId&&p.injured);
+  let bannerHtml='';
   if(G.crisis){
-    cb.innerHTML=`<div class="crisis-banner">⚠️ TALOUSKRIISI! Budjetti on miinuksella. Myy pelaajia tai hankki sponsoreita välittömästi! Kriisi jatkuu ${G.crisisWeeks} viikkoa.</div>`;
-  } else {cb.innerHTML='';}
+    bannerHtml+=`<div class="crisis-banner">⚠️ TALOUSKRIISI! Budjetti on miinuksella. Myy pelaajia tai hankki sponsoreita välittömästi! Kriisi jatkuu ${G.crisisWeeks} viikkoa.</div>`;
+  }
+  if(injured.length){
+    const sevCounts={light:0,moderate:0,severe:0};
+    injured.forEach(p=>sevCounts[p.injurySeverity||'light']++);
+    const parts=[];
+    if(sevCounts.severe) parts.push(`🔴 ${sevCounts.severe} vakava`);
+    if(sevCounts.moderate) parts.push(`🟠 ${sevCounts.moderate} kohtalainen`);
+    if(sevCounts.light) parts.push(`🟡 ${sevCounts.light} lievä`);
+    bannerHtml+=`<div style="background:rgba(192,51,43,.1);border:1px solid var(--rd);border-radius:6px;padding:7px 10px;margin-bottom:8px;font-size:.78rem;color:var(--rd);cursor:pointer" onclick="nav('sq')">
+      🚑 ${injured.length} loukkaantunutta — ${parts.join(', ')} · <span style="color:var(--mu)">Katso Joukkue →</span>
+    </div>`;
+  }
+  cb.innerHTML=bannerHtml;
 
   // Tactic buttons rendered inside renderNextMatch dynamically
 
@@ -1758,13 +1792,24 @@ function developPlayers(){
 
     const fatigueInjBonus=p.fatigue>70?0.004:p.fatigue>40?0.001:0;
     if(!p.injured&&Math.random()<injBase+fatigueInjBonus){
-      p.injured=true;p.injuryWeeks=rnd(1,5);
-      if(p.team===G.myId) notify('🚑 '+p.name+' loukkaantui!');
+      p.injured=true;
+      // Severity based on fatigue and random
+      const roll=Math.random();
+      const sevBonus=p.fatigue>70?0.2:0;
+      if(roll<0.45-sevBonus){p.injuryWeeks=rnd(1,2);p.injurySeverity='light';}
+      else if(roll<0.80-sevBonus){p.injuryWeeks=rnd(3,4);p.injurySeverity='moderate';}
+      else{p.injuryWeeks=rnd(5,8);p.injurySeverity='severe';}
+      if(p.team===G.myId){
+        const sevTxt={light:'🟡 Lievä',moderate:'🟠 Kohtalainen',severe:'🔴 Vakava'}[p.injurySeverity];
+        notify(`🚑 ${p.name} loukkaantui! ${sevTxt} — ${p.injuryWeeks} vk`);
+        addNews('red',`🚑 ${p.name}: ${sevTxt} loukkaantuminen, poissa ${p.injuryWeeks} viikkoa`);
+      }
     }
     if(p.injured&&p.injuryWeeks>0){
       p.injuryWeeks--;
       if(p.injuryWeeks===0){
         p.injured=false;
+        p.injurySeverity=null;
         p.fatigue=Math.max(0,p.fatigue-20);
         if(p.team===G.myId) notify('✅ '+p.name+' palasi!');
       }
@@ -1946,10 +1991,47 @@ function closeWeeklySummary(){
 // ══════════════════════════════════════
 function renderSquad(){
   const mine=G.players.filter(p=>p.team===G.myId).sort((a,b)=>{const o={M:0,P:1,V:2};return o[a.pos]-o[b.pos]||b.rating-a.rating;});
+
+  // Injury panel at top if any injured
+  const injured=mine.filter(p=>p.injured);
+  let injHtml='';
+  if(injured.length){
+    injHtml=`<div class="pnl" style="margin-bottom:8px;border-color:var(--rd)">
+      <div class="pt" style="color:var(--rd)">🚑 LOUKKAANTUNEET (${injured.length})</div>
+      ${injured.map(p=>{
+        const sev=p.injurySeverity||'light';
+        const sevIcon={light:'🟡',moderate:'🟠',severe:'🔴'}[sev];
+        const sevName={light:'Lievä',moderate:'Kohtalainen',severe:'Vakava'}[sev];
+        const canPhysio=p.injuryWeeks>1&&G.budget>=15000;
+        const canSpec=p.injuryWeeks>1&&G.budget>=35000;
+        return`<div style="padding:7px 0;border-bottom:1px solid var(--bd)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-size:.82rem;font-weight:600">${p.name} <span style="font-size:.7rem">${sevIcon} ${sevName}</span></div>
+              <div style="font-size:.68rem;color:var(--mu)">Poissa ${p.injuryWeeks} viikkoa</div>
+            </div>
+            <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end">
+              <button class="btn bsm" style="background:${canPhysio?'var(--bl)':'var(--sf)'};color:${canPhysio?'white':'var(--mu)'};font-size:.62rem" 
+                onclick="treatInjury('${p.id}','physio')" ${canPhysio?'':'disabled'}>
+                💊 Fysio<br><span style="font-size:.58rem">€15k -1vk</span>
+              </button>
+              <button class="btn bsm" style="background:${canSpec?'var(--pu)':'var(--sf)'};color:${canSpec?'white':'var(--mu)'};font-size:.62rem"
+                onclick="treatInjury('${p.id}','specialist')" ${canSpec?'':'disabled'}>
+                🏥 Erikoislääkäri<br><span style="font-size:.58rem">€35k -2vk</span>
+              </button>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
   document.getElementById('sq-body').innerHTML=mine.map(p=>{
     const pct=clamp((p.rating-45)/50*100,0,100);
     const col=p.rating>=80?'var(--gr)':p.rating>=65?'var(--ac)':'var(--rd)';
-    const inj=p.injured?` <span style="color:var(--rd);font-size:.62rem">🚑${p.injuryWeeks}vk</span>`:'';
+    const sev=p.injurySeverity||'light';
+    const sevIcon={light:'🟡',moderate:'🟠',severe:'🔴'}[sev];
+    const inj=p.injured?` <span style="color:var(--rd);font-size:.62rem">${sevIcon}${p.injuryWeeks}vk</span>`:'';
     const cap=p.captain?'<span class="badge bC">C</span> ':'';
     const youth=p.isYouth?'<span class="badge" style="background:#1a0f30;color:#9070d8">JR</span> ':'';
     const foreign=p.foreign&&!p.isYouth?'<span class="badge" style="background:#0e2020;color:#40d8c8">🌍</span> ':'';
@@ -1965,6 +2047,19 @@ function renderSquad(){
       <td class="r" style="color:var(--ac)">${fmt(p.wage)}</td>
       <td class="r" style="color:var(--mu)">${p.contractYears}v</td></tr>`;
   }).join('');
+
+  // Inject injury panel before table
+  const pnl=document.querySelector('#s-sq .pnl');
+  if(pnl){
+    const existing=document.getElementById('inj-panel');
+    if(existing) existing.remove();
+    if(injHtml){
+      const div=document.createElement('div');
+      div.id='inj-panel';
+      div.innerHTML=injHtml;
+      pnl.parentNode.insertBefore(div,pnl);
+    }
+  }
 }
 
 function setChTab(tab){
@@ -1979,6 +2074,22 @@ function setChTab(tab){
 // ══════════════════════════════════════
 // CHAINS
 // ══════════════════════════════════════
+function treatInjury(pid,level){
+  const p=G.players.find(x=>x.id===pid);
+  if(!p||!p.injured) return;
+  const costs={physio:15000,specialist:35000};
+  const speedup={physio:1,specialist:2};
+  const cost=costs[level];
+  const weeks=speedup[level];
+  if(G.budget<cost){notify(`⛔ Tarvitaan ${fmt(cost)}`);return;}
+  if(p.injuryWeeks<=1){notify('⛔ Pelaaja palaa ensi viikolla joka tapauksessa!');return;}
+  G.budget-=cost;
+  p.injuryWeeks=Math.max(1,p.injuryWeeks-weeks);
+  const name=level==='physio'?'Fysioterapia':'Erikoislääkäri';
+  notify(`💊 ${name}: ${p.name} palaa ${p.injuryWeeks} viikon kuluttua`);
+  updateHdr();renderSquad();renderOverview();
+}
+
 function getPool(pos){return G.players.filter(p=>p.team===G.myId&&p.pos===pos&&!p.injured).sort((a,b)=>b.rating-a.rating);}
 function setLineup(k,id){
   Object.keys(G.lineup).forEach(x=>{if(G.lineup[x]===id&&x!==k)delete G.lineup[x];});
@@ -2636,23 +2747,54 @@ function advancePlayoffs(){
 }
 
 function renderPlayoffs(){
-  if(!G.playoffs){document.getElementById('po-content').innerHTML='<p style="color:var(--mu);text-align:center;padding:16px">Playoffs ei ole alkanut.</p>';return;}
+  const el=document.getElementById('po-content');
+  if(!G.playoffs){el.innerHTML='<p style="color:var(--mu);text-align:center;padding:16px">Playoffs ei ole alkanut.</p>';return;}
+
+  // Find champion
+  const finalMatch=G.playoffs.rounds[2]?.matches[0];
+  const champId=finalMatch?.winner;
+  const champ=champId?TEAMS.find(t=>t.id===champId):null;
+
   let html='';
-  G.playoffs.rounds.slice(0,G.playoffs.currentRound+1).forEach(r=>{
-    if(!r.matches.length) return;
-    html+=`<div class="brd"><div class="brt">${r.name}</div>`;
-    r.matches.forEach(m=>{
-      if(!m.t1||!m.t2) return;
-      const t1=TEAMS.find(x=>x.id===m.t1),t2=TEAMS.find(x=>x.id===m.t2);
-      html+=`<div class="brm">
-        <div class="brte ${m.done&&m.winner===m.t1?'win':m.done?'los':''}">${t1.em} ${t1.name}<span style="float:right;color:var(--ac)">${m.w1}</span></div>
-        <div class="brte ${m.done&&m.winner===m.t2?'win':m.done?'los':''}">${t2.em} ${t2.name}<span style="float:right;color:var(--ac)">${m.w2}</span></div>
-        <div class="brs">${m.done?'✅ Voittaja: '+TEAMS.find(x=>x.id===m.winner)?.name:'Käynnissä · paras 3/5'}</div>
-      </div>`;
-    });
+
+  // Champion banner if known
+  if(champ){
+    const isMe=champ.id===G.myId;
+    html+=`<div style="background:${isMe?'rgba(240,165,0,.15)':'rgba(255,255,255,.05)'};border:1px solid ${isMe?'var(--ac)':'var(--bd)'};border-radius:8px;padding:12px;text-align:center;margin-bottom:12px">
+      <div style="font-size:1.8rem">🏆</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--ac)">${champ.em} ${champ.name}</div>
+      <div style="font-size:.72rem;color:var(--mu)">SM-liigan mestari ${G.season}</div>
+    </div>`;
+  }
+
+  // Show ALL rounds always (greyed out if not yet reached)
+  G.playoffs.rounds.forEach((r,ri)=>{
+    const reached=ri<=G.playoffs.currentRound;
+    html+=`<div class="brd" style="opacity:${reached?1:0.35}"><div class="brt">${r.name}</div>`;
+    if(!r.matches.length){
+      html+=`<p style="color:var(--mu);font-size:.74rem;padding:6px 0">Odottaa aiemman kierroksen tuloksia</p>`;
+    } else {
+      r.matches.forEach(m=>{
+        if(!m.t1||!m.t2) return;
+        const t1=TEAMS.find(x=>x.id===m.t1),t2=TEAMS.find(x=>x.id===m.t2);
+        const myMatch=m.t1===G.myId||m.t2===G.myId;
+        html+=`<div class="brm" style="${myMatch?'border-color:var(--ac)':''}">
+          <div class="brte ${m.done&&m.winner===m.t1?'win':m.done?'los':''}" style="${m.t1===G.myId?'font-weight:700':''}">
+            ${t1.em} ${t1.name}${m.t1===G.myId?' 👈':''}
+            <span style="float:right;color:var(--ac);font-family:'Bebas Neue',sans-serif;font-size:1rem">${m.w1}</span>
+          </div>
+          <div class="brte ${m.done&&m.winner===m.t2?'win':m.done?'los':''}" style="${m.t2===G.myId?'font-weight:700':''}">
+            ${t2.em} ${t2.name}${m.t2===G.myId?' 👈':''}
+            <span style="float:right;color:var(--ac);font-family:'Bebas Neue',sans-serif;font-size:1rem">${m.w2}</span>
+          </div>
+          <div class="brs">${m.done?`✅ ${TEAMS.find(x=>x.id===m.winner)?.em} ${TEAMS.find(x=>x.id===m.winner)?.name} voitti sarjan`:'⏳ Käynnissä · paras 3/5'}</div>
+        </div>`;
+      });
+    }
     html+='</div>';
   });
-  document.getElementById('po-content').innerHTML=html;
+
+  el.innerHTML=html;
 }
 
 function showChampion(){
