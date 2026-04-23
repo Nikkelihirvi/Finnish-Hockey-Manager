@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="fi">
 <head>
 <meta charset="UTF-8">
@@ -15,188 +14,186 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
 
 /* SETUP */
 #setup{position:fixed;inset:0;background:linear-gradient(160deg,#06080f,#0a1528 60%,#0d1e3a);display:flex;flex-direction:column;align-items:center;padding:20px 14px;overflow-y:auto;z-index:500;}
-#setup h1{font-size:2.4rem;color:var(–ac);text-shadow:0 0 40px rgba(240,165,0,.4);margin-bottom:2px;}
-.s-sub{font-family:‘Barlow Condensed’,sans-serif;color:var(–mu);letter-spacing:.2em;font-size:.78rem;margin-bottom:14px;}
-.s-sect{font-family:‘Barlow Condensed’,sans-serif;font-size:.7rem;color:var(–mu);letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px;width:100%;max-width:430px;}
+#setup h1{font-size:2.4rem;color:var(--ac);text-shadow:0 0 40px rgba(240,165,0,.4);margin-bottom:2px;}
+.s-sub{font-family:'Barlow Condensed',sans-serif;color:var(--mu);letter-spacing:.2em;font-size:.78rem;margin-bottom:14px;}
+.s-sect{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;color:var(--mu);letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px;width:100%;max-width:430px;}
 .diff-row{display:flex;gap:6px;margin-bottom:12px;width:100%;max-width:430px;}
-.diff-btn{flex:1;padding:7px 3px;border:1px solid var(–bd);border-radius:6px;background:var(–sf);color:var(–mu);font-family:‘Barlow Condensed’,sans-serif;font-size:.75rem;cursor:pointer;text-align:center;transition:all .15s;}
-.diff-btn.sel{border-color:var(–ac);background:rgba(240,165,0,.1);color:var(–ac);}
+.diff-btn{flex:1;padding:7px 3px;border:1px solid var(--bd);border-radius:6px;background:var(--sf);color:var(--mu);font-family:'Barlow Condensed',sans-serif;font-size:.75rem;cursor:pointer;text-align:center;transition:all .15s;}
+.diff-btn.sel{border-color:var(--ac);background:rgba(240,165,0,.1);color:var(--ac);}
 .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;max-width:430px;margin-bottom:14px;}
-.tbtn{background:var(–sf);border:1px solid var(–bd);border-radius:7px;padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .15s;}
-.tbtn:hover{border-color:var(–ac);}
-.tbtn.sel{border-color:var(–ac);background:rgba(240,165,0,.08);}
-.tbtn .em{font-size:1.2rem;}.tbtn .nm{font-family:‘Bebas Neue’,sans-serif;font-size:.88rem;}.tbtn .cy{font-size:.64rem;color:var(–mu);}
-.btn-start{width:100%;max-width:430px;padding:11px;background:var(–ac);color:#06080f;font-family:‘Bebas Neue’,sans-serif;font-size:1.05rem;letter-spacing:.1em;border:none;border-radius:7px;cursor:pointer;}
+.tbtn{background:var(--sf);border:1px solid var(--bd);border-radius:7px;padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .15s;}
+.tbtn:hover{border-color:var(--ac);}
+.tbtn.sel{border-color:var(--ac);background:rgba(240,165,0,.08);}
+.tbtn .em{font-size:1.2rem;}.tbtn .nm{font-family:'Bebas Neue',sans-serif;font-size:.88rem;}.tbtn .cy{font-size:.64rem;color:var(--mu);}
+.btn-start{width:100%;max-width:430px;padding:11px;background:var(--ac);color:#06080f;font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.1em;border:none;border-radius:7px;cursor:pointer;}
 .btn-start:disabled{background:#3a3000;color:#7a6000;cursor:not-allowed;}
 
 /* HEADER */
-#hdr{background:linear-gradient(90deg,#080d18,#0c1528);border-bottom:2px solid var(–ac);padding:6px 11px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.ht{font-family:‘Bebas Neue’,sans-serif;font-size:1.1rem;color:var(–ac);}
-.hm{font-size:.65rem;color:var(–mu);}
-.hb{font-family:‘Barlow Condensed’,sans-serif;font-size:.88rem;color:var(–ac);font-weight:700;}
+#hdr{background:linear-gradient(90deg,#080d18,#0c1528);border-bottom:2px solid var(--ac);padding:6px 11px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.ht{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--ac);}
+.hm{font-size:.65rem;color:var(--mu);}
+.hb{font-family:'Barlow Condensed',sans-serif;font-size:.88rem;color:var(--ac);font-weight:700;}
 
 /* NAV */
-#nav{display:flex;background:var(–sf);border-bottom:1px solid var(–bd);flex-shrink:0;overflow-x:auto;scrollbar-width:none;}
+#nav{display:flex;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;overflow-x:auto;scrollbar-width:none;}
 #nav::-webkit-scrollbar{display:none;}
-#nav button{flex-shrink:0;padding:7px 11px;background:none;border:none;color:var(–mu);font-family:‘Barlow Condensed’,sans-serif;font-size:.75rem;letter-spacing:.08em;cursor:pointer;border-bottom:2px solid transparent;text-transform:uppercase;transition:all .15s;}
-#nav button.on,#nav button:hover{color:var(–ac);border-bottom-color:var(–ac);}
+#nav button{flex-shrink:0;padding:7px 11px;background:none;border:none;color:var(--mu);font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:.08em;cursor:pointer;border-bottom:2px solid transparent;text-transform:uppercase;transition:all .15s;}
+#nav button.on,#nav button:hover{color:var(--ac);border-bottom-color:var(--ac);}
 
 /* MAIN */
 #main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:9px;}
 
 /* PANELS */
-.pnl{background:var(–sf2);border:1px solid var(–bd);border-radius:7px;padding:10px;margin-bottom:8px;}
-.pt{font-family:‘Barlow Condensed’,sans-serif;font-size:.66rem;color:var(–ac);letter-spacing:.18em;text-transform:uppercase;margin-bottom:7px;font-weight:700;}
+.pnl{background:var(--sf2);border:1px solid var(--bd);border-radius:7px;padding:10px;margin-bottom:8px;}
+.pt{font-family:'Barlow Condensed',sans-serif;font-size:.66rem;color:var(--ac);letter-spacing:.18em;text-transform:uppercase;margin-bottom:7px;font-weight:700;}
 
 /* STAT ROW */
-.sr{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(–bd);}
+.sr{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--bd);}
 .sr:last-child{border-bottom:none;}
-.sl{color:var(–mu);font-size:.78rem;}
+.sl{color:var(--mu);font-size:.78rem;}
 .sv{font-weight:600;font-size:.84rem;}
 
 /* TABLE */
 .tbl{width:100%;border-collapse:collapse;}
-.tbl th{padding:4px 5px;font-family:‘Barlow Condensed’,sans-serif;font-size:.64rem;color:var(–ac);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(–bd);text-align:left;}
+.tbl th{padding:4px 5px;font-family:'Barlow Condensed',sans-serif;font-size:.64rem;color:var(--ac);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--bd);text-align:left;}
 .tbl th.r,.tbl td.r{text-align:right;}
 .tbl th.c,.tbl td.c{text-align:center;}
 .tbl td{padding:5px 5px;border-bottom:1px solid #141f2e;font-size:.76rem;}
 .tbl tr:last-child td{border-bottom:none;}
-.tbl tr.me td{color:var(–ac);}
+.tbl tr.me td{color:var(--ac);}
 .tbl tr.me td:nth-child(2){font-weight:700;}
 
 /* BADGES */
-.badge{display:inline-block;padding:1px 4px;border-radius:3px;font-family:‘Barlow Condensed’,sans-serif;font-size:.64rem;font-weight:700;}
-.bM{background:#0e2535;color:#5ab0d8;}.bP{background:#1a1535;color:#9070d8;}.bV{background:#0e2518;color:#50c878;}.bC{background:var(–ac);color:#06080f;}
+.badge{display:inline-block;padding:1px 4px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.64rem;font-weight:700;}
+.bM{background:#0e2535;color:#5ab0d8;}.bP{background:#1a1535;color:#9070d8;}.bV{background:#0e2518;color:#50c878;}.bC{background:var(--ac);color:#06080f;}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:6px 11px;border-radius:5px;border:none;cursor:pointer;font-family:‘Barlow Condensed’,sans-serif;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;transition:all .15s;font-weight:600;}
-.bp{background:var(–ac);color:#06080f;}.bp:hover{background:#ffc235;}
-.bs{background:var(–bl);color:white;}.bs:hover{background:#2280cc;}
-.bd{background:var(–rd);color:white;}.bd:hover{background:#e04040;}
-.bg{background:var(–gr);color:white;}.bg:hover{background:#22b86a;}
-.bpu{background:var(–pu);color:white;}.bpu:hover{background:#9d54ff;}
-.bo{background:#223;color:var(–tx);border:1px solid var(–bd);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:6px 11px;border-radius:5px;border:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;transition:all .15s;font-weight:600;}
+.bp{background:var(--ac);color:#06080f;}.bp:hover{background:#ffc235;}
+.bs{background:var(--bl);color:white;}.bs:hover{background:#2280cc;}
+.bd{background:var(--rd);color:white;}.bd:hover{background:#e04040;}
+.bg{background:var(--gr);color:white;}.bg:hover{background:#22b86a;}
+.bpu{background:var(--pu);color:white;}.bpu:hover{background:#9d54ff;}
+.bo{background:#223;color:var(--tx);border:1px solid var(--bd);}
 .bsm{padding:3px 7px;font-size:.68rem;}
 .bw{width:100%;}
 .btn:disabled{opacity:.35;cursor:not-allowed;}
 
 /* RBAR */
 .rbar{display:flex;align-items:center;gap:3px;}
-.rbg{width:36px;height:4px;background:var(–bd);border-radius:2px;overflow:hidden;}
+.rbg{width:36px;height:4px;background:var(--bd);border-radius:2px;overflow:hidden;}
 .rbf{height:100%;border-radius:2px;}
 
 /* FIXTURES */
-.whdr{font-family:‘Barlow Condensed’,sans-serif;font-size:.66rem;color:var(–ac);letter-spacing:.15em;text-transform:uppercase;padding:5px 0 2px;border-bottom:1px solid var(–bd);margin-bottom:2px;}
+.whdr{font-family:'Barlow Condensed',sans-serif;font-size:.66rem;color:var(--ac);letter-spacing:.15em;text-transform:uppercase;padding:5px 0 2px;border-bottom:1px solid var(--bd);margin-bottom:2px;}
 .fix{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid #141f2e;}
 .fix:last-child{border-bottom:none;}
 .fix-t{flex:1;font-size:.78rem;line-height:1.3;}
-.fix-r{font-family:‘Bebas Neue’,sans-serif;font-size:.88rem;min-width:46px;text-align:right;}
+.fix-r{font-family:'Bebas Neue',sans-serif;font-size:.88rem;min-width:46px;text-align:right;}
 .fix-me{background:rgba(240,165,0,.04);border-radius:4px;padding:4px 5px;}
 
 /* MATCH OVERLAY */
 #mov{position:fixed;inset:0;background:rgba(4,6,12,.96);z-index:300;overflow-y:auto;padding:12px;display:none;}
-.mbox{background:linear-gradient(180deg,#0a1020,#0c1830);border:1px solid var(–ac);border-radius:10px;padding:14px 11px;text-align:center;margin-bottom:9px;}
+.mbox{background:linear-gradient(180deg,#0a1020,#0c1830);border:1px solid var(--ac);border-radius:10px;padding:14px 11px;text-align:center;margin-bottom:9px;}
 .mteams{display:flex;justify-content:center;align-items:center;gap:7px;margin-bottom:5px;}
-.mt{font-family:‘Bebas Neue’,sans-serif;font-size:.85rem;}
-.msc{font-family:‘Bebas Neue’,sans-serif;font-size:2.2rem;color:var(–ac);line-height:1;}
-.mper{font-size:.66rem;color:var(–mu);margin-top:2px;}
+.mt{font-family:'Bebas Neue',sans-serif;font-size:.85rem;}
+.msc{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--ac);line-height:1;}
+.mper{font-size:.66rem;color:var(--mu);margin-top:2px;}
 .glog{max-height:180px;overflow-y:auto;}
 .ge{display:flex;align-items:center;gap:5px;padding:3px 0;border-bottom:1px solid #141f2e;font-size:.73rem;}
-.gm{font-family:‘Barlow Condensed’,sans-serif;color:var(–ac);font-weight:700;min-width:24px;}
+.gm{font-family:'Barlow Condensed',sans-serif;color:var(--ac);font-weight:700;min-width:24px;}
 
 /* PRESS OVERLAY */
 #pov{position:fixed;inset:0;background:rgba(4,6,12,.96);z-index:310;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
-.press-box{background:var(–sf2);border:1px solid var(–bd);border-radius:10px;padding:18px;max-width:400px;width:100%;}
-.press-title{font-family:‘Bebas Neue’,sans-serif;font-size:1.3rem;color:var(–ac);margin-bottom:12px;text-align:center;}
-.press-opt{background:var(–sf);border:1px solid var(–bd);border-radius:6px;padding:10px;margin-bottom:7px;cursor:pointer;font-size:.82rem;line-height:1.4;transition:all .15s;}
-.press-opt:hover{border-color:var(–ac);background:#111e30;}
+.press-box{background:var(--sf2);border:1px solid var(--bd);border-radius:10px;padding:18px;max-width:400px;width:100%;}
+.press-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--ac);margin-bottom:12px;text-align:center;}
+.press-opt{background:var(--sf);border:1px solid var(--bd);border-radius:6px;padding:10px;margin-bottom:7px;cursor:pointer;font-size:.82rem;line-height:1.4;transition:all .15s;}
+.press-opt:hover{border-color:var(--ac);background:#111e30;}
 
 /* NEWS TICKER */
-#news-bar{background:#0a0e1a;border-bottom:1px solid var(–bd);padding:5px 11px;font-family:‘Barlow Condensed’,sans-serif;font-size:.72rem;color:var(–mu);white-space:nowrap;overflow:hidden;flex-shrink:0;}
+#news-bar{background:#0a0e1a;border-bottom:1px solid var(--bd);padding:5px 11px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:var(--mu);white-space:nowrap;overflow:hidden;flex-shrink:0;}
 
 /* SUBTABS */
 .stabs{display:flex;gap:5px;margin-bottom:7px;overflow-x:auto;scrollbar-width:none;}
-.stab{flex-shrink:0;padding:3px 8px;border-radius:4px;border:1px solid var(–bd);background:none;color:var(–mu);font-family:‘Barlow Condensed’,sans-serif;font-size:.7rem;letter-spacing:.06em;cursor:pointer;text-transform:uppercase;}
-.stab.on{background:var(–bl);border-color:var(–bl);color:white;}
+.stab{flex-shrink:0;padding:3px 8px;border-radius:4px;border:1px solid var(--bd);background:none;color:var(--mu);font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.06em;cursor:pointer;text-transform:uppercase;}
+.stab.on{background:var(--bl);border-color:var(--bl);color:white;}
 
 /* CHAINS */
-.cbox{border:1px solid var(–bd);border-radius:5px;padding:8px;margin-bottom:6px;background:#0a1020;}
-.ct{font-family:‘Barlow Condensed’,sans-serif;color:var(–ac);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;}
+.cbox{border:1px solid var(--bd);border-radius:5px;padding:8px;margin-bottom:6px;background:#0a1020;}
+.ct{font-family:'Barlow Condensed',sans-serif;color:var(--ac);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;}
 .csl{display:flex;align-items:center;gap:4px;padding:3px 0;border-bottom:1px solid #141f2e;}
 .csl:last-child{border-bottom:none;}
-.clb{color:var(–mu);font-size:.66rem;min-width:26px;font-family:‘Barlow Condensed’,sans-serif;}
-.csel{flex:1;background:#0d1828;border:1px solid var(–bd);color:var(–tx);font-family:‘Barlow’,sans-serif;font-size:.76rem;padding:2px 4px;border-radius:3px;cursor:pointer;}
-.csel:focus{outline:none;border-color:var(–ac);}
+.clb{color:var(--mu);font-size:.66rem;min-width:26px;font-family:'Barlow Condensed',sans-serif;}
+.csel{flex:1;background:#0d1828;border:1px solid var(--bd);color:var(--tx);font-family:'Barlow',sans-serif;font-size:.76rem;padding:2px 4px;border-radius:3px;cursor:pointer;}
+.csel:focus{outline:none;border-color:var(--ac);}
 
 /* TRAINING */
-.tr-card{border:1px solid var(–bd);border-radius:5px;padding:8px;margin-bottom:6px;background:#0a1020;cursor:pointer;transition:all .15s;}
-.tr-card:hover{border-color:var(–ac);}
-.tr-card.sel{border-color:var(–ac);background:rgba(240,165,0,.07);}
-.tr-title{font-family:‘Barlow Condensed’,sans-serif;font-size:.84rem;font-weight:700;margin-bottom:2px;}
-.tr-desc{font-size:.72rem;color:var(–mu);line-height:1.3;}
-.tr-cost{font-size:.68rem;color:var(–ac);margin-top:3px;font-family:‘Barlow Condensed’,sans-serif;}
+.tr-card{border:1px solid var(--bd);border-radius:5px;padding:8px;margin-bottom:6px;background:#0a1020;cursor:pointer;transition:all .15s;}
+.tr-card:hover{border-color:var(--ac);}
+.tr-card.sel{border-color:var(--ac);background:rgba(240,165,0,.07);}
+.tr-title{font-family:'Barlow Condensed',sans-serif;font-size:.84rem;font-weight:700;margin-bottom:2px;}
+.tr-desc{font-size:.72rem;color:var(--mu);line-height:1.3;}
+.tr-cost{font-size:.68rem;color:var(--ac);margin-top:3px;font-family:'Barlow Condensed',sans-serif;}
 
 /* TRANSFER CARD */
-.tcard{display:flex;align-items:center;justify-content:space-between;padding:7px 8px;background:#0a1020;border:1px solid var(–bd);border-radius:5px;margin-bottom:5px;}
+.tcard{display:flex;align-items:center;justify-content:space-between;padding:7px 8px;background:#0a1020;border:1px solid var(--bd);border-radius:5px;margin-bottom:5px;}
 .tn{font-weight:600;font-size:.82rem;}
-.ti{font-size:.66rem;color:var(–mu);margin-top:1px;}
-.tp{font-family:‘Barlow Condensed’,sans-serif;color:var(–ac);font-size:.84rem;font-weight:700;text-align:right;}
+.ti{font-size:.66rem;color:var(--mu);margin-top:1px;}
+.tp{font-family:'Barlow Condensed',sans-serif;color:var(--ac);font-size:.84rem;font-weight:700;text-align:right;}
 
 /* SPONSOR CARD */
-.spcard{border:1px solid var(–bd);border-radius:5px;padding:9px;margin-bottom:6px;background:#0a1020;}
-.spcard.active{border-color:var(–gr);}
-.sp-name{font-family:‘Barlow Condensed’,sans-serif;font-size:.9rem;font-weight:700;}
-.sp-info{font-size:.72rem;color:var(–mu);margin-top:2px;}
-.sp-income{color:var(–gr);font-family:‘Barlow Condensed’,sans-serif;font-size:.84rem;font-weight:700;}
+.spcard{border:1px solid var(--bd);border-radius:5px;padding:9px;margin-bottom:6px;background:#0a1020;}
+.spcard.active{border-color:var(--gr);}
+.sp-name{font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:700;}
+.sp-info{font-size:.72rem;color:var(--mu);margin-top:2px;}
+.sp-income{color:var(--gr);font-family:'Barlow Condensed',sans-serif;font-size:.84rem;font-weight:700;}
 
 /* BARS */
-.mbar{height:4px;background:var(–bd);border-radius:2px;overflow:hidden;flex:1;}
+.mbar{height:4px;background:var(--bd);border-radius:2px;overflow:hidden;flex:1;}
 .mbf{height:100%;border-radius:2px;}
-.capbar{height:4px;background:var(–bd);border-radius:2px;overflow:hidden;margin-top:3px;}
+.capbar{height:4px;background:var(--bd);border-radius:2px;overflow:hidden;margin-top:3px;}
 .capf{height:100%;border-radius:2px;transition:width .4s;}
 
 /* CRISIS */
-.crisis-banner{background:rgba(192,51,43,.15);border:1px solid var(–rd);border-radius:6px;padding:8px 10px;margin-bottom:8px;font-size:.8rem;color:var(–rd);}
+.crisis-banner{background:rgba(192,51,43,.15);border:1px solid var(--rd);border-radius:6px;padding:8px 10px;margin-bottom:8px;font-size:.8rem;color:var(--rd);}
 
 /* PLAYOFF */
 .brd{margin-bottom:11px;}
-.brt{font-family:‘Bebas Neue’,sans-serif;color:var(–ac);font-size:.95rem;margin-bottom:5px;}
-.brm{background:#0a1020;border:1px solid var(–bd);border-radius:5px;padding:7px 8px;margin-bottom:5px;}
+.brt{font-family:'Bebas Neue',sans-serif;color:var(--ac);font-size:.95rem;margin-bottom:5px;}
+.brm{background:#0a1020;border:1px solid var(--bd);border-radius:5px;padding:7px 8px;margin-bottom:5px;}
 .brte{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:.78rem;}
-.brte.win{color:var(–ac);font-weight:700;}.brte.los{color:var(–mu);}
-.brs{font-size:.66rem;color:var(–mu);margin-top:2px;}
+.brte.win{color:var(--ac);font-weight:700;}.brte.los{color:var(--mu);}
+.brs{font-size:.66rem;color:var(--mu);margin-top:2px;}
 
 /* NEWS EVENT */
-.news-item{background:#0a1020;border-left:3px solid var(–ac);border-radius:4px;padding:8px 10px;margin-bottom:6px;font-size:.8rem;line-height:1.4;}
-.news-item.red{border-left-color:var(–rd);}
-.news-item.green{border-left-color:var(–gr);}
-.news-item.purple{border-left-color:var(–pu);}
+.news-item{background:#0a1020;border-left:3px solid var(--ac);border-radius:4px;padding:8px 10px;margin-bottom:6px;font-size:.8rem;line-height:1.4;}
+.news-item.red{border-left-color:var(--rd);}
+.news-item.green{border-left-color:var(--gr);}
+.news-item.purple{border-left-color:var(--pu);}
 
 /* CHAMPION */
 #champ{display:none;position:fixed;inset:0;background:radial-gradient(ellipse at center,#1a1200,#06080f 70%);z-index:400;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;}
 #champ.show{display:flex;}
-#champ h1{font-size:2.4rem;color:var(–ac);text-shadow:0 0 60px rgba(240,165,0,.6);margin-bottom:6px;}
+#champ h1{font-size:2.4rem;color:var(--ac);text-shadow:0 0 60px rgba(240,165,0,.6);margin-bottom:6px;}
 
 /* AWARDS */
 #awards-overlay{display:none;position:fixed;inset:0;background:rgba(4,6,12,.95);z-index:350;overflow-y:auto;padding:16px;}
 #awards-overlay.show{display:block;}
-.award-item{display:flex;align-items:center;gap:10px;padding:10px;background:var(–sf2);border:1px solid var(–bd);border-radius:6px;margin-bottom:7px;}
+.award-item{display:flex;align-items:center;gap:10px;padding:10px;background:var(--sf2);border:1px solid var(--bd);border-radius:6px;margin-bottom:7px;}
 .award-icon{font-size:1.6rem;}
-.award-name{font-family:‘Bebas Neue’,sans-serif;font-size:1rem;color:var(–ac);}
-.award-player{font-size:.82rem;color:var(–tx);}
+.award-name{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--ac);}
+.award-player{font-size:.82rem;color:var(--tx);}
 
 /* NOTIF */
-#notif{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:var(–ac);color:#06080f;padding:6px 14px;border-radius:5px;font-family:‘Barlow Condensed’,sans-serif;font-size:.84rem;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:280px;}
+#notif{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:var(--ac);color:#06080f;padding:6px 14px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:.84rem;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:280px;}
 #notif.show{opacity:1;}
 
 .screen{display:none;}.screen.on{display:block;}
 </style>
-
 </head>
 <body>
 
 <!-- SETUP -->
-
 <div id="setup">
   <h1>🏒 FINNISH HOCKEY</h1>
   <div class="s-sub">MANAGER</div>
@@ -210,7 +207,6 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
   <div class="team-grid" id="team-grid"></div>
 
   <!-- Team preview panel — shown when team selected -->
-
   <div id="team-preview" style="display:none;width:100%;max-width:430px;background:#0c1120;border:1px solid var(--bd);border-radius:8px;padding:10px;margin-bottom:10px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--ac)" id="prev-name">—</div>
@@ -236,30 +232,48 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
     <div id="prev-pos" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--ac)">—</div>
   </div>
 
-<button class="btn-start" id="start-btn" disabled onclick="startGame()">VALITSE JOUKKUE</button>
-<button class="btn" style="width:100%;max-width:430px;margin-top:6px;background:var(--sf);border:1px solid var(--bd);color:var(--mu);font-family:Bebas Neue;font-size:.9rem" onclick="showSeasonPreview()">📋 KAUSIENNAKKO</button>
+  <button class="btn-start" id="start-btn" disabled onclick="startGame()">VALITSE JOUKKUE</button>
+  <button class="btn" style="width:100%;max-width:430px;margin-top:6px;background:var(--sf);border:1px solid var(--bd);color:var(--mu);font-family:Bebas Neue;font-size:.9rem" onclick="showSeasonPreview()">📋 KAUSIENNAKKO</button>
+</div>
 
+<!-- SCOUT REPORT MODAL -->
+<div id="scout-modal" style="position:fixed;inset:0;background:rgba(4,6,12,.95);z-index:700;overflow-y:auto;padding:14px;display:none;">
+  <div style="max-width:420px;margin:30px auto;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:14px" id="scout-modal-content"></div>
 </div>
 
 <!-- SEASON PREVIEW OVERLAY -->
-
-<div id="spov" style="position:fixed;inset:0;background:rgba(4,6,12,.97);z-index:450;overflow-y:auto;padding:12px;display:none;">
+<div id="spov" style="position:fixed;inset:0;background:rgba(4,6,12,.97);z-index:600;overflow-y:auto;padding:12px;display:none;">
   <div style="max-width:460px;margin:0 auto;">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--ac);text-align:center;margin-bottom:10px">📋 KAUSIENNAKKO 2024–25</div>
-    <div class="pnl" style="margin-bottom:8px">
-      <div class="pt">🏆 ENNUSTETTU JÄRJESTYS</div>
-      <div id="spov-standings"></div>
+    <div id="spov-title" style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--ac);text-align:center;margin-bottom:10px">📋 KAUSIENNAKKO 2024–25</div>
+    <div class="stabs" style="margin-bottom:8px">
+      <button class="stab on" id="spov-tab-sm" onclick="setSpovTab('sm')">SM-LIIGA</button>
+      <button class="stab" id="spov-tab-chl" onclick="setSpovTab('chl')">CHL 🏆</button>
     </div>
-    <div class="pnl" style="margin-bottom:8px">
-      <div class="pt">⭐ SUOSIKIT & TIETOA</div>
-      <div id="spov-best"></div>
+    <div id="spov-sm-content">
+      <div class="pnl" style="margin-bottom:8px">
+        <div class="pt">🏆 ENNUSTETTU JÄRJESTYS</div>
+        <div id="spov-standings"></div>
+      </div>
+      <div class="pnl" style="margin-bottom:8px">
+        <div class="pt">⭐ SUOSIKIT & TIETOA</div>
+        <div id="spov-best"></div>
+      </div>
+    </div>
+    <div id="spov-chl-content" style="display:none">
+      <div class="pnl" style="margin-bottom:8px">
+        <div class="pt">🏆 CHL — ENNUSTETTU JÄRJESTYS</div>
+        <div id="spov-chl-standings"></div>
+      </div>
+      <div class="pnl" style="margin-bottom:8px">
+        <div class="pt">🇫🇮 SUOMALAISET OSALLISTUJAT</div>
+        <div id="spov-chl-finnish"></div>
+      </div>
     </div>
     <button class="btn bp bw" onclick="document.getElementById('spov').style.display='none'">SULJE ✕</button>
   </div>
 </div>
 
 <!-- GAME -->
-
 <div id="game" style="display:none;flex-direction:column;height:100%;">
   <div id="hdr">
     <div><div class="ht" id="hdr-t">Finnish Hockey Manage</div><div class="hm" id="hdr-m">Kausi 2024–25</div></div>
@@ -270,6 +284,7 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
     <button class="on" onclick="nav('ov')">YLEISKATSAUS</button>
     <button onclick="nav('sq')">JOUKKUE</button>
     <button onclick="nav('ch')">KETJUT</button>
+    <button onclick="nav('tn')">HARJOITTELU</button>
     <button onclick="nav('fx')">OTTELUT</button>
     <button onclick="nav('st')">TAULUKKO</button>
     <button onclick="nav('tr')">SIIRROT</button>
@@ -279,199 +294,253 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
     <button onclick="nav('sa')">TILASTOT</button>
     <button onclick="nav('hi')">HISTORIA</button>
     <button onclick="nav('po')" id="nav-po" style="display:none">PLAYOFFS</button>
+    <button onclick="nav('chl')" id="nav-chl" style="display:none">CHL 🏆</button>
   </div>
   <div id="main">
 
-```
-<!-- OVERVIEW -->
-<div id="s-ov" class="screen on">
-  <div id="crisis-div"></div>
-  <div class="pnl">
-    <div class="pt">📊 Kauden tilanne</div>
-    <div class="sr"><span class="sl">Joukkue</span><span class="sv" id="ov-t">—</span></div>
-    <div class="sr"><span class="sl">Sijoitus</span><span class="sv" id="ov-p">—</span></div>
-    <div class="sr"><span class="sl">Pisteet (V-OTV-OTH-H)</span><span class="sv" id="ov-r">0</span></div>
-    <div class="sr"><span class="sl">Maalit tehty/päästetty</span><span class="sv" id="ov-g">0:0</span></div>
-    <div class="sr"><span class="sl">Mieliala</span>
-      <span class="sv" style="display:flex;align-items:center;gap:5px;min-width:120px;">
-        <div class="mbar"><div class="mbf" id="ov-mb"></div></div><span id="ov-mt">—</span>
-      </span>
+    <!-- OVERVIEW -->
+    <div id="s-ov" class="screen on">
+      <div id="crisis-div"></div>
+      <div class="pnl">
+        <div class="pt">📊 Kauden tilanne</div>
+        <div class="sr"><span class="sl">Joukkue</span><span class="sv" id="ov-t">—</span></div>
+        <div class="sr"><span class="sl">Sijoitus</span><span class="sv" id="ov-p">—</span></div>
+        <div class="sr"><span class="sl">Pisteet (V-OTV-OTH-H)</span><span class="sv" id="ov-r">0</span></div>
+        <div class="sr"><span class="sl">Maalit tehty/päästetty</span><span class="sv" id="ov-g">0:0</span></div>
+        <div class="sr"><span class="sl">Mieliala</span>
+          <span class="sv" style="display:flex;align-items:center;gap:5px;min-width:120px;">
+            <div class="mbar"><div class="mbf" id="ov-mb"></div></div><span id="ov-mt">—</span>
+          </span>
+        </div>
+        <div class="sr"><span class="sl">Salary cap</span>
+          <span class="sv" style="min-width:140px;">
+            <div style="font-size:.76rem" id="ov-ct">—</div>
+            <div class="capbar"><div class="capf" id="ov-cf"></div></div>
+          </span>
+        </div>
+        <div class="sr"><span class="sl">Manager maine</span><span class="sv" id="ov-rep">—</span></div>
+        <div class="sr"><span class="sl">Vaihe</span><span class="sv" id="ov-phase">—</span></div>
+      </div>
+
+      <div class="pnl" id="news-pnl">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+          <div class="pt" style="margin-bottom:0">📰 Uutiset</div>
+          <button class="btn bo bsm" onclick="showSeasonPreview()">📋 Kausiennakko</button>
+        </div>
+        <div id="news-list"></div>
+      </div>
+
+      <div class="pnl">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+          <div class="pt" style="margin-bottom:0">🏋️ Harjoittelu</div>
+          <button class="btn bo bsm" onclick="nav('tn')">📋 AVAA →</button>
+        </div>
+        <div style="font-size:.78rem;color:var(--mu);line-height:1.4">
+          Tällä viikolla: <span id="train-lbl" style="color:var(--ac)">Ei valintaa</span><br>
+          <span id="train-summary" style="font-size:.7rem"></span>
+        </div>
+      </div>
+
+      <div class="pnl" id="next-pnl">
+        <div class="pt">⏭ Seuraava ottelu</div>
+        <div id="next-info" style="font-size:.82rem;margin-bottom:7px;line-height:1.4"></div>
+        <!-- Tactic buttons and play button rendered dynamically by renderNextMatch -->
+      </div>
     </div>
-    <div class="sr"><span class="sl">Salary cap</span>
-      <span class="sv" style="min-width:140px;">
-        <div style="font-size:.76rem" id="ov-ct">—</div>
-        <div class="capbar"><div class="capf" id="ov-cf"></div></div>
-      </span>
+
+    <!-- SQUAD -->
+    <div id="s-sq" class="screen">
+      <div class="pnl">
+        <div class="pt">👥 Pelaajat</div>
+        <table class="tbl">
+          <thead><tr><th>Pelaaja</th><th class="c">Pos</th><th class="c">Ikä</th><th class="r">Arvio</th><th class="r">Rasitus</th><th class="r">Palkka/kk</th><th class="r">Sopimus</th></tr></thead>
+          <tbody id="sq-body"></tbody>
+        </table>
+      </div>
     </div>
-    <div class="sr"><span class="sl">Manager maine</span><span class="sv" id="ov-rep">—</span></div>
-    <div class="sr"><span class="sl">Vaihe</span><span class="sv" id="ov-phase">—</span></div>
-  </div>
 
-  <div class="pnl" id="news-pnl">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
-      <div class="pt" style="margin-bottom:0">📰 Uutiset</div>
-      <button class="btn bo bsm" onclick="showSeasonPreview()">📋 Kausiennakko</button>
+    <!-- CHAINS -->
+    <div id="s-ch" class="screen">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:.95rem;color:var(--ac)">KETJUT & KOKOONPANO</div>
+        <button class="btn bg bsm" onclick="aiOptimize()">🤖 AI OPTIMOI</button>
+      </div>
+      <div class="stabs" style="margin-bottom:8px;">
+        <button class="stab on" id="ch-tab-reg" onclick="setChTab('reg')">NORMAALIT</button>
+        <button class="stab" id="ch-tab-pp" onclick="setChTab('pp')">⚡ YLIVOIMA</button>
+        <button class="stab" id="ch-tab-pk" onclick="setChTab('pk')">🛡️ ALIVOIMA</button>
+      </div>
+      <div id="ch-content"></div>
     </div>
-    <div id="news-list"></div>
-  </div>
 
-  <div class="pnl">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
-      <div class="pt" style="margin-bottom:0">🏋️ Harjoittelukalenteri</div>
-      <button class="btn bo bsm" onclick="clearTrainingCalendar()">🗑 Tyhjennä</button>
+    <!-- FIXTURES -->
+    <div id="s-fx" class="screen">
+      <div class="stabs">
+        <button class="stab on" onclick="setFxTab('mine')">OMAT</button>
+        <button class="stab" onclick="setFxTab('all')">KAIKKI</button>
+        <button class="stab" id="fx-tab-chl" onclick="setFxTab('chl')" style="display:none">CHL 🏆</button>
+      </div>
+      <div class="pnl" id="fx-list"></div>
     </div>
-    <div id="training-calendar"></div>
-    <div id="training-cards" style="margin-top:6px"></div>
-    <div style="font-size:.68rem;color:var(--mu);margin-top:5px">
-      Tällä viikolla: <span id="train-lbl" style="color:var(--ac)">Ei valintaa (oletuspalautuminen -8 rasitusta)</span>
+
+    <!-- STANDINGS -->
+    <div id="s-st" class="screen">
+      <div class="stabs">
+        <button class="stab on" id="st-tab-sm" onclick="setStTab('sm')">SM-LIIGA</button>
+        <button class="stab" id="st-tab-chl" onclick="setStTab('chl')" style="display:none">CHL 🏆</button>
+      </div>
+      <div class="pnl">
+        <div id="st-sm-content">
+          <table class="tbl">
+            <thead><tr><th>#</th><th>Joukkue</th><th class="c">O</th><th class="c">V</th><th class="c">OTV</th><th class="c">OTH</th><th class="c">H</th><th class="c">M+</th><th class="c">M-</th><th class="r">P</th></tr></thead>
+            <tbody id="st-body"></tbody>
+          </table>
+        </div>
+        <div id="st-chl-content" style="display:none"></div>
+      </div>
     </div>
-  </div>
 
-  <div class="pnl" id="next-pnl">
-    <div class="pt">⏭ Seuraava ottelu</div>
-    <div id="next-info" style="font-size:.82rem;margin-bottom:7px;line-height:1.4"></div>
-    <!-- Tactic buttons and play button rendered dynamically by renderNextMatch -->
-  </div>
-</div>
+    <!-- TRAINING -->
+    <div id="s-tn" class="screen">
+      <div class="pnl">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+          <div class="pt" style="margin-bottom:0">📋 Esiasetetut suunnitelmat</div>
+          <button class="btn bo bsm" onclick="clearTrainingCalendar()">🗑 Tyhjennä</button>
+        </div>
+        <div style="font-size:.7rem;color:var(--mu);margin-bottom:6px">Yksi klikkaus täyttää koko kauden harjoituskalenterin. Voit silti muokata yksittäisiä viikkoja.</div>
+        <div id="training-plans" style="display:flex;flex-wrap:wrap;gap:4px"></div>
+      </div>
 
-<!-- SQUAD -->
-<div id="s-sq" class="screen">
-  <div class="pnl">
-    <div class="pt">👥 Pelaajat</div>
-    <table class="tbl">
-      <thead><tr><th>Pelaaja</th><th class="c">Pos</th><th class="c">Ikä</th><th class="r">Arvio</th><th class="r">Rasitus</th><th class="r">Palkka/kk</th><th class="r">Sopimus</th></tr></thead>
-      <tbody id="sq-body"></tbody>
-    </table>
-  </div>
-</div>
+      <div class="pnl">
+        <div class="pt">🎓 Valmentaja</div>
+        <div style="font-size:.7rem;color:var(--mu);margin-bottom:6px">Valmentajan taso vaikuttaa kuinka nopeasti pitkäaikaiset harjoitusvaikutukset aktivoituvat.</div>
+        <div id="coach-info"></div>
+      </div>
 
-<!-- CHAINS -->
-<div id="s-ch" class="screen">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:.95rem;color:var(--ac)">KETJUT & KOKOONPANO</div>
-    <button class="btn bg bsm" onclick="aiOptimize()">🤖 AI OPTIMOI</button>
-  </div>
-  <div class="stabs" style="margin-bottom:8px;">
-    <button class="stab on" id="ch-tab-reg" onclick="setChTab('reg')">NORMAALIT</button>
-    <button class="stab" id="ch-tab-pp" onclick="setChTab('pp')">⚡ YLIVOIMA</button>
-    <button class="stab" id="ch-tab-pk" onclick="setChTab('pk')">🛡️ ALIVOIMA</button>
-  </div>
-  <div id="ch-content"></div>
-</div>
+      <div class="pnl">
+        <div class="pt">👁️ Skoutti (kausimaksu)</div>
+        <div style="font-size:.7rem;color:var(--mu);margin-bottom:6px">Skoutti tutkii vastustajia ja tuottaa ottelua varten skouttiraporttia. Maksetaan kerran kaudessa.</div>
+        <div id="scout-info"></div>
+      </div>
 
-<!-- FIXTURES -->
-<div id="s-fx" class="screen">
-  <div class="stabs">
-    <button class="stab on" onclick="setFxTab('mine')">OMAT</button>
-    <button class="stab" onclick="setFxTab('all')">KAIKKI</button>
-  </div>
-  <div class="pnl" id="fx-list"></div>
-</div>
+      <div class="pnl">
+        <div class="pt">📅 Viikkokalenteri</div>
+        <div id="training-calendar"></div>
+        <div id="training-cards" style="margin-top:6px"></div>
+      </div>
+    </div>
 
-<!-- STANDINGS -->
-<div id="s-st" class="screen">
-  <div class="pnl">
-    <div class="pt">🏆 Sarjataulukko</div>
-    <table class="tbl">
-      <thead><tr><th>#</th><th>Joukkue</th><th class="c">O</th><th class="c">V</th><th class="c">OTV</th><th class="c">OTH</th><th class="c">H</th><th class="c">M+</th><th class="c">M-</th><th class="r">P</th></tr></thead>
-      <tbody id="st-body"></tbody>
-    </table>
-  </div>
-</div>
+    <!-- TRANSFERS -->
+    <div id="s-tr" class="screen">
+      <div class="pnl">
+        <div class="pt">💰 Talous</div>
+        <div class="sr"><span class="sl">Budjetti</span><span class="sv" id="tr-b">—</span></div>
+        <div class="sr"><span class="sl">Salary cap</span><span class="sv" id="tr-c">—</span></div>
+        <div class="sr"><span class="sl">Palkkakulu/kk</span><span class="sv" id="tr-w">—</span></div>
+        <div class="sr"><span class="sl">Lipputulot/ottelu</span><span class="sv" id="tr-ti">—</span></div>
+        <div class="sr"><span class="sl">Sponsoritulot/kk</span><span class="sv" id="tr-sp">—</span></div>
+        <div class="sr"><span class="sl">Siirtoikkuna</span><span class="sv" id="tr-win">—</span></div>
+      </div>
+      <div class="pnl">
+        <div class="pt">🔍 Vapaat agentit</div>
+        <div id="fa-list"></div>
+      </div>
+      <div class="pnl">
+        <div class="pt">📤 Myy pelaaja</div>
+        <div id="sell-list"></div>
+      </div>
+      <div class="pnl">
+        <div class="pt">📋 Sopimusneuvottelut</div>
+        <div id="contract-list"></div>
+      </div>
+    </div>
 
-<!-- TRANSFERS -->
-<div id="s-tr" class="screen">
-  <div class="pnl">
-    <div class="pt">💰 Talous</div>
-    <div class="sr"><span class="sl">Budjetti</span><span class="sv" id="tr-b">—</span></div>
-    <div class="sr"><span class="sl">Salary cap</span><span class="sv" id="tr-c">—</span></div>
-    <div class="sr"><span class="sl">Palkkakulu/kk</span><span class="sv" id="tr-w">—</span></div>
-    <div class="sr"><span class="sl">Lipputulot/ottelu</span><span class="sv" id="tr-ti">—</span></div>
-    <div class="sr"><span class="sl">Sponsoritulot/kk</span><span class="sv" id="tr-sp">—</span></div>
-    <div class="sr"><span class="sl">Siirtoikkuna</span><span class="sv" id="tr-win">—</span></div>
-  </div>
-  <div class="pnl">
-    <div class="pt">🔍 Vapaat agentit</div>
-    <div id="fa-list"></div>
-  </div>
-  <div class="pnl">
-    <div class="pt">📤 Myy pelaaja</div>
-    <div id="sell-list"></div>
-  </div>
-  <div class="pnl">
-    <div class="pt">📋 Sopimusneuvottelut</div>
-    <div id="contract-list"></div>
-  </div>
-</div>
+    <!-- SPONSORS -->
+    <div id="s-sp" class="screen">
+      <div class="pnl">
+        <div class="pt">🏢 Aktiiviset sponsorit</div>
+        <div id="active-sponsors"></div>
+      </div>
+      <div class="pnl">
+        <div class="pt">📨 Sponsoritarjoukset</div>
+        <div id="sponsor-offers"></div>
+      </div>
+    </div>
 
-<!-- SPONSORS -->
-<div id="s-sp" class="screen">
-  <div class="pnl">
-    <div class="pt">🏢 Aktiiviset sponsorit</div>
-    <div id="active-sponsors"></div>
-  </div>
-  <div class="pnl">
-    <div class="pt">📨 Sponsoritarjoukset</div>
-    <div id="sponsor-offers"></div>
-  </div>
-</div>
+    <!-- STADIUM -->
+    <div id="s-sd" class="screen">
+      <div class="pnl">
+        <div class="pt">🏟️ Kotistadion</div>
+        <div style="font-size:2rem;text-align:center;padding:6px 0">🏟️</div>
+        <div class="sr"><span class="sl">Stadion</span><span class="sv" id="sd-n">—</span></div>
+        <div class="sr"><span class="sl">Kapasiteetti</span><span class="sv" id="sd-c">—</span></div>
+        <div class="sr"><span class="sl">Täyttöaste</span><span class="sv" id="sd-o">—</span></div>
+        <div class="sr"><span class="sl">Lipputulo/ottelu</span><span class="sv" id="sd-i">—</span></div>
+      </div>
+      <div class="pnl"><div class="pt">🔨 Laajenna</div><div id="sd-exp"></div></div>
+    </div>
 
-<!-- STADIUM -->
-<div id="s-sd" class="screen">
-  <div class="pnl">
-    <div class="pt">🏟️ Kotistadion</div>
-    <div style="font-size:2rem;text-align:center;padding:6px 0">🏟️</div>
-    <div class="sr"><span class="sl">Stadion</span><span class="sv" id="sd-n">—</span></div>
-    <div class="sr"><span class="sl">Kapasiteetti</span><span class="sv" id="sd-c">—</span></div>
-    <div class="sr"><span class="sl">Täyttöaste</span><span class="sv" id="sd-o">—</span></div>
-    <div class="sr"><span class="sl">Lipputulo/ottelu</span><span class="sv" id="sd-i">—</span></div>
-  </div>
-  <div class="pnl"><div class="pt">🔨 Laajenna</div><div id="sd-exp"></div></div>
-</div>
+    <!-- ACADEMY -->
+    <div id="s-ac" class="screen">
+      <div class="pnl">
+        <div class="pt">🌟 Nuorisoakatemia</div>
+        <div class="sr"><span class="sl">Akatemiataso</span><span class="sv" id="ac-lvl">—</span></div>
+        <div class="sr"><span class="sl">Vuosikustannus</span><span class="sv" id="ac-cost">—</span></div>
+        <div class="sr"><span class="sl">Seuraava lupaus</span><span class="sv" id="ac-next">—</span></div>
+      </div>
+      <div class="pnl"><div class="pt">🔼 Kehitä akatemiaa</div><div id="ac-upgrades"></div></div>
+      <div class="pnl"><div class="pt">🧒 Akatemian pelaajat</div><div id="ac-players"></div></div>
+    </div>
 
-<!-- ACADEMY -->
-<div id="s-ac" class="screen">
-  <div class="pnl">
-    <div class="pt">🌟 Nuorisoakatemia</div>
-    <div class="sr"><span class="sl">Akatemiataso</span><span class="sv" id="ac-lvl">—</span></div>
-    <div class="sr"><span class="sl">Vuosikustannus</span><span class="sv" id="ac-cost">—</span></div>
-    <div class="sr"><span class="sl">Seuraava lupaus</span><span class="sv" id="ac-next">—</span></div>
-  </div>
-  <div class="pnl"><div class="pt">🔼 Kehitä akatemiaa</div><div id="ac-upgrades"></div></div>
-  <div class="pnl"><div class="pt">🧒 Akatemian pelaajat</div><div id="ac-players"></div></div>
-</div>
+    <!-- STATS -->
+    <div id="s-sa" class="screen">
+      <div class="stabs">
+        <button class="stab on" onclick="setSaTab('sc')">PISTEPÖRSSI</button>
+        <button class="stab" onclick="setSaTab('gk')">MAALIVAHTIT</button>
+        <button class="stab" onclick="setSaTab('st')">YV/AV</button>
+        <button class="stab" id="sa-tab-chl" onclick="setSaTab('chl')" style="display:none">CHL 🏆</button>
+      </div>
+      <div class="pnl" id="sa-content"></div>
+    </div>
 
-<!-- STATS -->
-<div id="s-sa" class="screen">
-  <div class="stabs">
-    <button class="stab on" onclick="setSaTab('sc')">PISTEPÖRSSI</button>
-    <button class="stab" onclick="setSaTab('gk')">MAALIVAHTIT</button>
-    <button class="stab" onclick="setSaTab('st')">YV/AV</button>
-  </div>
-  <div class="pnl" id="sa-content"></div>
-</div>
+    <!-- HISTORY -->
+    <div id="s-hi" class="screen">
+      <div class="pnl">
+        <div class="pt">🧑‍💼 Managerin ura</div>
+        <div class="sr"><span class="sl">Nimi</span><span class="sv" id="hi-name">—</span></div>
+        <div class="sr"><span class="sl">Maine</span><span class="sv" id="hi-rep">—</span></div>
+        <div class="sr"><span class="sl">Kausia</span><span class="sv" id="hi-seasons">—</span></div>
+        <div class="sr"><span class="sl">Mestaruudet</span><span class="sv" id="hi-titles">—</span></div>
+      </div>
+      <div class="pnl"><div class="pt">📜 Kausihistoria</div><div id="hi-list"></div></div>
+    </div>
 
-<!-- HISTORY -->
-<div id="s-hi" class="screen">
-  <div class="pnl">
-    <div class="pt">🧑‍💼 Managerin ura</div>
-    <div class="sr"><span class="sl">Nimi</span><span class="sv" id="hi-name">—</span></div>
-    <div class="sr"><span class="sl">Maine</span><span class="sv" id="hi-rep">—</span></div>
-    <div class="sr"><span class="sl">Kausia</span><span class="sv" id="hi-seasons">—</span></div>
-    <div class="sr"><span class="sl">Mestaruudet</span><span class="sv" id="hi-titles">—</span></div>
-  </div>
-  <div class="pnl"><div class="pt">📜 Kausihistoria</div><div id="hi-list"></div></div>
-</div>
+    <!-- PLAYOFFS -->
+    <div id="s-po" class="screen"><div id="po-content"></div></div>
 
-<!-- PLAYOFFS -->
-<div id="s-po" class="screen"><div id="po-content"></div></div>
-```
+    <!-- CHL -->
+    <div id="s-chl" class="screen">
+      <div class="pnl" style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div class="pt" style="margin-bottom:0">🏆 Champions Hockey League</div>
+          <div id="chl-phase-lbl" style="font-size:.7rem;color:var(--ac);font-family:'Barlow Condensed',sans-serif"></div>
+        </div>
+        <div id="chl-my-status"></div>
+      </div>
+      <div id="chl-tabs" style="display:flex;gap:4px;margin-bottom:8px">
+        <button class="btn bsm on" id="chl-tab-table" onclick="setCHLTab('table')">TAULUKKO</button>
+        <button class="btn bsm" id="chl-tab-fixtures" onclick="setCHLTab('fixtures')">OMAT OTTELUT</button>
+        <button class="btn bsm" id="chl-tab-bracket" onclick="setCHLTab('bracket')">BRACKET</button>
+      </div>
+      <div id="chl-table-view"></div>
+      <div id="chl-fixtures-view" style="display:none"></div>
+      <div id="chl-bracket-view" style="display:none"></div>
+    </div>
 
   </div>
 </div>
 
 <!-- MATCH OVERLAY -->
-
 <div id="mov">
   <div style="max-width:460px;margin:0 auto;">
     <div class="mbox">
@@ -486,7 +555,6 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
 </div>
 
 <!-- PRESS OVERLAY -->
-
 <div id="pov">
   <div class="press-box">
     <div class="press-title" id="press-title">LEHDISTÖTILAISUUS</div>
@@ -496,7 +564,6 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
 </div>
 
 <!-- WEEKLY SUMMARY OVERLAY -->
-
 <div id="wov" style="position:fixed;inset:0;background:rgba(4,6,12,.96);z-index:305;overflow-y:auto;padding:12px;display:none;">
   <div style="max-width:460px;margin:0 auto;">
     <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--ac);text-align:center;margin-bottom:10px" id="wov-title">VIIKON TULOKSET</div>
@@ -514,7 +581,6 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
 </div>
 
 <!-- AWARDS -->
-
 <div id="awards-overlay">
   <div style="max-width:460px;margin:0 auto;">
     <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--ac);text-align:center;margin-bottom:14px">🏅 KAUDEN PALKINNOT</div>
@@ -525,7 +591,6 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
 </div>
 
 <!-- CHAMPION -->
-
 <div id="champ">
   <div style="font-size:3rem">🏆</div>
   <h1>MESTARI!</h1>
@@ -614,28 +679,90 @@ const PRESS_OPTS_LOSS=[
 ];
 
 const TRAINING_OPTIONS=[
-  {id:'rest',   icon:'😴',name:'Täysi lepo',        desc:'Rasitus -20 kaikille. Loukkaantumisriski pienenee.',              cost:0,    effect:{fatigueRed:20,injMod:-0.5}},
-  {id:'light',  icon:'🚶',name:'Kevyt harjoitus',   desc:'Rasitus -12 kaikille. Sopii tiheään pelitahtiin.',               cost:0,    effect:{fatigueRed:12,injMod:-0.2}},
-  {id:'fitness',icon:'🏃',name:'Kuntovalmennus',    desc:'Rasitus -8. Parantaa kestävyyttä pitkällä tähtäimellä.',         cost:12000,effect:{fatigueRed:8,injMod:0.1}},
-  {id:'attack', icon:'⚡',name:'Hyökkäysharjoitus', desc:'Rasitus -5. +15% maalinteko seuraavaan otteluun.',               cost:18000,effect:{fatigueRed:5,attackBoost:0.15,injMod:0.1}},
-  {id:'defense',icon:'🛡️',name:'Puolustusharjoitus',desc:'Rasitus -5. -15% päästettyä seuraavassa.',                      cost:18000,effect:{fatigueRed:5,defenseBoost:0.15,injMod:0.1}},
-  {id:'tactics',icon:'📋',name:'Taktinen harjoitus',desc:'Rasitus -5. Kotietu +10% seuraavassa.',                         cost:22000,effect:{fatigueRed:5,tacBoost:0.10,injMod:0.1}},
+  {id:'rest',   icon:'😴',name:'Täysi lepo',        desc:'Rasitus -25 kaikille. Loukkaantumisriski -50%.',                cost:0,    effect:{fatigueRed:25,injMod:-0.5}},
+  {id:'light',  icon:'🚶',name:'Kevyt harjoitus',   desc:'Rasitus -15 kaikille. Sopii tiheään pelitahtiin.',              cost:0,    effect:{fatigueRed:15,injMod:-0.2}},
+  {id:'fitness',icon:'🏃',name:'Kuntovalmennus',    desc:'Rasitus -10. 4× peräkkäin: pelaajien kestävyys paranee pysyvästi.', cost:8000, effect:{fatigueRed:10,injMod:0.1,longTerm:'fitness'}},
+  {id:'attack', icon:'⚡',name:'Hyökkäysharjoitus', desc:'Rasitus -5, +0.3 hyökkäys. 4× peräkkäin: hyökkääjät +1 rating (max +3 kaudessa).', cost:15000,effect:{fatigueRed:5,attackBoost:0.10,injMod:0.1,longTerm:'attack'}},
+  {id:'defense',icon:'🛡️',name:'Puolustusharjoitus',desc:'Rasitus -5, +0.3 puolustus. 4× peräkkäin: puolustajat+MV +1 rating (max +3 kaudessa).', cost:15000,effect:{fatigueRed:5,defenseBoost:0.10,injMod:0.1,longTerm:'defense'}},
+  {id:'tactics',icon:'📋',name:'Taktinen harjoitus',desc:'Rasitus -5, +0.2 synergia seuraavaan otteluun. 5× peräkkäin: synergia +0.05 valitulle taktiikalle (max +0.3).', cost:12000,effect:{fatigueRed:5,tacBoost:0.07,injMod:0.1,longTerm:'tactics'}},
+];
+
+// Pre-built training plans for the regular season (weeks 5-26)
+const TRAINING_PLANS=[
+  {id:'attack',   icon:'🎯', name:'Hyökkäysorientoitunut', desc:'8× hyökkäys, 4× kunto, loput palautusta',
+    pattern:['attack','light','attack','rest','attack','fitness','attack','light','attack','rest','attack','fitness','attack','light','attack','rest','fitness','light','rest','light','rest','light']},
+  {id:'defense',  icon:'🛡️', name:'Puolustusorientoitunut', desc:'8× puolustus, 4× kunto, loput palautusta',
+    pattern:['defense','light','defense','rest','defense','fitness','defense','light','defense','rest','defense','fitness','defense','light','defense','rest','fitness','light','rest','light','rest','light']},
+  {id:'tactical', icon:'📋', name:'Taktinen', desc:'10× taktinen, loput palautusta + kuntoa',
+    pattern:['tactics','light','tactics','rest','tactics','light','tactics','fitness','tactics','rest','tactics','light','tactics','rest','tactics','fitness','tactics','light','tactics','rest','light','rest']},
+  {id:'balanced', icon:'⚖️', name:'Tasapainoinen', desc:'Sekoitus kaikkia harjoituksia',
+    pattern:['attack','rest','defense','light','tactics','rest','attack','fitness','defense','rest','tactics','light','attack','rest','defense','fitness','tactics','rest','light','rest','light','rest']},
+  {id:'custom',   icon:'🎨', name:'Mukautettu', desc:'Tyhjä kalenteri — valitse itse joka viikolle', pattern:null},
+];
+
+// Coaching staff
+const COACHES=[
+  {id:'assistant', icon:'👤', name:'Apuvalmentaja',     wage:0,    desc:'Ei erikoisbonuksia. Oletusvaihtoehto.',
+    streakReduction:0, fatigueBonus:0},
+  {id:'experienced', icon:'🎓', name:'Kokenut valmentaja', wage:3000, desc:'Streak 1 vähemmän (4→3, 5→4)',
+    streakReduction:1, fatigueBonus:0},
+  {id:'elite',     icon:'🏆', name:'Huippuvalmentaja',  wage:8000, desc:'Streak 2 vähemmän + rasitusbonus -1 kaikille',
+    streakReduction:2, fatigueBonus:1},
+];
+
+// Scouts — opponent intelligence
+const SCOUTS=[
+  {id:'self',   icon:'🔍', name:'Itseopiskelu',     cost:0,     desc:'Vain joukkueen tyyli ja yleisarvio'},
+  {id:'junior', icon:'👁️', name:'Junior-skoutti',   cost:30000, desc:'Att/Def/MV ±5 tarkkuus, top 3 pelaajaa, taktiikkavinkki'},
+  {id:'head',   icon:'🎯', name:'Pää-skoutti',      cost:80000, desc:'Tarkat luvut, top 5 pelaajaa + rasitus, suora taktiikkasuositus'},
 ];
 
 const TACTICS=[
-  {id:'trap',      name:'Trap',        icon:'🔒', desc:'Matala peli, vähän maaleja. Hyötyy puolustavista pelaajista.',
-    attMod:-0.3, defMod:0.5, fatigueMod:0.85, bestProfiles:['defensive','physical']},
-  {id:'forecheck', name:'Forechecking', icon:'🔥', desc:'Korkea intensiteetti, paljon maaleja molemmille. Hyötyy fyysisistä ja nopeista.',
-    attMod:0.4,  defMod:-0.2, fatigueMod:1.20, bestProfiles:['physical','fast']},
-  {id:'cycle',     name:'Cycle',       icon:'🔄', desc:'Kärsivällinen pyöritys. Hyötyy taitavista pelaajista.',
+  {id:'trap',      name:'Trap',        icon:'🔒', desc:'Tiivis puolustus. Lyö hyökkäävää, häviää forecheckille.',
+    attMod:-0.2, defMod:0.4, fatigueMod:0.85, bestProfiles:['defensive','physical']},
+  {id:'forecheck', name:'Forechecking', icon:'🔥', desc:'Aggressiivinen paine. Lyö trapin, häviää cyclelle.',
+    attMod:0.3,  defMod:-0.1, fatigueMod:1.15, bestProfiles:['physical','fast']},
+  {id:'cycle',     name:'Cycle',       icon:'🔄', desc:'Kärsivällinen pyöritys. Lyö forecheckin, häviää hyökkäävälle.',
     attMod:0.2,  defMod:0.1, fatigueMod:1.00, bestProfiles:['skilled','leader']},
-  {id:'dump',      name:'Dump & Chase', icon:'🏒', desc:'Suora fyysinen peli. Hyötyy fyysisistä ja nopeista.',
-    attMod:0.1,  defMod:0.0, fatigueMod:1.10, bestProfiles:['physical','fast']},
-  {id:'attack',    name:'Hyökkäävä',   icon:'⚡', desc:'Maksimaalinen hyökkäys. Hyötyy nopeista ja taitavista.',
-    attMod:0.5,  defMod:-0.4, fatigueMod:1.10, bestProfiles:['fast','skilled']},
+  {id:'dump',      name:'Dump & Chase', icon:'🏒', desc:'Turvallinen tasapaino. Neutraali kaikkia vastaan.',
+    attMod:0.15, defMod:0.15, fatigueMod:1.05, bestProfiles:['physical','fast']},
+  {id:'attack',    name:'Hyökkäävä',   icon:'⚡', desc:'Maksimaalinen hyökkäys. Lyö cyclen, häviää trappiin.',
+    attMod:0.4,  defMod:-0.4, fatigueMod:1.15, bestProfiles:['fast','skilled']},
 ];
 
 let G={};
+
+// ══════════════════════════════════════
+// CHL TEAMS
+// ══════════════════════════════════════
+const CHL_FOREIGN_TEAMS=[
+  // Ruotsi
+  {id:'chl_frolunda',  name:'Frölunda HC',      nation:'🇸🇪', rating:82},
+  {id:'chl_skeleftea', name:'Skellefteå AIK',    nation:'🇸🇪', rating:79},
+  {id:'chl_lulea',     name:'Luleå HF',          nation:'🇸🇪', rating:80},
+  // Tšekki
+  {id:'chl_trinec',    name:'HC Třinec',         nation:'🇨🇿', rating:76},
+  {id:'chl_sparta',    name:'HC Sparta Praha',   nation:'🇨🇿', rating:72},
+  {id:'chl_mountfield',name:'Mountfield HK',     nation:'🇨🇿', rating:70},
+  // Saksa
+  {id:'chl_eisbaren',  name:'Eisbären Berlin',   nation:'🇩🇪', rating:78},
+  {id:'chl_munich',    name:'Red Bull München',  nation:'🇩🇪', rating:76},
+  {id:'chl_ingolstadt',name:'ERC Ingolstadt',    nation:'🇩🇪', rating:73},
+  // Sveitsi
+  {id:'chl_zsc',       name:'ZSC Lions',         nation:'🇨🇭', rating:80},
+  {id:'chl_lausanne',  name:'Lausanne HC',       nation:'🇨🇭', rating:76},
+  {id:'chl_bern',      name:'SC Bern',           nation:'🇨🇭', rating:73},
+  // Itävalta
+  {id:'chl_salzburg',  name:'EC Salzburg',       nation:'🇦🇹', rating:74},
+  {id:'chl_graz',      name:'Graz 99ers',        nation:'🇦🇹', rating:69},
+  {id:'chl_vienna',    name:'Vienna Capitals',   nation:'🇦🇹', rating:67},
+  // Haastajaliigat
+  {id:'chl_storhamar', name:'Storhamar Dragons', nation:'🇳🇴', rating:60},
+  {id:'chl_tychy',     name:'GKS Tychy',         nation:'🇵🇱', rating:55},
+  {id:'chl_belfast',   name:'Belfast Giants',    nation:'🇬🇧', rating:58},
+  {id:'chl_odense',    name:'Odense Bulldogs',   nation:'🇩🇰', rating:59},
+  {id:'chl_grenoble',  name:'Brûleurs de Loups', nation:'🇫🇷', rating:57},
+];
 
 function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function pick(a){return a[Math.floor(Math.random()*a.length)];}
@@ -665,8 +792,7 @@ const PROFILES=[
 ];
 
 function mkPlayer(tid,pos,boost=0,isYouth=false){
-  // Tighter rating range so prestige boost (-8 to +8) has more impact
-  const rating=clamp(rnd(isYouth?40:56,isYouth?68:80)+boost,35,96);
+  const rating=clamp(rnd(isYouth?40:53,isYouth?68:81)+boost,35,96);
   const age=isYouth?rnd(16,20):rnd(19,37);
   const wage=Math.round(clamp((rating-50)*350+rnd(-1000,1000),2000,22000)/500)*500;
   const contractYears=rnd(1,3);
@@ -677,7 +803,7 @@ function mkPlayer(tid,pos,boost=0,isYouth=false){
   else profilePool=['skilled','fast','physical','leader','skilled'];
   const profile=pick(profilePool);
   return{id:Math.random().toString(36).slice(2,9),name:pname(isYouth),pos,age,rating,wage,foreign:!isYouth&&Math.random()<0.1,
-    team:tid,fatigue:0,goals:0,assists:0,gamesPlayed:0,
+    team:tid,fatigue:0,goals:0,assists:0,gamesPlayed:0,chlGoals:0,chlAssists:0,chlGames:0,
     mvGoalsAgainst:0,mvGames:0,captain:false,injured:false,injuryWeeks:0,
     contractYears,isYouth:isYouth||false,profile,
     goal:{type:pick(['playoffs','scoring','defense']),achieved:false}};
@@ -759,21 +885,19 @@ function genSchedule(includePreseason=false){
 let selTeam=null;
 
 function teamStrengthRating(t){
-  // If game is running, use actual player ratings directly
   if(G&&G.players&&G.players.length>0){
     const squad=G.players.filter(p=>p.team===t.id&&!p.injured);
     if(squad.length>0){
       const top18=squad.slice().sort((a,b)=>b.rating-a.rating).slice(0,18);
       const avg=top18.reduce((s,p)=>s+p.rating,0)/top18.length;
-      // Scale: avg 56 (weak) → ~35, avg 80 (strong) → ~99
-      return clamp(Math.round((avg-56)/(80-56)*64+35),1,99);
+      // avg range: ~54 (weakest) to ~92 (strongest with boost+lucky rolls)
+      return clamp(Math.round((avg-54)/(92-54)*64+35),1,99);
     }
   }
-  // Setup screen: estimate from prestige using same scale
-  // prestige 1 → avg~56 → rating 35, prestige 10 → avg~80 → rating 99
   const prestige=G&&G.prestige&&G.prestige[t.id]?G.prestige[t.id]:t.prestige;
-  const estimatedAvg=56+(prestige-1)/9*24; // prestige 1→56, 10→80
-  return clamp(Math.round((estimatedAvg-56)/(80-56)*64+35),1,99);
+  const prestigeB=Math.round((prestige-1)/9*20-10);
+  const estimatedAvg=clamp(68+prestigeB,54,92);
+  return clamp(Math.round((estimatedAvg-54)/(92-54)*64+35),1,99);
 }
 
 function predictedFinish(t){
@@ -836,21 +960,31 @@ function showTeamPreview(id){
   document.getElementById('team-preview').style.display='block';
 }
 
+function setSpovTab(tab){
+  ['sm','chl'].forEach(t=>{
+    document.getElementById('spov-tab-'+t)?.classList.toggle('on',t===tab);
+    document.getElementById('spov-'+t+'-content').style.display=t===tab?'':'none';
+  });
+}
+
 function showSeasonPreview(){
   const inGame=G&&G.players&&G.players.length>0;
   const ranked=TEAMS.slice().sort((a,b)=>teamStrengthRating(b)-teamStrengthRating(a));
   const season=inGame?G.season:'2024–25';
 
-  // Fix title safely
-  const titleEl=document.querySelector('#spov > div > div:first-child');
+  // Title
+  const titleEl=document.getElementById('spov-title');
   if(titleEl) titleEl.textContent='📋 KAUSIENNAKKO '+season;
 
-  // Predicted standings
+  // Reset to SM tab
+  setSpovTab('sm');
+
+  // Predicted SM-liiga standings
   document.getElementById('spov-standings').innerHTML=
     ranked.map((t,i)=>{
       const str=teamStrengthRating(t);
       const col=str>=75?'var(--gr)':str>=55?'var(--ac)':'var(--rd)';
-      const isSel=inGame?(t.id===G.myId):(t.id===selTeam);
+      const isSel=inGame?(t.id===G.myId):(selTeam&&t.id===selTeam);
       return`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #141f2e;${isSel?'background:rgba(240,165,0,.06);border-radius:4px;padding:5px 4px':''}">
         <span style="font-family:'Barlow Condensed',sans-serif;color:var(--mu);min-width:20px;font-size:.8rem">${i+1}${i<8?'<span style="color:var(--gr);font-size:.5rem"> ●</span>':''}</span>
         <span style="flex:1;font-size:.8rem">${t.em} ${t.name}${isSel?' 👈':''}</span>
@@ -863,7 +997,7 @@ function showSeasonPreview(){
       </div>`;
     }).join('');
 
-  // Best players — use real data if in game, estimated if setup
+  // Best section
   let bestHtml='';
   if(inGame){
     const scorers=G.players.filter(p=>p.pos==='V'&&p.team).sort((a,b)=>b.rating-a.rating)[0];
@@ -883,19 +1017,14 @@ function showSeasonPreview(){
     });
   } else {
     const topTeams=ranked.slice(0,3);
-    const styleDesc={
-      hyökkäävä:'Aggressiivinen hyökkäyspeli, paljon maaleja',
-      puolustava:'Tiivis puolustus, matala maalimäärä',
-      tasapainoinen:'Monipuolinen peli, sopeutuu tilanteeseen'
-    };
+    const styleDesc={hyökkäävä:'Aggressiivinen hyökkäyspeli',puolustava:'Tiivis puolustuspeli',tasapainoinen:'Monipuolinen peli'};
     bestHtml=`<div style="font-size:.72rem;color:var(--mu);margin-bottom:8px">Vahvimmat joukkueet kaudelle ${season}:</div>`;
     topTeams.forEach((t,i)=>{
-      const prestige=G&&G.prestige?G.prestige[t.id]:t.prestige;
+      const prestige=t.prestige;
       const str=teamStrengthRating(t);
       const col=str>=75?'var(--gr)':str>=55?'var(--ac)':'var(--rd)';
-      const medals=['🥇','🥈','🥉'];
       bestHtml+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #141f2e">
-        <span style="font-size:1.1rem">${medals[i]}</span>
+        <span style="font-size:1.1rem">${['🥇','🥈','🥉'][i]}</span>
         <div style="flex:1">
           <div style="font-size:.82rem;font-weight:600">${t.em} ${t.name}</div>
           <div style="font-size:.68rem;color:var(--mu)">${styleDesc[t.style]||t.style}</div>
@@ -906,16 +1035,104 @@ function showSeasonPreview(){
         </div>
       </div>`;
     });
-
-    // Add salary cap info
-    const capYear=G&&G.salCap?G.salCap:LEAGUE_SALARY_CAP_BASE;
+    const capYear=LEAGUE_SALARY_CAP_BASE;
     bestHtml+=`<div style="margin-top:8px;padding:6px;background:rgba(255,255,255,.04);border-radius:4px;font-size:.72rem;color:var(--mu)">
-      💰 Liigan salary cap: <span style="color:var(--ac)">${fmt(capYear)}/v</span> (sama kaikille)
+      💰 Liigan salary cap: <span style="color:var(--ac)">${fmt(capYear)}/v</span> · Vaikeus: <span style="color:var(--ac)">${difficulty==='easy'?'Helppo':difficulty==='hard'?'Vaikea':'Normaali'}</span>
     </div>`;
   }
   document.getElementById('spov-best').innerHTML=bestHtml;
+
+  // CHL preview
+  renderCHLSeasonPreview(inGame, season);
+
   document.getElementById('spov').style.display='block';
 }
+
+function renderCHLSeasonPreview(inGame, season){
+  // Determine Finnish qualifiers for CHL
+  // If CHL already initialized (in-game), use G.chl.teams
+  // Otherwise estimate from prestige/standings
+  let finnishQuals=[];
+  let chlTeams=[];
+
+  if(inGame&&G.chl&&G.chl.teams.length>0){
+    // CHL already running — use actual teams
+    chlTeams=G.chl.teams;
+    finnishQuals=chlTeams.filter(t=>t.isSMliiga);
+  } else {
+    // Estimate: top 3 prestige or top 2 runkosarja + mestari
+    if(inGame&&G.seasonCount>0){
+      // Use last season standings
+      const sorted=getSorted();
+      finnishQuals=sorted.slice(0,3).map(t=>({
+        id:t.id,name:t.name,em:t.em,nation:'🇫🇮',isSMliiga:true,
+        rating:teamStrengthRating(t)
+      }));
+    } else {
+      // Setup screen: use prestige
+      finnishQuals=TEAMS.slice().sort((a,b)=>(b.prestige||5)-(a.prestige||5)).slice(0,3)
+        .map(t=>({id:t.id,name:t.name,em:t.em,nation:'🇫🇮',isSMliiga:true,rating:teamStrengthRating(t)}));
+    }
+    chlTeams=[...finnishQuals,...CHL_FOREIGN_TEAMS.map(t=>({...t,isSMliiga:false,em:t.nation}))];
+  }
+
+  // Sort all 24 by strength
+  function chlTeamStr(t){
+    if(t.isSMliiga){
+      const smT=TEAMS.find(x=>x.id===t.id);
+      return smT?teamStrengthRating(smT):60;
+    }
+    return Math.round(clamp((t.rating-55)/27*18+55,50,75));
+  }
+  const sorted=[...chlTeams].sort((a,b)=>chlTeamStr(b)-chlTeamStr(a));
+
+  // CHL standings table
+  const myId=inGame?G.myId:selTeam;
+  document.getElementById('spov-chl-standings').innerHTML=
+    sorted.map((t,i)=>{
+      const str=chlTeamStr(t);
+      const col=str>=72?'var(--gr)':str>=62?'var(--ac)':'var(--rd)';
+      const isMe=t.id===myId;
+      const isFinnish=t.isSMliiga;
+      return`<div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid #141f2e;${isMe?'background:rgba(240,165,0,.06);border-radius:4px;padding:4px':''}">
+        <span style="font-size:.72rem;color:${i<16?'var(--gr)':'var(--mu)'};font-family:'Barlow Condensed',sans-serif;min-width:18px">${i+1}</span>
+        <span style="flex:1;font-size:.78rem;${isFinnish?'color:var(--ac)':''}">${t.em||t.nation} ${t.name}${isMe?' 👈':''}</span>
+        <div style="display:flex;align-items:center;gap:4px">
+          <div style="width:40px;height:3px;background:var(--bd);border-radius:2px;overflow:hidden">
+            <div style="width:${str}%;height:100%;background:${col}"></div>
+          </div>
+          <span style="font-size:.65rem;color:${col};font-family:'Barlow Condensed',sans-serif;min-width:20px">${str}</span>
+        </div>
+      </div>`;
+    }).join('')+
+    `<div style="font-size:.62rem;color:var(--mu);margin-top:4px">━ Top 16 jatkaa pudotuspeleihin · 🇫🇮 = Suomalainen joukkue</div>`;
+
+  // Finnish qualifiers detail
+  const myT=TEAMS.find(t=>t.id===myId);
+  const myInCHL=finnishQuals.find(t=>t.id===myId);
+  let finnishHtml=`<div style="font-size:.7rem;color:var(--mu);margin-bottom:6px">Suomesta osallistuu 3 joukkuetta:</div>`;
+  finnishQuals.forEach((t,i)=>{
+    const str=chlTeamStr(t);
+    const col=str>=72?'var(--gr)':str>=62?'var(--ac)':'var(--rd)';
+    const isMe=t.id===myId;
+    const rank=sorted.findIndex(x=>x.id===t.id)+1;
+    finnishHtml+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #141f2e;${isMe?'background:rgba(240,165,0,.08);border-radius:4px;padding:6px 4px':''}">
+      <span style="font-size:.9rem">${['🥇','🥈','🥉'][i]}</span>
+      <div style="flex:1">
+        <div style="font-size:.82rem;font-weight:${isMe?700:400}">${t.em} ${t.name}${isMe?' 👈':''}</div>
+        <div style="font-size:.65rem;color:var(--mu)">CHL-ennakkosijoitus: ${rank}./24</div>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;color:${col};font-size:.9rem">${str}/99</div>
+    </div>`;
+  });
+  if(!myInCHL&&myT){
+    finnishHtml+=`<div style="margin-top:8px;padding:6px;background:rgba(192,51,43,.08);border:1px solid var(--rd);border-radius:4px;font-size:.72rem;color:var(--rd)">
+      ❌ ${myT.em} ${myT.name} ei ole kvalifioitunut CHL:ään tällä kaudella
+    </div>`;
+  }
+  document.getElementById('spov-chl-finnish').innerHTML=finnishHtml;
+}
+
 
 // ══════════════════════════════════════
 // START GAME
@@ -949,6 +1166,14 @@ function startGame(){
     prestige:{},
     trainingCalendar:{},
     trainingSelectedWeek:1,
+    trainingStreak:{},
+    seasonRatingBoost:{attack:0,defense:0},
+    seasonTacticBoost:{},
+    fitnessBonus:0,
+    coach:'assistant',
+    scout:'self',
+    activeTrainingPlan:null,
+    chl:{active:false,teams:[],fixtures:[],standings:{},playoffs:null,myQualified:false,phase:'regular',myGoals:0,myGoalsAgainst:0},
   };
 
   // Initialize prestige from TEAMS base values
@@ -957,7 +1182,7 @@ function startGame(){
   // Compute per-team rating boost based on prestige (range -8 to +8)
   function prestigeBoost(tid){
     const p=G.prestige[tid]||5;
-    return Math.round((p-1)/9*20-10); // prestige 1→-10, 10→+10
+    return Math.round((p-1)/9*16-8); // prestige 1→-8, 10→+8
   }
 
   TEAMS.forEach(t=>{
@@ -975,6 +1200,7 @@ function startGame(){
   // Starting sponsors
   G.sponsors=[{...SPONSOR_TYPES[0],id:'sp0',active:true,weeksLeft:24}];
   genSponsorOffers();
+  initCHL();
   genAcademyPlayers();
   addNews('green','🏒 Uusi kausi alkaa! Tervetuloa manageriksi, '+td.name+'!');
 
@@ -991,11 +1217,12 @@ function nav(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('#nav button').forEach(b=>b.classList.remove('on'));
   document.getElementById('s-'+name).classList.add('on');
-  const idx={ov:0,sq:1,ch:2,fx:3,st:4,tr:5,sp:6,sd:7,ac:8,sa:9,hi:10,po:11};
+  const idx={ov:0,sq:1,ch:2,tn:3,fx:4,st:5,tr:6,sp:7,sd:8,ac:9,sa:10,hi:11,po:12,chl:13};
   const btns=document.querySelectorAll('#nav button');
   if(idx[name]!==undefined&&btns[idx[name]]) btns[idx[name]].classList.add('on');
   if(name==='sq') renderSquad();
   if(name==='ch') renderChains();
+  if(name==='tn') renderTraining();
   if(name==='fx') renderFixtures();
   if(name==='st') renderStandings();
   if(name==='tr') renderTransfers();
@@ -1005,6 +1232,15 @@ function nav(name){
   if(name==='sa') renderStats();
   if(name==='hi') renderHistory();
   if(name==='po') renderPlayoffs();
+  if(name==='chl'){renderCHL();setCHLTab('table');}
+}
+
+function renderTraining(){
+  renderTrainingPlans();
+  renderCoach();
+  renderScout();
+  renderTrainingCalendar();
+  renderTrainingCards();
 }
 
 // ══════════════════════════════════════
@@ -1055,15 +1291,604 @@ function triggerRandomEvent(){
 }
 
 // ══════════════════════════════════════
-// TRAINING CALENDAR
+// CHL — CHAMPIONS HOCKEY LEAGUE
 // ══════════════════════════════════════
+function initCHL(){
+  // Determine Finnish qualifiers
+  // Season 1: top 3 by prestige. Season 2+: previous season's top 2 regular season + champion
+  let finnishQualifiers;
+  if(!G.seasonCount||G.seasonCount===0){
+    finnishQualifiers=TEAMS.slice().sort((a,b)=>(G.prestige[b.id]||b.prestige)-(G.prestige[a.id]||a.prestige)).slice(0,3)
+      .map(t=>({id:t.id,name:t.name,nation:'🇫🇮',rating:teamStrengthRating(t),isSMliiga:true,em:t.em}));
+  } else {
+    const sorted=getSorted();
+    const top2=sorted.slice(0,2).map(t=>({id:t.id,name:t.name,nation:'🇫🇮',rating:teamStrengthRating(t),isSMliiga:true,em:t.em}));
+    finnishQualifiers=top2;
+    // Add champion if not already in top2
+    const champ=G.history.length?G.history[G.history.length-1].champion:null;
+    if(champ&&!top2.find(t=>t.id===champ)){
+      const ct=TEAMS.find(t=>t.id===champ);
+      if(ct) finnishQualifiers.push({id:ct.id,name:ct.name,nation:'🇫🇮',rating:teamStrengthRating(ct),isSMliiga:true,em:ct.em});
+    }
+  }
+
+  // Build full 24-team list
+  G.chl.teams=[...finnishQualifiers,...CHL_FOREIGN_TEAMS.map(t=>({...t,isSMliiga:false,em:t.nation}))];
+
+  // Check if my team qualifies
+  G.chl.active=!!G.chl.teams.find(t=>t.id===G.myId);
+
+  // Generate round-robin fixtures — each team plays 6 opponents (different ones)
+  G.chl.fixtures=genCHLFixtures();
+
+  // Initialize standings
+  G.chl.standings={};
+  G.chl.teams.forEach(t=>{G.chl.standings[t.id]={W:0,OTW:0,OTL:0,L:0,GF:0,GA:0,pts:0,played:0};});
+
+  G.chl.phase='regular';
+  G.chl.playoffs=null;
+  G.chl.myQualified=false;
+
+  if(G.chl.active){
+    const myT=TEAMS.find(t=>t.id===G.myId);
+    addNews('green',`🏆 ${myT.em} ${myT.name} kvalifioitui Champions Hockey Leagueen!`);
+    document.getElementById('nav-chl').style.display='';
+  }
+}
+
+function genCHLFixtures(){
+  const teams=G.chl.teams;
+  const fixtures=[];
+  const gamesPerTeam=6;
+  const finnishIds=teams.filter(t=>t.isSMliiga).map(t=>t.id);
+
+  // Try multiple times to find a valid schedule where every team has 6 games
+  let schedule=null;
+  for(let attempt=0;attempt<20;attempt++){
+    const shuffled=[...teams].sort(()=>Math.random()-0.5);
+    const sched={};
+    shuffled.forEach(t=>{sched[t.id]=[];});
+    const fix=[];
+
+    // Build pairs by going round-robin style
+    // Process teams in order of fewest games first to balance
+    let allDone=false;
+    let safety=0;
+    while(!allDone&&safety<500){
+      safety++;
+      // Sort by who has fewest games
+      const remaining=shuffled.filter(t=>sched[t.id].length<gamesPerTeam)
+        .sort((a,b)=>sched[a.id].length-sched[b.id].length);
+      if(remaining.length===0){allDone=true;break;}
+      if(remaining.length===1) break; // can't pair single team
+
+      const t1=remaining[0];
+      // Find a partner that t1 hasn't played and that needs games
+      let partner=null;
+      for(const t2 of remaining){
+        if(t2.id===t1.id) continue;
+        if(sched[t1.id].includes(t2.id)) continue;
+        // Finnish vs Finnish limit
+        const bothFinnish=finnishIds.includes(t1.id)&&finnishIds.includes(t2.id);
+        if(bothFinnish){
+          const t1FinOpps=sched[t1.id].filter(id=>finnishIds.includes(id)).length;
+          const t2FinOpps=sched[t2.id].filter(id=>finnishIds.includes(id)).length;
+          if(t1FinOpps>=1||t2FinOpps>=1) continue;
+        }
+        partner=t2;
+        break;
+      }
+      if(!partner){
+        // Relax Finnish restriction if needed
+        for(const t2 of remaining){
+          if(t2.id===t1.id) continue;
+          if(sched[t1.id].includes(t2.id)) continue;
+          partner=t2;
+          break;
+        }
+      }
+      if(!partner) break; // give up this attempt
+
+      sched[t1.id].push(partner.id);
+      sched[partner.id].push(t1.id);
+      const home=Math.random()<0.5?t1.id:partner.id;
+      const away=home===t1.id?partner.id:t1.id;
+      fix.push({home,away,played:false,hg:0,ag:0,week:0,ot:false});
+    }
+
+    // Check if all teams got 6 games
+    const allHaveSix=shuffled.every(t=>sched[t.id].length===gamesPerTeam);
+    if(allHaveSix){
+      schedule=sched;
+      fixtures.push(...fix);
+      break;
+    }
+  }
+
+  // Fallback: if we still don't have valid schedule, force-assign
+  if(!schedule){
+    console.warn('CHL fixture generation fell back');
+    fixtures.length=0;
+    const sched={};
+    teams.forEach(t=>{sched[t.id]=[];});
+    for(let i=0;i<teams.length;i++){
+      for(let j=i+1;j<teams.length;j++){
+        if(sched[teams[i].id].length>=gamesPerTeam) break;
+        if(sched[teams[j].id].length>=gamesPerTeam) continue;
+        sched[teams[i].id].push(teams[j].id);
+        sched[teams[j].id].push(teams[i].id);
+        const home=Math.random()<0.5?teams[i].id:teams[j].id;
+        const away=home===teams[i].id?teams[j].id:teams[i].id;
+        fixtures.push({home,away,played:false,hg:0,ag:0,week:0,ot:false});
+      }
+    }
+  }
+
+  // Assign weeks 5,7,9,11,13,15 — each team's 6 games spread across all 6 weeks
+  const chlWeeks=[5,7,9,11,13,15];
+  // For each team, assign their 6 games to 6 different weeks
+  const teamGameCount={};
+  teams.forEach(t=>{teamGameCount[t.id]=[0,0,0,0,0,0];});
+
+  // Sort fixtures so player's games come first
+  const myFix=fixtures.filter(f=>f.home===G.myId||f.away===G.myId);
+  const otherFix=fixtures.filter(f=>f.home!==G.myId&&f.away!==G.myId);
+
+  // Assign player's 6 games to weeks 5,7,9,11,13,15 (one per week)
+  myFix.forEach((f,i)=>{
+    f.week=chlWeeks[i%6];
+    teamGameCount[f.home][i%6]++;
+    teamGameCount[f.away][i%6]++;
+  });
+
+  // Assign other fixtures, trying to spread evenly
+  otherFix.forEach(f=>{
+    // Find week where neither team has played yet
+    let bestWeek=0,bestScore=99;
+    for(let w=0;w<6;w++){
+      const score=teamGameCount[f.home][w]+teamGameCount[f.away][w];
+      if(score<bestScore){bestScore=score;bestWeek=w;}
+    }
+    f.week=chlWeeks[bestWeek];
+    teamGameCount[f.home][bestWeek]++;
+    teamGameCount[f.away][bestWeek]++;
+  });
+
+  return fixtures;
+}
+
+function simCHLGame(f){
+  const ht=G.chl.teams.find(t=>t.id===f.home);
+  const at=G.chl.teams.find(t=>t.id===f.away);
+  function chlStr(team,home){
+    if(team.isSMliiga) return teamStr(team.id,home);
+    const base=clamp((team.rating-55)/27*18+55,50,75);
+    return base+(home?0.5:0)+rnd(-2,2);
+  }
+  const hStr=chlStr(ht,true);
+  const aStr=chlStr(at,false);
+  const hTarget=clamp((hStr-60)/15+2.8+0.3,1.2,4.5);
+  const aTarget=clamp((aStr-60)/15+2.8,1.2,4.5);
+  let hg=0,ag=0;
+  for(let i=0;i<10;i++){if(Math.random()<hTarget/10)hg++;}
+  for(let i=0;i<10;i++){if(Math.random()<aTarget/10)ag++;}
+  let ot=false;
+  if(hg===ag){ot=true;if(Math.random()<0.5)hg++;else ag++;}
+  f.hg=hg;f.ag=ag;f.played=true;f.ot=ot;
+
+  // Update standings (CHL points: W=3, OTW=2, OTL=1, L=0)
+  const hs=G.chl.standings[f.home];
+  const as=G.chl.standings[f.away];
+  if(hs){hs.GF+=hg;hs.GA+=ag;hs.played++;}
+  if(as){as.GF+=ag;as.GA+=hg;as.played++;}
+  if(hs&&as){
+    if(ot){
+      if(hg>ag){hs.OTW++;hs.pts+=2;as.OTL++;as.pts+=1;}
+      else{as.OTW++;as.pts+=2;hs.OTL++;hs.pts+=1;}
+    } else {
+      if(hg>ag){hs.W++;hs.pts+=3;as.L++;}
+      else{as.W++;as.pts+=3;hs.L++;}
+    }
+  }
+
+  // Prize money for wins
+  if(f.home===G.myId||f.away===G.myId){
+    const myG=f.home===G.myId?hg:ag;
+    const oppG=f.home===G.myId?ag:hg;
+    const won=myG>oppG;
+    G.chl.myGoals=(G.chl.myGoals||0)+myG;
+    G.chl.myGoalsAgainst=(G.chl.myGoalsAgainst||0)+oppG;
+    if(won){G.budget+=30000;addNews('green',`🏆 CHL voitto! +€30 000`);}
+    else if(ot){G.budget+=20000;addNews('',`🏒 CHL jatkoaika +€20 000`);}
+    const oppT=G.chl.teams.find(t=>t.id===(f.home===G.myId?f.away:f.home));
+    const myT=TEAMS.find(t=>t.id===G.myId);
+    addNews(won?'green':'',`CHL ${myT.em} ${myT.name} ${myG}–${oppG} ${oppT.em||oppT.nation} ${oppT.name}`);
+    // Extra fatigue for CHL week
+    G.players.filter(p=>p.team===G.myId).forEach(p=>{
+      p.fatigue=clamp((p.fatigue||0)+rnd(3,5),0,100);
+    });
+  } else {
+    const ht2=G.chl.teams.find(t=>t.id===f.home);
+    const at2=G.chl.teams.find(t=>t.id===f.away);
+    addNews('',`CHL ${ht2.em||ht2.nation} ${ht2.name} ${hg}–${ag}${ot?' JA':''} ${at2.em||at2.nation} ${at2.name}`);
+  }
+}
+
+function playCHLMatch(){
+  // Find pending CHL match (week = G.week-1 since we incremented already)
+  const f=G.chl.fixtures.find(x=>(x.home===G.myId||x.away===G.myId)&&!x.played&&x.week===G.week-1);
+  if(!f){renderOverview();return;}
+
+  const oppId=f.home===G.myId?f.away:f.home;
+  const opp=G.chl.teams.find(t=>t.id===oppId);
+  const myT=TEAMS.find(t=>t.id===G.myId);
+  const isHome=f.home===G.myId;
+
+  // Simulate result
+  // Foreign team ratings (65-85) map to teamStr scale (~60-90)
+  // Scale: rating 65 → teamStr ~62, rating 85 → teamStr ~80
+  function chlTeamStr(team,home){
+    if(team.isSMliiga) return teamStr(team.id,home);
+    // Scale foreign rating to teamStr equivalent
+    const base=clamp((team.rating-55)/27*18+55,50,75);
+    return base+(home?0.5:0)+rnd(-2,2);
+  }
+
+  const homeTeam=isHome?{id:G.myId,isSMliiga:true}:opp;
+  const awayTeam=isHome?opp:{id:G.myId,isSMliiga:true};
+  const hStr=chlTeamStr(homeTeam,true);
+  const aStr=chlTeamStr(awayTeam,false);
+  const hTarget=clamp((hStr-60)/15+2.8+0.3,1.2,4.5);
+  const aTarget=clamp((aStr-60)/15+2.8,1.2,4.5);
+  let hg=0,ag=0;
+  for(let i=0;i<10;i++){if(Math.random()<hTarget/10)hg++;}
+  for(let i=0;i<10;i++){if(Math.random()<aTarget/10)ag++;}
+  let ot=false;
+  if(hg===ag){ot=true;if(Math.random()<0.5)hg++;else ag++;}
+  f.hg=hg;f.ag=ag;f.played=true;f.ot=ot;
+
+  // Update CHL standings
+  const hs=G.chl.standings[f.home];
+  const as=G.chl.standings[f.away];
+  if(hs){hs.GF+=hg;hs.GA+=ag;hs.played++;}
+  if(as){as.GF+=ag;as.GA+=hg;as.played++;}
+  if(hs&&as){
+    if(ot){if(hg>ag){hs.OTW++;hs.pts+=2;as.OTL++;as.pts+=1;}else{as.OTW++;as.pts+=2;hs.OTL++;hs.pts+=1;}}
+    else{if(hg>ag){hs.W++;hs.pts+=3;as.L++;}else{as.W++;as.pts+=3;hs.L++;}}
+  }
+
+  const myG=isHome?hg:ag;
+  const oppG=isHome?ag:hg;
+  const won=myG>oppG;
+  if(won){G.budget+=30000;addNews('green',`🏆 CHL voitto! +€30 000`);}
+  else if(ot){G.budget+=20000;addNews('',`🏒 CHL jatkoaika +€20 000`);}
+  G.morale=clamp(G.morale+(won?6:-4),0,100);
+  G.players.filter(p=>p.team===G.myId&&!p.injured).forEach(p=>{
+    p.fatigue=clamp((p.fatigue||0)+rnd(3,5),0,100);
+    p.chlGames=(p.chlGames||0); // ensure field exists
+  });
+
+  // Show match animation
+  const homeT=isHome?myT:opp;
+  const awayT=isHome?opp:myT;
+  const homeDisplay=(isHome?myT.em:(opp.nation||'🏒'))+' '+(isHome?myT.name:opp.name);
+  const awayDisplay=(isHome?(opp.nation||'🏒'):myT.em)+' '+(isHome?opp.name:myT.name);
+
+  document.getElementById('m-h').textContent=homeDisplay;
+  document.getElementById('m-a').textContent=awayDisplay;
+  document.getElementById('m-sc').textContent='0 – 0';
+  document.getElementById('m-per').textContent='1. erä';
+  document.getElementById('m-type').textContent='🏆 Champions Hockey League';
+  document.getElementById('glog').innerHTML='';
+  document.getElementById('m-close').style.display='none';
+  document.getElementById('mov').style.display='block';
+
+  const goals=[];
+  for(let i=0;i<hg;i++) goals.push({side:'home',min:rnd(1,60)});
+  for(let i=0;i<ag;i++) goals.push({side:'away',min:rnd(1,60)});
+  if(ot) goals.push({side:hg>ag?'home':'away',min:rnd(61,65),isOT:true});
+  goals.sort((a,b)=>a.min-b.min);
+  // Remove the OT goal from regular goals if it was added
+  const regularGoals=goals.filter(g=>!g.isOT);
+  const otGoal=goals.find(g=>g.isOT);
+  const allGoals=otGoal?[...regularGoals,otGoal]:regularGoals;
+
+  let hs2=0,as2=0,gi=0;
+  function next(){
+    if(gi>=allGoals.length){
+      const suf=ot?' (JA)':'';
+      document.getElementById('m-per').textContent='LOPPUPISTE 🏁'+suf;
+      document.getElementById('m-close').style.display='block';
+      if(G.chl.fixtures.every(fx=>fx.played)) startCHLPlayoffs();
+      renderOverview();
+      return;
+    }
+    const g=allGoals[gi++];
+    if(g.side==='home')hs2++;else as2++;
+    document.getElementById('m-sc').textContent=hs2+' – '+as2;
+    const period=g.isOT?'JA':g.min<=20?'1. erä':g.min<=40?'2. erä':'3. erä';
+    document.getElementById('m-per').textContent=period;
+
+    // Determine if this is my team's goal
+    const isMyGoal=(g.side==='home')===isHome;
+    let scorerName;
+    let scorerPlayer=null;
+
+    if(isMyGoal){
+      // Own goal — use real player name
+      const fwds=G.players.filter(p=>p.team===G.myId&&p.pos==='V'&&!p.injured);
+      if(fwds.length){
+        scorerPlayer=pick(fwds);
+        scorerPlayer.chlGoals=(scorerPlayer.chlGoals||0)+1;
+        scorerPlayer.chlGames=(scorerPlayer.chlGames||0)+1;
+        scorerName=scorerPlayer.name;
+        const others=fwds.filter(p=>p!==scorerPlayer);
+        if(others.length&&Math.random()<0.7){
+          const assister=pick(others);
+          assister.chlAssists=(assister.chlAssists||0)+1;
+        }
+      } else {
+        scorerName=myT.name;
+      }
+    } else {
+      // Opponent goal — use opponent team name
+      scorerName=opp.name;
+    }
+    const gl=document.createElement('div');
+    gl.className='ge';
+    gl.textContent=`🏒 ${scorerName} ${g.min}'${g.isOT?' (JA)':''}`;
+    document.getElementById('glog').prepend(gl);
+    setTimeout(next,900);
+  }
+  setTimeout(next,600);
+}
+
+function closeCHLMatch(){
+  document.getElementById('mov').style.display='none';
+  renderOverview();
+}
+
+function getCHLSorted(){
+  return G.chl.teams.slice().sort((a,b)=>{
+    const sa=G.chl.standings[a.id]||{pts:0,GF:0,GA:0};
+    const sb=G.chl.standings[b.id]||{pts:0,GF:0,GA:0};
+    return sb.pts-sa.pts||(sb.GF-sb.GA)-(sa.GF-sa.GA);
+  });
+}
+
+function startCHLPlayoffs(){
+  const sorted=getCHLSorted().slice(0,16);
+  G.chl.myQualified=!!sorted.find(t=>t.id===G.myId);
+  G.chl.phase='r16';
+  // Bracket: 1v16, 2v15 ... 8v9
+  const matches=[];
+  for(let i=0;i<8;i++){
+    matches.push({t1:sorted[i].id,t2:sorted[15-i].id,
+      leg1:{hg:0,ag:0,played:false},leg2:{hg:0,ag:0,played:false},
+      done:false,winner:null,agg1:0,agg2:0});
+  }
+  G.chl.playoffs={phase:'r16',rounds:[
+    {name:'Round of 16',matches},
+    {name:'Neljännesvälierät',matches:[]},
+    {name:'Välierät',matches:[]},
+    {name:'Finaali',matches:[]}
+  ],currentRound:0};
+  if(G.chl.myQualified){
+    addNews('green','🏆 Oma joukkue jatkaa CHL pudotuspeleihin!');
+  } else {
+    addNews('red','❌ Oma joukkue ei jatkanut CHL pudotuspeleihin.');
+  }
+  renderCHL();
+}
+
+function simCHLLeg(m,isLeg2){
+  const homeId=isLeg2?m.t2:m.t1;
+  const awayId=isLeg2?m.t1:m.t2;
+  const ht=G.chl.teams.find(t=>t.id===homeId);
+  const at=G.chl.teams.find(t=>t.id===awayId);
+  function chlStr(team,home){
+    if(!team) return 65;
+    if(team.isSMliiga) return teamStr(team.id,home);
+    const base=clamp((team.rating-55)/27*18+55,50,75);
+    return base+(home?0.5:0)+rnd(-2,2);
+  }
+  const hStr=chlStr(ht,true);
+  const aStr=chlStr(at,false);
+  const hTarget=clamp((hStr-60)/15+2.8+0.3,1.2,4.5);
+  const aTarget=clamp((aStr-60)/15+2.8,1.2,4.5);
+  let hg=0,ag=0;
+  for(let i=0;i<10;i++){if(Math.random()<hTarget/10)hg++;}
+  for(let i=0;i<10;i++){if(Math.random()<aTarget/10)ag++;}
+  const leg=isLeg2?m.leg2:m.leg1;
+  leg.hg=hg;leg.ag=ag;leg.played=true;
+  // Update aggregate
+  if(isLeg2){
+    // t1 agg = leg1.hg + leg2.ag, t2 agg = leg1.ag + leg2.hg
+    m.agg1=m.leg1.hg+m.leg2.ag;
+    m.agg2=m.leg1.ag+m.leg2.hg;
+    if(m.agg1!==m.agg2){
+      m.done=true;m.winner=m.agg1>m.agg2?m.t1:m.t2;
+    } else {
+      // Sudden death OT — random
+      m.done=true;m.winner=Math.random()<0.5?m.t1:m.t2;
+    }
+    // Prize money
+    const prize={r16:150000,qf:250000,sf:400000}[G.chl.playoffs.rounds[G.chl.playoffs.currentRound].name==='Round of 16'?'r16':G.chl.playoffs.rounds[G.chl.playoffs.currentRound].name==='Neljännesvälierät'?'qf':'sf']||150000;
+    if(m.winner===G.myId){G.budget+=prize;addNews('green',`🏆 CHL voitto! +${fmt(prize)}`);}
+  }
+  // News
+  if(m.t1===G.myId||m.t2===G.myId){
+    const myG=homeId===G.myId?hg:ag;
+    const oppG=homeId===G.myId?ag:hg;
+    const oppId=homeId===G.myId?awayId:homeId;
+    const oppT=G.chl.teams.find(t=>t.id===oppId);
+    const myT=TEAMS.find(t=>t.id===G.myId);
+    addNews(myG>oppG?'green':'',`CHL ${isLeg2?'Paluuottelu':'1. ottelu'}: ${myT.em} ${myT.name} ${myG}–${oppG} ${oppT?.em||oppT?.nation} ${oppT?.name}`);
+    G.players.filter(p=>p.team===G.myId).forEach(p=>{p.fatigue=clamp((p.fatigue||0)+rnd(3,6),0,100);});
+  }
+}
+
+function advanceCHLRound(){
+  const r=G.chl.playoffs;
+  const cr=r.currentRound;
+  const isFinal=r.rounds[cr].name==='Finaali';
+  const winners=r.rounds[cr].matches.filter(m=>m.done).map(m=>m.winner);
+
+  if(isFinal){
+    const champion=winners[0];
+    const champT=G.chl.teams.find(t=>t.id===champion);
+    addNews('green',`🏆 CHL MESTARI: ${champT?.em||champT?.nation} ${champT?.name}!`);
+    if(champion===G.myId){
+      G.budget+=1200000;
+      G.prestige[G.myId]=clamp((G.prestige[G.myId]||5)+2,1,10);
+      addNews('green','🏆 CHL Mestaruus! +€1 200 000 + Prestige +2!');
+    }
+    G.chl.phase='done';
+    return;
+  }
+
+  // Build next round
+  const nextMatches=[];
+  for(let i=0;i<winners.length;i+=2){
+    if(winners[i]&&winners[i+1]){
+      nextMatches.push({t1:winners[i],t2:winners[i+1],
+        leg1:{hg:0,ag:0,played:false},leg2:{hg:0,ag:0,played:false},
+        done:false,winner:null,agg1:0,agg2:0});
+    }
+  }
+  r.currentRound++;
+  // Final is single leg
+  if(r.rounds[r.currentRound].name==='Finaali'){
+    nextMatches.forEach(m=>{m.leg2=null;});
+  }
+  r.rounds[r.currentRound].matches=nextMatches;
+  addNews('green',`🏒 CHL ${r.rounds[r.currentRound].name} alkavat!`);
+}
+function setCHLTab(tab){
+  ['table','fixtures','bracket'].forEach(t=>{
+    document.getElementById('chl-tab-'+t)?.classList.toggle('on',t===tab);
+    const el=document.getElementById('chl-'+t+'-view');
+    if(el) el.style.display=t===tab?'':'none';
+  });
+  if(tab==='table') renderCHLTable();
+  else if(tab==='fixtures') renderCHLFixtures();
+  else renderCHLBracket();
+}
+
+function renderCHL(){
+  if(!G.chl||!G.chl.teams.length) return;
+  const phaseNames={regular:'Runkosarja',r16:'Round of 16',qf:'Neljännesvälierät',sf:'Välierät',final:'Finaali',done:'Päättyi'};
+  const lbl=document.getElementById('chl-phase-lbl');
+  if(lbl) lbl.textContent=phaseNames[G.chl.phase]||G.chl.phase;
+  const st=G.chl.standings[G.myId];
+  const rank=getCHLSorted().findIndex(t=>t.id===G.myId)+1;
+  const status=document.getElementById('chl-my-status');
+  if(status&&st){
+    const q=rank<=16;
+    status.innerHTML=`<div style="display:flex;gap:12px;font-size:.78rem">
+      <div>Sija: <span style="color:${q?'var(--gr)':'var(--rd)'};font-family:'Barlow Condensed',sans-serif;font-size:.9rem">${rank}.</span></div>
+      <div>Pisteet: <span style="color:var(--ac)">${st.pts}</span></div>
+      <div>Pelattu: <span style="color:var(--mu)">${st.played}/6</span></div>
+      <div>Maalit: <span style="color:var(--mu)">${st.GF}-${st.GA}</span></div>
+    </div>
+    <div style="font-size:.68rem;color:${q?'var(--gr)':'var(--rd)'};margin-top:3px">${rank<=16?'✅ Jatkopaikalla (top 16)':'❌ Jatkopaikan ulkopuolella'}</div>`;
+  }
+  renderCHLTable();
+}
+
+function renderCHLTable(){
+  const el=document.getElementById('chl-table-view');
+  if(!el) return;
+  const sorted=getCHLSorted();
+  el.innerHTML=`<table class="tbl" style="font-size:.72rem">
+    <thead><tr><th>#</th><th>Joukkue</th><th class="c">O</th><th class="c">V</th><th class="c">OTV</th><th class="c">OTH</th><th class="c">H</th><th class="r">P</th></tr></thead>
+    <tbody>${sorted.map((t,i)=>{
+      const s=G.chl.standings[t.id]||{W:0,OTW:0,OTL:0,L:0,pts:0,played:0};
+      const isMe=t.id===G.myId;
+      return`<tr class="${isMe?'me':''}" style="${i===15?'border-bottom:2px solid var(--ac)':''}">
+        <td style="color:${i<16?'var(--gr)':'var(--mu)'}">${i+1}</td>
+        <td>${t.em||t.nation} ${t.name}${isMe?' 👈':''}</td>
+        <td class="c">${s.played}</td><td class="c">${s.W}</td><td class="c">${s.OTW}</td><td class="c">${s.OTL}</td><td class="c">${s.L}</td>
+        <td class="r" style="color:var(--ac);font-weight:700">${s.pts}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table>
+  <div style="font-size:.65rem;color:var(--mu);margin-top:4px">━ Top 16 jatkaa pudotuspeleihin</div>`;
+}
+
+function renderCHLFixtures(){
+  const el=document.getElementById('chl-fixtures-view');
+  if(!el) return;
+  const myFix=G.chl.fixtures.filter(f=>f.home===G.myId||f.away===G.myId);
+  if(!myFix.length){el.innerHTML='<p style="color:var(--mu);font-size:.8rem">Ei CHL-otteluita.</p>';return;}
+  el.innerHTML=myFix.map(f=>{
+    const oppId=f.home===G.myId?f.away:f.home;
+    const opp=G.chl.teams.find(t=>t.id===oppId);
+    const myG=f.home===G.myId?f.hg:f.ag;
+    const oppG=f.home===G.myId?f.ag:f.hg;
+    const isHome=f.home===G.myId;
+    if(!f.played) return`<div class="fix"><div class="fix-t">${isHome?'Koti':'Vieras'} vs ${opp?.em||opp?.nation} ${opp?.name}<span style="font-size:.65rem;color:var(--mu)"> · Viikko ${f.week}</span></div><span class="fix-r" style="color:var(--mu)">—</span></div>`;
+    const col=myG>oppG?'var(--gr)':myG<oppG?'var(--rd)':'var(--ac)';
+    return`<div class="fix"><div class="fix-t">${isHome?'Koti':'Vieras'} vs ${opp?.em||opp?.nation} ${opp?.name}</div><span class="fix-r" style="color:${col}">${myG}–${oppG}${f.ot?' JA':''}</span></div>`;
+  }).join('');
+}
+
+function renderCHLBracket(){
+  const el=document.getElementById('chl-bracket-view');
+  if(!el) return;
+  if(!G.chl.playoffs){el.innerHTML='<p style="color:var(--mu);font-size:.8rem;padding:10px 0">Pudotuspelit alkavat kun runkosarja on pelattu (top 16 jatkaa).</p>';return;}
+  let html='';
+  G.chl.playoffs.rounds.forEach(r=>{
+    if(!r.matches.length) return;
+    html+=`<div class="brd"><div class="brt">${r.name}</div>`;
+    r.matches.forEach(m=>{
+      const t1=G.chl.teams.find(t=>t.id===m.t1);
+      const t2=G.chl.teams.find(t=>t.id===m.t2);
+      const isMe=m.t1===G.myId||m.t2===G.myId;
+      html+=`<div class="brm" style="${isMe?'border-color:var(--ac)':''}">
+        <div class="brte ${m.done&&m.winner===m.t1?'win':m.done?'los':''}">${t1?.em||t1?.nation} ${t1?.name||'?'}${m.t1===G.myId?' 👈':''}<span style="float:right;color:var(--ac)">${m.agg1||0}</span></div>
+        <div class="brte ${m.done&&m.winner===m.t2?'win':m.done?'los':''}">${t2?.em||t2?.nation} ${t2?.name||'?'}${m.t2===G.myId?' 👈':''}<span style="float:right;color:var(--ac)">${m.agg2||0}</span></div>
+        <div class="brs">${m.done?`✅ ${G.chl.teams.find(t=>t.id===m.winner)?.name} voitti`:`${m.leg1.played?m.leg1.hg+'-'+m.leg1.ag:'—'} / ${m.leg2?.played?m.leg2.hg+'-'+m.leg2.ag:'—'}`}</div>
+      </div>`;
+    });
+    html+='</div>';
+  });
+  el.innerHTML=html||'<p style="color:var(--mu)">Bracket ei saatavilla</p>';
+}
+
 function renderTrainingCalendar(){
   const el=document.getElementById('training-calendar');
   if(!el) return;
   const selectedWeek=G.trainingSelectedWeek||G.week;
+
+  // Season overview — count training types in calendar
+  const counts={};
+  Object.values(G.trainingCalendar).forEach(id=>{counts[id]=(counts[id]||0)+1;});
+  const totalSet=Object.values(G.trainingCalendar).length;
+
+  let summaryHtml='';
+  if(totalSet>0){
+    summaryHtml=`<div style="padding:6px 8px;background:rgba(255,255,255,.04);border-radius:4px;margin-bottom:8px;font-size:.7rem">
+      <div style="color:var(--mu);margin-bottom:3px">📊 KAUDEN HARJOITUSJAKAUMA (${totalSet} viikkoa)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${TRAINING_OPTIONS.filter(t=>counts[t.id]).map(t=>`<span><strong style="color:var(--ac)">${counts[t.id]}×</strong> ${t.icon} ${t.name}</span>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Week navigation - show 4 weeks but allow scrolling
+  const startWeek=G.trainingViewStart||Math.max(1,G.week);
   const weeks=[];
-  for(let i=0;i<4;i++) weeks.push(G.week+i);
-  el.innerHTML='<div style="font-size:.68rem;color:var(--mu);margin-bottom:4px">Valitse viikko:</div>'+
+  for(let i=0;i<4;i++) weeks.push(startWeek+i);
+  const canBack=startWeek>1;
+  const canFwd=startWeek<23;
+
+  el.innerHTML=summaryHtml+
+    `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <button class="btn bsm" style="font-size:.7rem;padding:3px 8px;${!canBack?'opacity:.3':''}" onclick="${canBack?`scrollTrainingWeeks(-4)`:''}">◀ Edelliset</button>
+      <span style="font-size:.68rem;color:var(--mu)">Viikot ${startWeek}–${startWeek+3} / 26</span>
+      <button class="btn bsm" style="font-size:.7rem;padding:3px 8px;${!canFwd?'opacity:.3':''}" onclick="${canFwd?`scrollTrainingWeeks(4)`:''}">Seuraavat ▶</button>
+    </div>`+
     '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px">'+
     weeks.map(w=>{
       const tid=G.trainingCalendar[w];
@@ -1079,10 +1904,43 @@ function renderTrainingCalendar(){
     `<div style="font-size:.68rem;color:var(--mu);margin-bottom:4px">Harjoittelu viikolle ${selectedWeek}${selectedWeek===G.week?' (tämä viikko)':''}:</div>`;
 }
 
+function scrollTrainingWeeks(delta){
+  const cur=G.trainingViewStart||G.week;
+  G.trainingViewStart=clamp(cur+delta,1,26);
+  renderTrainingCalendar();
+}
+
 function selectTrainingWeek(week){
   G.trainingSelectedWeek=week;
   renderTrainingCalendar();
   renderTrainingCards();
+}
+
+function renderTrainingPlans(){
+  const el=document.getElementById('training-plans');
+  if(!el) return;
+  const active=G.activeTrainingPlan;
+  el.innerHTML=TRAINING_PLANS.map(p=>{
+    const isActive=p.id===active;
+    return`<button class="btn bsm" style="font-size:.66rem;padding:4px 6px;${isActive?'background:var(--ac);color:#000':'background:rgba(255,255,255,.06)'}" onclick="applyTrainingPlan('${p.id}')" title="${p.desc}">${p.icon} ${p.name}</button>`;
+  }).join('');
+}
+
+function renderCoach(){
+  const el=document.getElementById('coach-info');
+  if(!el) return;
+  const cur=getCoach();
+  el.innerHTML=`<div style="font-size:.78rem;margin-bottom:6px">
+    Nykyinen: <span style="color:var(--ac)">${cur.icon} ${cur.name}</span>
+    ${cur.wage>0?`<span style="color:var(--mu);font-size:.68rem"> (${fmt(cur.wage)}/vk)</span>`:''}
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:4px">
+    ${COACHES.map(c=>{
+      const isActive=c.id===(G.coach||'assistant');
+      const canAfford=c.wage===0||G.budget>=c.wage*4;
+      return`<button class="btn bsm" style="font-size:.66rem;padding:4px 6px;${isActive?'background:var(--ac);color:#000':'background:rgba(255,255,255,.06)'};${!canAfford?'opacity:.5':''}" onclick="hireCoach('${c.id}')" title="${c.desc}${c.wage>0?' · '+fmt(c.wage)+'/vk':''}">${c.icon} ${c.name}</button>`;
+    }).join('')}
+  </div>`;
 }
 
 function renderTrainingCards(){
@@ -1094,6 +1952,27 @@ function renderTrainingCards(){
     const red=t.effect.fatigueRed||0;
     const redCol=red>=15?'var(--gr)':red>=8?'var(--ac)':'var(--mu)';
     const isSelected=currentId===t.id;
+
+    // Long-term progress display
+    let progressHtml='';
+    if(t.effect.longTerm){
+      const lt=t.effect.longTerm;
+      const streak=(G.trainingStreak&&G.trainingStreak[lt])||0;
+      const target=lt==='tactics'?5:4;
+      let bonus='';
+      if(lt==='attack'&&G.seasonRatingBoost) bonus=`Hyökkääjien rating +${G.seasonRatingBoost.attack||0}/3`;
+      else if(lt==='defense'&&G.seasonRatingBoost) bonus=`Puolustajat+MV +${G.seasonRatingBoost.defense||0}/3`;
+      else if(lt==='fitness') bonus=`Rasitusbonus -${Math.round((G.fitnessBonus||0)*100)}%`;
+      else if(lt==='tactics'){
+        const tac=G.tactic||'cycle';
+        const boost=(G.seasonTacticBoost&&G.seasonTacticBoost[tac])||0;
+        bonus=`${tac}-synergia +${(boost*100).toFixed(0)}%/30%`;
+      }
+      progressHtml=`<div style="margin-top:4px;padding:4px 6px;background:rgba(240,165,0,.06);border-radius:3px;font-size:.65rem;color:var(--ac)">
+        Streak: ${streak}/${target} · ${bonus}
+      </div>`;
+    }
+
     return`<div class="tr-card ${isSelected?'sel':''}" onclick="selectTraining('${t.id}')">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div class="tr-title">${t.icon} ${t.name}</div>
@@ -1101,6 +1980,7 @@ function renderTrainingCards(){
       </div>
       <div class="tr-desc">${t.desc}</div>
       <div class="tr-cost">${t.cost>0?'Kustannus: '+fmt(t.cost):'Ilmainen'}</div>
+      ${progressHtml}
     </div>`;
   }).join('');
 }
@@ -1134,16 +2014,199 @@ function clearTrainingCalendar(){
   renderTrainingCalendar();
   notify('🗑 Harjoittelukalenteri tyhjennetty');
 }
+function applyTrainingPlan(planId){
+  const plan=TRAINING_PLANS.find(p=>p.id===planId);
+  if(!plan) return;
+  if(!plan.pattern){
+    // Custom — clear calendar
+    G.trainingCalendar={};
+    notify('🎨 Mukautettu: kalenteri tyhjennetty');
+    renderTrainingCalendar();
+    renderTrainingCards();
+    return;
+  }
+  // Fill weeks 1-26 (preseason + regular season)
+  for(let w=1;w<=26;w++){
+    G.trainingCalendar[w]=plan.pattern[(w-1)%plan.pattern.length];
+  }
+  G.activeTrainingPlan=planId;
+  notify(`${plan.icon} ${plan.name} -suunnitelma asetettu kaudelle`);
+  renderTrainingCalendar();
+  renderTrainingCards();
+}
+
+function hireCoach(coachId){
+  const coach=COACHES.find(c=>c.id===coachId);
+  if(!coach) return;
+  G.coach=coachId;
+  notify(`${coach.icon} ${coach.name} palkattu`);
+  renderTransfers();
+  renderCoach();
+}
+
+function getCoach(){
+  return COACHES.find(c=>c.id===(G.coach||'assistant'));
+}
+
+function getScout(){
+  return SCOUTS.find(s=>s.id===(G.scout||'self'));
+}
+
+function hireScout(scoutId){
+  const scout=SCOUTS.find(s=>s.id===scoutId);
+  if(!scout) return;
+  if(scout.cost>0&&G.budget<scout.cost){notify('⛔ Ei budjettia skoutin palkkaamiseen!');return;}
+  if(scout.cost>0) G.budget-=scout.cost;
+  G.scout=scoutId;
+  notify(`${scout.icon} ${scout.name} palkattu kaudelle (${scout.cost>0?fmt(scout.cost):'ilmainen'})`);
+  renderScout();
+  renderOverview();
+}
+
+function renderScout(){
+  const el=document.getElementById('scout-info');
+  if(!el) return;
+  const cur=getScout();
+  el.innerHTML=`<div style="font-size:.78rem;margin-bottom:6px">
+    Nykyinen: <span style="color:var(--ac)">${cur.icon} ${cur.name}</span>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:4px">
+    ${SCOUTS.map(s=>{
+      const isActive=s.id===(G.scout||'self');
+      const canAfford=s.cost===0||G.budget>=s.cost;
+      return`<button class="btn bsm" style="font-size:.66rem;padding:4px 6px;${isActive?'background:var(--ac);color:#000':'background:rgba(255,255,255,.06)'};${!canAfford?'opacity:.5':''}" onclick="hireScout('${s.id}')" title="${s.desc}${s.cost>0?' · '+fmt(s.cost)+'/kausi':''}">${s.icon} ${s.name}${s.cost>0?' ('+fmt(s.cost)+')':''}</button>`;
+    }).join('')}
+  </div>`;
+}
+
+function showScoutReport(oppId){
+  const opp=TEAMS.find(t=>t.id===oppId);
+  if(!opp) return;
+  const scout=getScout();
+  const myTac=G.tactic||'cycle';
+  const oppTac=getTacticForTeam(oppId);
+
+  // Calculate what to show based on scout level
+  const oppPlayers=G.players.filter(p=>p.team===oppId&&!p.injured).sort((a,b)=>b.rating-a.rating);
+  const attStr=teamAttStr(oppId,false);
+  const defStr=teamDefStr(oppId);
+  const lineupData=getLineupByPos(oppId);
+  const mvAvg=lineupData.mvs.length?lineupData.mvs.reduce((s,p)=>s+p.rating,0)/lineupData.mvs.length:60;
+
+  let html=`<div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--ac);text-align:center;margin-bottom:6px">${scout.icon} SKOUTTIRAPORTTI</div>`;
+  html+=`<div style="font-size:1rem;text-align:center;margin-bottom:10px">${opp.em} ${opp.name}</div>`;
+
+  if(scout.id==='self'){
+    // Itseopiskelu — basic info only
+    const overall=Math.round((attStr+defStr)/2);
+    html+=`<div style="padding:8px;background:rgba(255,255,255,.04);border-radius:4px;margin-bottom:8px">
+      <div style="font-size:.7rem;color:var(--mu);margin-bottom:4px">YLEISARVIO</div>
+      <div style="font-size:.85rem">Kokonaisvahvuus: <span style="color:var(--ac);font-weight:600">${overall}/99</span></div>
+      <div style="font-size:.78rem;color:var(--mu);margin-top:4px">Pelityyli: ${opp.style}</div>
+      <div style="font-size:.7rem;color:var(--mu);margin-top:6px">⚠️ Junior- tai Pää-skoutti antaa tarkemman raportin</div>
+    </div>`;
+  } else if(scout.id==='junior'){
+    // Junior — ±5 tarkkuus
+    const fuzz=v=>Math.round(v+(Math.random()-0.5)*10);
+    const attEst=fuzz(attStr);
+    const defEst=fuzz(defStr);
+    const mvEst=fuzz(mvAvg);
+    html+=`<div style="padding:8px;background:rgba(255,255,255,.04);border-radius:4px;margin-bottom:8px">
+      <div style="font-size:.7rem;color:var(--mu);margin-bottom:6px">📊 ARVIOIDUT VAHVUUDET (±5 tarkkuus)</div>
+      ${strBar('Hyökkäys',attEst)}
+      ${strBar('Puolustus',defEst)}
+      ${strBar('Maalivahti',mvEst)}
+    </div>`;
+    // Top 3 players
+    html+=`<div style="padding:8px;background:rgba(255,255,255,.04);border-radius:4px;margin-bottom:8px">
+      <div style="font-size:.7rem;color:var(--mu);margin-bottom:4px">⭐ AVAINPELAAJAT (Top 3)</div>
+      ${oppPlayers.slice(0,3).map(p=>`<div style="font-size:.78rem;padding:3px 0">${posIcon(p.pos)} ${p.name} <span style="color:var(--mu);font-size:.7rem">(${p.pos}, rating ~${Math.round(p.rating)})</span></div>`).join('')}
+    </div>`;
+    // Generic tactic hint
+    const matchup=getTacticMatchup(myTac,oppTac);
+    if(matchup.attBonus>0||matchup.defBonus>0){
+      html+=`<div style="padding:8px;background:rgba(76,175,80,.1);border:1px solid var(--gr);border-radius:4px;margin-bottom:8px">
+        <div style="font-size:.7rem;color:var(--gr);margin-bottom:4px">💡 TAKTINEN VINKKI</div>
+        <div style="font-size:.78rem">Vastustaja todennäköisesti pelaa <strong>${oppTac}</strong>. Nykyinen taktiikkasi (${myTac}) toimii hyvin tätä vastaan!</div>
+      </div>`;
+    } else if(matchup.attBonus<0||matchup.defBonus<0){
+      html+=`<div style="padding:8px;background:rgba(192,51,43,.1);border:1px solid var(--rd);border-radius:4px;margin-bottom:8px">
+        <div style="font-size:.7rem;color:var(--rd);margin-bottom:4px">⚠️ VAROITUS</div>
+        <div style="font-size:.78rem">Vastustaja pelaa <strong>${oppTac}</strong>. Nykyinen taktiikkasi (${myTac}) on heikossa asemassa.</div>
+      </div>`;
+    } else {
+      html+=`<div style="padding:8px;background:rgba(255,255,255,.04);border-radius:4px;margin-bottom:8px">
+        <div style="font-size:.78rem;color:var(--mu)">Vastustaja todennäköisesti pelaa <strong>${oppTac}</strong>.</div>
+      </div>`;
+    }
+  } else if(scout.id==='head'){
+    // Head scout — exact data, top 5, fatigue, recommendation
+    html+=`<div style="padding:8px;background:rgba(255,255,255,.04);border-radius:4px;margin-bottom:8px">
+      <div style="font-size:.7rem;color:var(--mu);margin-bottom:6px">📊 TARKAT VAHVUUDET</div>
+      ${strBar('Hyökkäys',Math.round(attStr))}
+      ${strBar('Puolustus',Math.round(defStr))}
+      ${strBar('Maalivahti',Math.round(mvAvg))}
+    </div>`;
+    // Top 5 with fatigue
+    html+=`<div style="padding:8px;background:rgba(255,255,255,.04);border-radius:4px;margin-bottom:8px">
+      <div style="font-size:.7rem;color:var(--mu);margin-bottom:4px">⭐ AVAINPELAAJAT (Top 5)</div>
+      ${oppPlayers.slice(0,5).map(p=>{
+        const fat=Math.round(p.fatigue||0);
+        const fatCol=fat>=70?'var(--rd)':fat>=40?'var(--ac)':'var(--gr)';
+        const fatIcon=fat>=70?'🔴':fat>=40?'🟡':'🟢';
+        return`<div style="display:flex;justify-content:space-between;align-items:center;font-size:.78rem;padding:3px 0;border-bottom:1px solid #141f2e">
+          <span>${posIcon(p.pos)} ${p.name} <span style="color:var(--mu);font-size:.7rem">(${p.pos}, ${p.rating})</span></span>
+          <span style="color:${fatCol};font-size:.7rem">${fatIcon} ${fat}</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+    // Find best tactic vs opponent
+    let bestTac=myTac, bestScore=-99, bestMatchup=null;
+    ['trap','forecheck','cycle','attack','dump'].forEach(t=>{
+      const m=getTacticMatchup(t,oppTac);
+      const score=m.attBonus-m.defBonus*0.5;
+      if(score>bestScore){bestScore=score;bestTac=t;bestMatchup=m;}
+    });
+    const curMatchup=getTacticMatchup(myTac,oppTac);
+    const tacNames={trap:'Trap',forecheck:'Forecheck',cycle:'Cycle',attack:'Hyökkäävä',dump:'Dump & Chase'};
+    html+=`<div style="padding:8px;background:rgba(76,175,80,.1);border:1px solid var(--gr);border-radius:4px;margin-bottom:8px">
+      <div style="font-size:.7rem;color:var(--gr);margin-bottom:4px">💡 TAKTINEN SUOSITUS</div>
+      <div style="font-size:.78rem;margin-bottom:4px">Vastustaja pelaa: <strong>${tacNames[oppTac]}</strong></div>
+      <div style="font-size:.78rem">Suositeltu taktiikka: <strong style="color:var(--gr)">${tacNames[bestTac]}</strong></div>
+      <div style="font-size:.7rem;color:var(--mu);margin-top:4px">Nykyinen (${tacNames[myTac]}): ${curMatchup.attBonus>=0?'+':''}${curMatchup.attBonus.toFixed(1)} hyökkäys, ${(curMatchup.defBonus*-0.5).toFixed(2)} maalia päästää</div>
+    </div>`;
+  }
+
+  html+=`<button class="btn bp bw" style="margin-top:6px" onclick="document.getElementById('scout-modal').style.display='none'">SULJE ✕</button>`;
+
+  document.getElementById('scout-modal-content').innerHTML=html;
+  document.getElementById('scout-modal').style.display='block';
+}
+
+function strBar(label,val){
+  const col=val>=75?'var(--gr)':val>=60?'var(--ac)':val>=50?'#e0a400':'var(--rd)';
+  return`<div style="display:flex;align-items:center;gap:8px;font-size:.75rem;padding:2px 0">
+    <span style="min-width:80px;color:var(--mu)">${label}</span>
+    <div style="flex:1;height:6px;background:var(--bd);border-radius:3px;overflow:hidden">
+      <div style="width:${val}%;height:100%;background:${col}"></div>
+    </div>
+    <span style="min-width:30px;text-align:right;color:${col};font-family:'Barlow Condensed',sans-serif">${val}</span>
+  </div>`;
+}
+
+function posIcon(pos){return pos==='M'?'🥅':pos==='P'?'🛡️':'🏒';}
+
 function applyTraining(){
-  // Read from calendar first, fall back to manually selected, then default
   const calId=G.trainingCalendar[G.week];
   const activeId=calId||G.trainingId||null;
   const opt=activeId?TRAINING_OPTIONS.find(t=>t.id===activeId):null;
   const e=opt?opt.effect:{fatigueRed:8};
   if(opt&&opt.cost>0) G.budget=Math.max(0,G.budget-opt.cost);
 
-  // Reduce fatigue for all my players
-  const fatigueRed=e.fatigueRed||8;
+  const coach=getCoach();
+
+  // Reduce fatigue for all my players (with coach fatigue bonus)
+  const fatigueRed=(e.fatigueRed||8)+(coach.fatigueBonus||0);
   G.players.filter(p=>p.team===G.myId).forEach(p=>{
     p.fatigue=clamp((p.fatigue||0)-fatigueRed,0,100);
   });
@@ -1154,8 +2217,65 @@ function applyTraining(){
   if(e.defenseBoost) G.trainingBoost.defense=e.defenseBoost;
   if(e.tacBoost) G.trainingBoost.tac=e.tacBoost;
 
+  // Track training streak for long-term effects
+  if(!G.trainingStreak) G.trainingStreak={};
+  if(!G.seasonRatingBoost) G.seasonRatingBoost={attack:0,defense:0};
+  if(!G.seasonTacticBoost) G.seasonTacticBoost={};
+
+  if(e.longTerm){
+    const lt=e.longTerm;
+    G.trainingStreak[lt]=(G.trainingStreak[lt]||0)+1;
+    Object.keys(G.trainingStreak).forEach(k=>{if(k!==lt) G.trainingStreak[k]=0;});
+
+    // Coach reduces streak target
+    const streakReduction=coach.streakReduction||0;
+    const attackTarget=Math.max(1,4-streakReduction);
+    const defenseTarget=Math.max(1,4-streakReduction);
+    const fitnessTarget=Math.max(1,4-streakReduction);
+    const tacticsTarget=Math.max(1,5-streakReduction);
+
+    if(lt==='attack' && G.trainingStreak.attack>=attackTarget){
+      G.trainingStreak.attack=0;
+      if(G.seasonRatingBoost.attack<3){
+        G.players.filter(p=>p.team===G.myId&&p.pos==='V').forEach(p=>{
+          p.rating=clamp(p.rating+1,40,99);
+        });
+        G.seasonRatingBoost.attack++;
+        addNews('green',`💪 Hyökkäysharjoitus tuotti tulosta! Hyökkääjien rating +1 (kauden boost: +${G.seasonRatingBoost.attack}/3)`);
+      }
+    } else if(lt==='defense' && G.trainingStreak.defense>=defenseTarget){
+      G.trainingStreak.defense=0;
+      if(G.seasonRatingBoost.defense<3){
+        G.players.filter(p=>p.team===G.myId&&(p.pos==='P'||p.pos==='M')).forEach(p=>{
+          p.rating=clamp(p.rating+1,40,99);
+        });
+        G.seasonRatingBoost.defense++;
+        addNews('green',`🛡️ Puolustusharjoitus tuotti tulosta! Puolustajat ja MV +1 (kauden boost: +${G.seasonRatingBoost.defense}/3)`);
+      }
+    } else if(lt==='fitness' && G.trainingStreak.fitness>=fitnessTarget){
+      G.trainingStreak.fitness=0;
+      G.fitnessBonus=clamp((G.fitnessBonus||0)+0.05,0,0.20);
+      addNews('green',`🏃 Kuntovalmennus tuotti tulosta! Pelaajien rasitus kasvaa hitaammin (-${Math.round(G.fitnessBonus*100)}%)`);
+    } else if(lt==='tactics' && G.trainingStreak.tactics>=tacticsTarget){
+      G.trainingStreak.tactics=0;
+      const tac=G.tactic;
+      if(tac){
+        const cur=G.seasonTacticBoost[tac]||0;
+        if(cur<0.30){
+          G.seasonTacticBoost[tac]=Math.min(0.30,cur+0.05);
+          addNews('green',`📋 Taktinen harjoitus tuotti tulosta! ${tac} synergia +0.05 (yhteensä +${(G.seasonTacticBoost[tac]*100).toFixed(0)}%)`);
+        }
+      }
+    }
+  } else {
+    if(activeId&&['rest','light'].includes(activeId)){
+      // rest/light don't break streaks
+    } else {
+      G.trainingStreak={};
+    }
+  }
+
   G.trainingId=null;
-  // Update label for next week
   const nextId=G.trainingCalendar[G.week+1];
   const nextOpt=nextId?TRAINING_OPTIONS.find(t=>t.id===nextId):null;
   const lbl=document.getElementById('train-lbl');
@@ -1200,6 +2320,19 @@ function renderOverview(){
   const prestigeStars='⭐'.repeat(Math.round(myPrestige/2));
   document.getElementById('ov-phase').textContent=(G.phase==='preseason'?'🏒 Esikausi':G.phase==='regular'?'📅 Runkosarja':G.phase==='playoffs'?'🏆 Playoffs':'✅ Päättyi')+' · Prestige '+myPrestige+'/10 '+prestigeStars;
 
+  // CHL week indicator
+  if(G.chl&&G.chl.active&&G.chl.phase==='regular'){
+    const nextCHLFix=G.chl.fixtures.find(f=>(f.home===G.myId||f.away===G.myId)&&!f.played);
+    if(nextCHLFix){
+      const chlBanner=document.getElementById('crisis-div');
+      const oppId=nextCHLFix.home===G.myId?nextCHLFix.away:nextCHLFix.home;
+      const opp=G.chl.teams.find(t=>t.id===oppId);
+      if(nextCHLFix.week===G.week+1||nextCHLFix.week===G.week){
+        addNews('green',`🏆 CHL-ottelu viikolla ${nextCHLFix.week}: vs ${opp?.nation} ${opp?.name}`);
+      }
+    }
+  }
+
   // Crisis banner
   const cb=document.getElementById('crisis-div');
   const injured=G.players.filter(p=>p.team===G.myId&&p.injured);
@@ -1224,7 +2357,14 @@ function renderOverview(){
 
   renderNewsPanel();
   renderNextMatch();
-  renderTrainingCalendar();
+  // Update training summary widget
+  const sumEl=document.getElementById('train-summary');
+  if(sumEl){
+    const coach=getCoach();
+    const scout=getScout();
+    const plan=G.activeTrainingPlan?TRAINING_PLANS.find(p=>p.id===G.activeTrainingPlan):null;
+    sumEl.innerHTML=`${coach.icon} ${coach.name}${coach.wage>0?` (${fmt(coach.wage)}/vk)`:''} · ${scout.icon} ${scout.name}${plan?` · ${plan.icon} ${plan.name}`:''}`;
+  }
 }
 
 function renderNextMatch(){
@@ -1256,21 +2396,48 @@ function renderNextMatch(){
   if(G.phase==='regular'){
     const next=G.fixtures.find(f=>!f.played&&!f.preseason&&(f.home===G.myId||f.away===G.myId));
     if(!next){
-      // Simulate all remaining AI fixtures before playoffs
       G.fixtures.filter(f=>!f.played&&!f.preseason).forEach(f=>simFix(f,false));
       pnl.innerHTML='<div class="pt">✅ Runkosarja päättyi</div>'+
         '<p style="color:var(--ac);font-family:Barlow Condensed;font-size:.9rem;margin-bottom:8px">Siirrytään pudotuspeleihin!</p>'+
         '<button class="btn bp bw" onclick="endRegularSeason()">🏆 KAUDEN PALKINNOT & PLAYOFFS</button>';
       return;
     }
+
+    // Check if there's a pending CHL match this week (SM-liiga already played, CHL pending)
+    const pendingCHL=G.chl&&G.chl.active&&G.chl.phase==='regular'
+      ? G.chl.fixtures.find(f=>(f.home===G.myId||f.away===G.myId)&&!f.played&&f.week===G.week-1)
+      : null;
+
+    if(pendingCHL){
+      const oppId=pendingCHL.home===G.myId?pendingCHL.away:pendingCHL.home;
+      const opp=G.chl.teams.find(t=>t.id===oppId);
+      const isHome=pendingCHL.home===G.myId;
+      const myT=TEAMS.find(x=>x.id===G.myId);
+      pnl.innerHTML=
+        '<div class="pt" style="color:var(--ac)">🏆 CHL-OTTELU</div>'+
+        `<div style="font-size:.82rem;margin-bottom:7px;line-height:1.4">`+
+        `<span style="font-size:.66rem;color:var(--ac);font-family:Barlow Condensed">CHAMPIONS HOCKEY LEAGUE · Runkosarja</span><br>`+
+        `<strong>${isHome?myT.em+' '+myT.name:opp.nation+' '+opp.name}</strong> vs `+
+        `<strong>${isHome?opp.nation+' '+opp.name:myT.em+' '+myT.name}</strong><br>`+
+        `<span style="color:var(--mu);font-size:.68rem">${isHome?'Kotijää':'Vierasjää'} · CHL runkosarja</span></div>`+
+        getTacticButtons()+
+        '<div style="font-size:.66rem;color:var(--mu);margin-bottom:7px">Taktiikka: <span id="tac-lbl2" style="color:var(--ac)">'+G.tactic+'</span></div>'+
+        '<button class="btn bp bw" style="background:linear-gradient(135deg,#1a3a6e,#0d2244)" id="play-btn" onclick="playCHLMatch()">🏆 PELAA CHL-OTTELU</button>';
+      return;
+    }
+
     const ht=TEAMS.find(x=>x.id===next.home),at=TEAMS.find(x=>x.id===next.away);
     const myPlayed=G.fixtures.filter(x=>x.played&&!x.preseason&&(x.home===G.myId||x.away===G.myId)).length;
     const totalGames=(TEAMS.length-1)*2;
+    // Check if next SM-liiga week is also a CHL week
+    const isCHLWeek=G.chl&&G.chl.active&&G.chl.phase==='regular'
+      && G.chl.fixtures.some(f=>(f.home===G.myId||f.away===G.myId)&&!f.played&&f.week===next.week);
     pnl.innerHTML=
-      '<div class="pt">⏭ Seuraava ottelu</div>'+
+      '<div class="pt">⏭ Seuraava ottelu'+(isCHLWeek?' <span style="color:var(--ac);font-size:.65rem">+ CHL</span>':'')+'</div>'+
       `<div id="next-info" style="font-size:.82rem;margin-bottom:7px;line-height:1.4">`+
       `<strong>${ht.em} ${ht.name}</strong> vs <strong>${at.em} ${at.name}</strong><br>`+
-      `<span style="color:var(--mu);font-size:.68rem">Viikko ${next.week} · Ottelu ${myPlayed+1}/${totalGames}</span></div>`+
+      `<span style="color:var(--mu);font-size:.68rem">Viikko ${next.week} · Ottelu ${myPlayed+1}/${totalGames}${isCHLWeek?' · 🏆 CHL-viikko':''}</span></div>`+
+      `<button class="btn bsm" style="margin-bottom:6px;font-size:.7rem;padding:4px 8px" onclick="showScoutReport('${next.home===G.myId?next.away:next.home}')">👁️ Skouttiraportti</button>`+
       getTacticButtons()+
       '<div style="font-size:.66rem;color:var(--mu);margin-bottom:7px">Taktikka: <span id="tac-lbl2" style="color:var(--ac)">'+G.tactic+'</span></div>'+
       '<button class="btn bp bw" id="play-btn" onclick="playNext()">▶ PELAA OTTELU</button>';
@@ -1299,7 +2466,12 @@ function getTacticButtons(){
     }).join('')+'</div>';
 }
 
-function setTac(t){G.tactic=t;renderOverview();}
+function setTac(t){
+  G.tactic=t;
+  const lbl2=document.getElementById('tac-lbl2');
+  if(lbl2) lbl2.textContent=t;
+  renderOverview();
+}
 function startRegularSeason(){
   G.phase='regular';
   // Set week to the first regular season fixture's week
@@ -1381,12 +2553,17 @@ function playNext(){
     squad.forEach(p=>{p.fatigue=clamp((p.fatigue||0)-fatigueRed,0,100);});
   });
   triggerRandomEvent();
+  const chlWeekCheck=G.week; // save before increment
   G.week++;
   updateHdr();
   simFix(next,true);
-  // developPlayers called once per week after all matches
+  // Simulate non-player CHL games this week
+  if(G.chl&&G.chl.active&&G.chl.phase==='regular'){
+    G.chl.fixtures.filter(f=>f.week===chlWeekCheck&&!f.played&&f.home!==G.myId&&f.away!==G.myId)
+      .forEach(f=>simCHLGame(f));
+  }
+  // developPlayers called once per week
   developPlayers();
-  const savedRecovery=G.trainingBoost.recovery;
   G.trainingBoost={};
   G.aiTrainingBoost={};
 }
@@ -1395,7 +2572,9 @@ function processFinances(){
   const wages=myWages();
   const spInc=sponsorIncome();
   const tickInc=ticketIncome();
-  const net=tickInc+spInc-wages;
+  const coach=getCoach();
+  const coachCost=(coach.wage||0)*4; // monthly cost
+  const net=tickInc+spInc-wages-coachCost;
   G.budget+=net;
 
   // Crisis check
@@ -1507,94 +2686,185 @@ function positionPenalty(p,slotPos){
 }
 
 // ══════════════════════════════════════
-// TEAM STRENGTH
+// TEAM STRENGTH — separated attack/defense
 // ══════════════════════════════════════
-function teamStr(tid,isHome){
+function getLineupByPos(tid){
+  // Returns {fwds, defs, mvs} from lineup (player) or top-N (AI)
   const pl=G.players.filter(p=>p.team===tid&&!p.injured);
-  if(!pl.length) return 58;
-
-  let avg;
-  let activePlayers=pl; // used later for synergy calc
+  if(!pl.length) return {fwds:[],defs:[],mvs:[]};
 
   if(tid===G.myId){
-    const inL=Object.entries(G.lineup).map(([k,id])=>{
-      const p=G.players.find(x=>x.id===id);
-      if(!p) return null;
-      const slotPos=k.startsWith('mv')?'M':k.startsWith('d')?'P':'V';
-      const effRating=positionPenalty(p,slotPos);
-      return{...p,effRating:effRating*fatigueMod(p)};
-    }).filter(Boolean);
-    const active=inL.length>=5?inL:pl.map(p=>({...p,effRating:p.rating*fatigueMod(p)}));
-    activePlayers=active;
-    avg=active.reduce((s,p)=>s+(p.effRating||p.rating*fatigueMod(p)),0)/active.length;
-  } else {
-    const sorted=pl.slice().sort((a,b)=>b.rating-a.rating);
-    const starters=sorted.slice(0,Math.min(18,sorted.length));
-    activePlayers=starters;
-    avg=starters.reduce((s,p)=>s+p.rating*fatigueMod(p),0)/starters.length;
+    const lineupSize=Object.keys(G.lineup).length;
+    if(lineupSize>=5){
+      // Use manually set lineup — split by slot key
+      const fwds=[],defs=[],mvs=[];
+      Object.entries(G.lineup).forEach(([k,id])=>{
+        const p=G.players.find(x=>x.id===id);
+        if(!p||p.injured) return;
+        const slotPos=k.startsWith('mv')?'M':k.startsWith('d')?'P':'V';
+        const eff=positionPenalty(p,slotPos)*fatigueMod(p);
+        if(slotPos==='M') mvs.push({...p,eff});
+        else if(slotPos==='P') defs.push({...p,eff});
+        else fwds.push({...p,eff});
+      });
+      return {fwds,defs,mvs};
+    }
   }
+  // Fallback / AI: use top-N per position (realistic squad split)
+  const sortedMv=pl.filter(p=>p.pos==='M').sort((a,b)=>b.rating-a.rating).slice(0,2);
+  const sortedDef=pl.filter(p=>p.pos==='P').sort((a,b)=>b.rating-a.rating).slice(0,7);
+  const sortedFwd=pl.filter(p=>p.pos==='V').sort((a,b)=>b.rating-a.rating).slice(0,12);
+  const eff=p=>p.rating*fatigueMod(p);
+  return {
+    fwds:sortedFwd.map(p=>({...p,eff:eff(p)})),
+    defs:sortedDef.map(p=>({...p,eff:eff(p)})),
+    mvs:sortedMv.map(p=>({...p,eff:eff(p)})),
+  };
+}
 
-  let mod=0;
+function avgEff(arr){return arr.length?arr.reduce((s,p)=>s+(p.eff||p.rating),0)/arr.length:60;}
+
+// Synergy multiplier: scales tactic effectiveness based on roster fit
+// 0% match → 0.3x (tactic struggles), 50% → 1.0x (normal), 100% → 1.7x (perfect fit)
+function getSynergyMultiplier(players, bestProfiles){
+  if(!players.length) return 1.0;
+  const matching=players.filter(p=>bestProfiles.includes(p.profile||'')).length;
+  const fraction=matching/players.length;
+  return clamp(0.3+fraction*1.4,0.3,1.7);
+}
+
+function teamAttStr(tid,isHome){
+  const {fwds,defs,mvs}=getLineupByPos(tid);
+  const fwdAvg=avgEff(fwds);
+  let att=fwdAvg;
+
   if(tid===G.myId){
     const tac=TACTICS.find(t=>t.id===G.tactic)||TACTICS[2];
-    mod+=tac.defMod*3;
-    const synergy=activePlayers.filter(p=>tac.bestProfiles.includes(p.profile||'')).length;
-    mod+=synergy*0.3;
-    mod+=G.morale/20;
-    if(G.trainingBoost.tac&&isHome) mod+=avg*G.trainingBoost.tac;
-    const leaders=activePlayers.filter(p=>p.profile==='leader').length;
-    mod+=leaders*0.5;
+    // Synergy multiplier scales tactic attack effectiveness
+    let synMult=getSynergyMultiplier(fwds,tac.bestProfiles);
+    // Long-term tactic training bonus
+    if(G.seasonTacticBoost&&G.seasonTacticBoost[G.tactic]) synMult+=G.seasonTacticBoost[G.tactic];
+    att+=tac.attMod*3*synMult;
+    att+=G.morale/20;
+    if(G.trainingBoost.attack) att+=G.trainingBoost.attack*3;
+    if(G.trainingBoost.tac&&isHome) att+=fwdAvg*G.trainingBoost.tac;
   } else {
     const td=TEAMS.find(x=>x.id===tid);
     const aiTacId=td?.style==='hyökkäävä'?'forecheck':td?.style==='puolustava'?'trap':'cycle';
     const aiTac=TACTICS.find(t=>t.id===aiTacId)||TACTICS[2];
-    mod+=aiTac.defMod*3;
-    const aiSynergy=activePlayers.filter(p=>aiTac.bestProfiles.includes(p.profile||'')).length;
-    mod+=aiSynergy*0.3;
-    const aiMor=G.aiMorale[tid]||65;
-    mod+=aiMor/20;
+    const aiSynMult=getSynergyMultiplier(fwds,aiTac.bestProfiles);
+    att+=aiTac.attMod*3*aiSynMult;
+    att+=(G.aiMorale[tid]||65)/20;
     const aiBoost=G.aiTrainingBoost[tid]||{};
-    if(aiBoost.tac&&isHome) mod+=avg*aiBoost.tac;
-    const aiLeaders=activePlayers.filter(p=>p.profile==='leader').length;
-    mod+=aiLeaders*0.5;
+    if(aiBoost.attack) att+=aiBoost.attack*3;
+    if(aiBoost.tac&&isHome) att+=fwdAvg*aiBoost.tac;
   }
+  return att;
+}
 
-  return avg+mod;
+function teamDefStr(tid){
+  const {fwds,defs,mvs}=getLineupByPos(tid);
+  const defAvg=avgEff(defs);
+  const mvAvg=avgEff(mvs);
+  const weighted=(defAvg*1.0+mvAvg*1.5)/2.5;
+  let def=weighted;
+
+  if(tid===G.myId){
+    const tac=TACTICS.find(t=>t.id===G.tactic)||TACTICS[2];
+    const defPlayers=[...defs,...mvs];
+    let synMult=getSynergyMultiplier(defPlayers,tac.bestProfiles);
+    if(G.seasonTacticBoost&&G.seasonTacticBoost[G.tactic]) synMult+=G.seasonTacticBoost[G.tactic];
+    def+=tac.defMod*3*synMult;
+    if(G.trainingBoost.defense) def+=G.trainingBoost.defense*3;
+    const leaders=defPlayers.filter(p=>p.profile==='leader').length;
+    def+=leaders*0.5;
+  } else {
+    const td=TEAMS.find(x=>x.id===tid);
+    const aiTacId=td?.style==='hyökkäävä'?'forecheck':td?.style==='puolustava'?'trap':'cycle';
+    const aiTac=TACTICS.find(t=>t.id===aiTacId)||TACTICS[2];
+    const defPlayers=[...defs,...mvs];
+    const aiSynMult=getSynergyMultiplier(defPlayers,aiTac.bestProfiles);
+    def+=aiTac.defMod*3*aiSynMult;
+    const aiBoost=G.aiTrainingBoost[tid]||{};
+    if(aiBoost.defense) def+=aiBoost.defense*3;
+    const leaders=defPlayers.filter(p=>p.profile==='leader').length;
+    def+=leaders*0.5;
+  }
+  return def;
+}
+
+// Keep teamStr for backward compatibility (kausiennakko etc)
+function teamStr(tid,isHome){
+  const att=teamAttStr(tid,isHome);
+  const def=teamDefStr(tid);
+  return (att+def)/2;
+}
+
+// ══════════════════════════════════════
+// TACTIC MATCHUP — rock-paper-scissors
+// ══════════════════════════════════════
+// Returns {attBonus, defBonus} — how my tactic performs vs opponent's tactic
+// Trap > Hyökkäävä > Cycle > Forecheck > Trap (cycle)
+// Dump&Chase neutral
+function getTacticMatchup(myTacId, oppTacId){
+  const matchups={
+    // myTac: { oppTac: {attBonus, defBonus} }
+    'trap': {
+      'attack':    {attBonus:0,    defBonus:+0.5},  // Trap kills Hyökkäävä's attack
+      'forecheck': {attBonus:-0.3, defBonus:-0.3},  // Forecheck breaks Trap
+      'cycle':     {attBonus:0,    defBonus:+0.1},
+    },
+    'forecheck': {
+      'trap':      {attBonus:+0.5, defBonus:0},     // Forecheck breaks Trap
+      'cycle':     {attBonus:-0.3, defBonus:-0.3},  // Cycle wears down Forecheck
+      'attack':    {attBonus:0,    defBonus:+0.1},
+    },
+    'cycle': {
+      'forecheck': {attBonus:+0.3, defBonus:+0.3},  // Cycle wears down Forecheck
+      'attack':    {attBonus:-0.3, defBonus:-0.3},  // Hyökkäävä speed breaks Cycle
+      'trap':      {attBonus:+0.1, defBonus:0},
+    },
+    'attack': {
+      'cycle':     {attBonus:+0.5, defBonus:0},     // Hyökkäävä breaks Cycle
+      'trap':      {attBonus:-0.3, defBonus:-0.3},  // Trap kills Hyökkäävä
+      'forecheck': {attBonus:0,    defBonus:-0.1},
+    },
+    'dump': {
+      // Neutral against all
+    },
+  };
+  const m=matchups[myTacId];
+  if(!m) return {attBonus:0,defBonus:0};
+  return m[oppTacId]||{attBonus:0,defBonus:0};
+}
+
+function getTacticForTeam(tid){
+  if(tid===G.myId) return G.tactic||'cycle';
+  const td=TEAMS.find(x=>x.id===tid);
+  return td?.style==='hyökkäävä'?'forecheck':td?.style==='puolustava'?'trap':'cycle';
 }
 
 function simGoals(tid,isHome,vsId){
-  const str=teamStr(tid,isHome);
-  let hm=isHome?0.3:0;
+  const att=teamAttStr(tid,isHome);
+  const def=vsId?teamDefStr(vsId):60;
 
-  // Apply tactic attack modifiers
-  if(tid===G.myId){
-    const tac=TACTICS.find(t=>t.id===G.tactic)||TACTICS[2];
-    hm+=tac.attMod*0.4;
-    if(G.trainingBoost.attack) hm+=G.trainingBoost.attack*0.5;
-  } else {
-    const td=TEAMS.find(x=>x.id===tid);
-    const aiTacId=td?.style==='hyökkäävä'?'forecheck':td?.style==='puolustava'?'trap':'cycle';
-    const aiTac=TACTICS.find(t=>t.id===aiTacId)||TACTICS[2];
-    hm+=aiTac.attMod*0.4;
-    const aiAtk=G.aiTrainingBoost[tid];
-    if(aiAtk?.attack) hm+=aiAtk.attack*0.5;
+  // Home advantage
+  const hm=isHome?0.3:0;
+
+  // Tactic matchup bonus
+  let matchupAtt=0, matchupDef=0;
+  if(vsId){
+    const myTac=getTacticForTeam(tid);
+    const oppTac=getTacticForTeam(vsId);
+    const matchup=getTacticMatchup(myTac,oppTac);
+    matchupAtt=matchup.attBonus;
+    matchupDef=matchup.defBonus;
   }
 
-  // Defense modifiers reduce opponent scoring
-  if(vsId&&vsId===G.myId){
-    const tac=TACTICS.find(t=>t.id===G.tactic)||TACTICS[2];
-    hm-=tac.defMod*0.2;
-    if(G.trainingBoost.defense) hm-=G.trainingBoost.defense*0.5;
-  } else if(vsId){
-    const vsTd=TEAMS.find(x=>x.id===vsId);
-    const vsTacId=vsTd?.style==='hyökkäävä'?'forecheck':vsTd?.style==='puolustava'?'trap':'cycle';
-    const vsTac=TACTICS.find(t=>t.id===vsTacId)||TACTICS[2];
-    hm-=vsTac.defMod*0.2;
-    const aiDef=G.aiTrainingBoost[vsId];
-    if(aiDef?.defense) hm-=aiDef.defense*0.5;
-  }
-
-  const target=clamp((str-60)/15+2.8+hm,1.2,4.5);
+  // Net: own attack vs opponent defense + matchup
+  // (att-60)/18: strong att=72 → +0.67, weak att=53 → -0.39
+  // (def-60)*0.4: strong def=72 → -0.48, weak def=50 → +0.40
+  const target=clamp((att-60)/18+2.5+hm-(def-60)*0.4/10+matchupAtt-matchupDef*0.5,0.8,4.2);
   let g=0;for(let i=0;i<10;i++) if(Math.random()<target/10) g++;
   return g;
 }
@@ -1603,13 +2873,10 @@ function simGoals(tid,isHome,vsId){
 // SPECIAL TEAMS — PP / PK
 // ══════════════════════════════════════
 function getSpecialTeamsStrength(type,tid){
-  // type: 'pp' or 'pk'
-  // Returns 0-100 strength value based on lineup or auto-pick for AI
   let players=[];
   if(tid===G.myId){
     const lineup=type==='pp'?G.ppLineup:G.pkLineup;
     players=Object.values(lineup).map(id=>G.players.find(p=>p.id===id)).filter(Boolean);
-    // If no special teams lineup set, fall back to top players
     if(players.length<3){
       const fwds=getPool('V').slice(0,type==='pp'?3:2);
       const defs=getPool('P').slice(0,2);
@@ -1773,11 +3040,13 @@ function fatigueMod(p){
   return 0.75;
 }
 
-function fatigueGain(chainLevel,profile){
+function fatigueGain(chainLevel,profile,playerTeam){
   const base=(chainLevel===1)?rnd(5,8):(chainLevel===2)?rnd(4,6):(chainLevel===3)?rnd(3,5):(chainLevel===4)?rnd(2,4):rnd(0,1);
   const prof=PROFILES.find(p=>p.id===profile);
   const multi=prof?prof.fatigueMulti:1.0;
-  return Math.round(base*multi);
+  // Fitness training bonus reduces fatigue gain
+  const fitnessReduction=(playerTeam===G.myId&&G.fitnessBonus)?G.fitnessBonus:0;
+  return Math.round(base*multi*(1-fitnessReduction));
 }
 
 function developPlayers(){
@@ -1818,7 +3087,7 @@ function developPlayers(){
     if(p.team===G.myId){
       if(!p.injured){
         const chainLevel=getPlayerChainLevel(p.id);
-        p.fatigue=clamp(p.fatigue+fatigueGain(chainLevel,p.profile),0,100);
+        p.fatigue=clamp(p.fatigue+fatigueGain(chainLevel,p.profile,p.team),0,100);
       }
     } else {
       if(!p.injured){
@@ -1829,7 +3098,7 @@ function developPlayers(){
         else if(rank<12) aiChain=2;
         else if(rank<18) aiChain=3;
         if(p.fatigue>70) aiChain=Math.min(aiChain+2,5);
-        p.fatigue=clamp(p.fatigue+fatigueGain(aiChain,p.profile),0,100);
+        p.fatigue=clamp(p.fatigue+fatigueGain(aiChain,p.profile,p.team),0,100);
       }
       p.fatigue=clamp(p.fatigue-8,0,100);
     }
@@ -2248,11 +3517,19 @@ function aiOptimize(){
 // ══════════════════════════════════════
 function setFxTab(t){
   G.fxTab=t;
-  document.querySelectorAll('#s-fx .stab').forEach((b,i)=>b.classList.toggle('on',(i===0&&t==='mine')||(i===1&&t==='all')));
+  document.querySelectorAll('#s-fx .stab').forEach((b,i)=>{
+    b.classList.toggle('on',(i===0&&t==='mine')||(i===1&&t==='all')||(i===2&&t==='chl'));
+  });
   renderFixtures();
 }
+
 function renderFixtures(){
   const tab=G.fxTab||'mine';
+  const chlTabBtn=document.getElementById('fx-tab-chl');
+  if(chlTabBtn) chlTabBtn.style.display=G.chl&&G.chl.active?'':'none';
+
+  if(tab==='chl'){renderCHLFixturesList();return;}
+
   let items=tab==='mine'
     ?G.fixtures.filter(f=>f.home===G.myId||f.away===G.myId||(f.preseason&&f.home===G.myId))
     :G.fixtures;
@@ -2266,7 +3543,8 @@ function renderFixtures(){
     const wf=byWeek[week];
     const allPlayed=wf.every(f=>f.played);
     if(allPlayed&&week<lastPW-1) return;
-    html+=`<div class="whdr">${week<=4&&wf.some(f=>f.preseason)?'Esikausi — ':''}Viikko ${week}</div>`;
+    const isCHLWeek=G.chl&&G.chl.active&&[5,7,9,11,13,15].includes(week);
+    html+=`<div class="whdr">Viikko ${week}${isCHLWeek?' <span style="color:var(--ac);font-size:.6rem">🏆 CHL</span>':''}</div>`;
     wf.forEach(f=>{
       const ht=f.preseason?TEAMS.find(x=>x.id===f.home):{em:'',name:''};
       const htName=f.preseason?`${ht.em} ${ht.name}`:TEAMS.find(x=>x.id===f.home)?.em+' '+TEAMS.find(x=>x.id===f.home)?.name;
@@ -2285,10 +3563,51 @@ function renderFixtures(){
   document.getElementById('fx-list').innerHTML=html||'<p style="color:var(--mu);text-align:center;padding:12px">Ei otteluita</p>';
 }
 
+function renderCHLFixturesList(){
+  if(!G.chl||!G.chl.fixtures.length){
+    document.getElementById('fx-list').innerHTML='<p style="color:var(--mu);text-align:center;padding:12px">Ei CHL-otteluita</p>';
+    return;
+  }
+  const byWeek={};
+  G.chl.fixtures.forEach(f=>{if(!byWeek[f.week])byWeek[f.week]=[];byWeek[f.week].push(f);});
+  const weeks=Object.keys(byWeek).map(Number).sort((a,b)=>a-b);
+  let html='<div style="font-size:.72rem;color:var(--ac);font-family:Barlow Condensed,sans-serif;padding:6px 0 4px;letter-spacing:.05em">🏆 CHAMPIONS HOCKEY LEAGUE</div>';
+  weeks.forEach(week=>{
+    html+=`<div class="whdr">CHL — Viikko ${week}</div>`;
+    byWeek[week].forEach(f=>{
+      const ht=G.chl.teams.find(t=>t.id===f.home);
+      const at=G.chl.teams.find(t=>t.id===f.away);
+      const htName=`${ht?.em||ht?.nation} ${ht?.name}`;
+      const atName=`${at?.em||at?.nation} ${at?.name}`;
+      const isMe=f.home===G.myId||f.away===G.myId;
+      let res='<span style="color:var(--mu);font-size:.68rem">–</span>';
+      if(f.played){
+        const myG=f.home===G.myId?f.hg:f.ag,oppG=f.home===G.myId?f.ag:f.hg;
+        const col=isMe?(myG>oppG?'var(--gr)':myG<oppG?'var(--rd)':'var(--ac)'):'var(--tx)';
+        res=`<span class="fix-r" style="color:${col}">${f.hg}–${f.ag}${f.ot?' JA':''}</span>`;
+      }
+      html+=`<div class="fix ${isMe?'fix-me':''}"><div class="fix-t">${htName} – ${atName}</div>${res}</div>`;
+    });
+  });
+  document.getElementById('fx-list').innerHTML=html;
+}
+
 // ══════════════════════════════════════
 // STANDINGS
 // ══════════════════════════════════════
+function setStTab(t){
+  ['sm','chl'].forEach(tab=>{
+    document.getElementById('st-tab-'+tab)?.classList.toggle('on',tab===t);
+    document.getElementById('st-'+tab+'-content')?.style&&(document.getElementById('st-'+tab+'-content').style.display=tab===t?'':'none');
+  });
+  if(t==='chl') renderCHLStandings();
+}
+
 function renderStandings(){
+  // Show CHL tab if active
+  const chlBtn=document.getElementById('st-tab-chl');
+  if(chlBtn) chlBtn.style.display=G.chl&&G.chl.active?'':'none';
+
   document.getElementById('st-body').innerHTML=getSorted().map((t,i)=>`
     <tr class="${t.id===G.myId?'me':''}">
       <td>${i+1}${i<8?'<span style="color:var(--gr);font-size:.58rem"> ●</span>':''}</td>
@@ -2297,6 +3616,29 @@ function renderStandings(){
       <td class="c">${t.GF}</td><td class="c">${t.GA}</td>
       <td class="r" style="color:var(--ac);font-weight:700">${t.pts}</td>
     </tr>`).join('');
+}
+
+function renderCHLStandings(){
+  const el=document.getElementById('st-chl-content');
+  if(!el||!G.chl||!G.chl.teams.length){return;}
+  const sorted=getCHLSorted();
+  el.innerHTML=`<div style="font-size:.72rem;color:var(--ac);font-family:'Barlow Condensed',sans-serif;padding:4px 0 6px;letter-spacing:.05em">🏆 CHAMPIONS HOCKEY LEAGUE — SARJATAULUKKO</div>
+  <table class="tbl" style="font-size:.72rem">
+    <thead><tr><th>#</th><th>Joukkue</th><th class="c">O</th><th class="c">V</th><th class="c">OTV</th><th class="c">OTH</th><th class="c">H</th><th class="c">M+</th><th class="c">M-</th><th class="r">P</th></tr></thead>
+    <tbody>${sorted.map((t,i)=>{
+      const s=G.chl.standings[t.id]||{W:0,OTW:0,OTL:0,L:0,GF:0,GA:0,pts:0,played:0};
+      const isMe=t.id===G.myId;
+      const q=i<16;
+      return`<tr class="${isMe?'me':''}" style="${i===15?'border-bottom:2px solid var(--ac)':''}">
+        <td style="color:${q?'var(--gr)':'var(--mu)'}">${i+1}</td>
+        <td>${t.em||t.nation} ${t.name}${isMe?' 👈':''}</td>
+        <td class="c">${s.played}</td><td class="c">${s.W}</td><td class="c">${s.OTW}</td><td class="c">${s.OTL}</td><td class="c">${s.L}</td>
+        <td class="c">${s.GF}</td><td class="c">${s.GA}</td>
+        <td class="r" style="color:var(--ac);font-weight:700">${s.pts}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table>
+  <div style="font-size:.65rem;color:var(--mu);margin-top:4px">━ Top 16 jatkaa pudotuspeleihin</div>`;
 }
 
 // ══════════════════════════════════════
@@ -2513,20 +3855,31 @@ function upgradeAcademy(){
 // ══════════════════════════════════════
 // STATS
 // ══════════════════════════════════════
-function setSaTab(t){G.saTab=t;document.querySelectorAll('#s-sa .stab').forEach((b,i)=>b.classList.toggle('on',(i===0&&t==='sc')||(i===1&&t==='gk')||(i===2&&t==='st')));renderStats();}
+function setSaTab(t){
+  G.saTab=t;
+  document.querySelectorAll('#s-sa .stab').forEach((b,i)=>b.classList.toggle('on',
+    (i===0&&t==='sc')||(i===1&&t==='gk')||(i===2&&t==='st')||(i===3&&t==='chl')
+  ));
+  const chlBtn=document.getElementById('sa-tab-chl');
+  if(chlBtn) chlBtn.style.display=G.chl&&G.chl.active?'':'none';
+  renderStats();
+}
+
 function renderStats(){
   const tab=G.saTab||'sc';
+  const chlBtn=document.getElementById('sa-tab-chl');
+  if(chlBtn) chlBtn.style.display=G.chl&&G.chl.active?'':'none';
   let html='';
   if(tab==='sc'){
     const pl=G.players.filter(p=>p.pos!=='M'&&p.gamesPlayed>0).sort((a,b)=>(b.goals+b.assists)-(a.goals+a.assists)).slice(0,25);
-    html='<table class="tbl"><thead><tr><th>#</th><th>Pelaaja</th><th>Joukkue</th><th class="c">M</th><th class="c">S</th><th class="c">P</th></tr></thead><tbody>'+
+    html='<div style="font-size:.68rem;color:var(--mu);margin-bottom:6px">SM-liigan pistepörssi</div>'+
+      '<table class="tbl"><thead><tr><th>#</th><th>Pelaaja</th><th>Joukkue</th><th class="c">M</th><th class="c">S</th><th class="c">P</th></tr></thead><tbody>'+
       pl.map((p,i)=>{const t=TEAMS.find(x=>x.id===p.team);return`<tr class="${p.team===G.myId?'me':''}"><td>${i+1}</td><td>${p.name}</td><td>${t?t.em+' '+t.name:'—'}</td><td class="c">${p.goals}</td><td class="c">${p.assists}</td><td class="c" style="color:var(--ac);font-weight:700">${p.goals+p.assists}</td></tr>`;}).join('')+'</tbody></table>';
   } else if(tab==='gk'){
     const pl=G.players.filter(p=>p.pos==='M'&&p.mvGames>0).sort((a,b)=>(a.mvGoalsAgainst/Math.max(1,a.mvGames))-(b.mvGoalsAgainst/Math.max(1,b.mvGames))).slice(0,15);
     html='<table class="tbl"><thead><tr><th>#</th><th>Maalivahti</th><th>Joukkue</th><th class="c">O</th><th class="r">PM/O</th></tr></thead><tbody>'+
       pl.map((p,i)=>{const t=TEAMS.find(x=>x.id===p.team);return`<tr class="${p.team===G.myId?'me':''}"><td>${i+1}</td><td>${p.name}</td><td>${t?t.em+' '+t.name:'—'}</td><td class="c">${p.mvGames}</td><td class="r">${(p.mvGoalsAgainst/p.mvGames).toFixed(2)}</td></tr>`;}).join('')+'</tbody></table>';
-  } else {
-    // Special teams stats
+  } else if(tab==='st'){
     const teams=getSorted().map(t=>({
       ...t,
       ppGoals:G.standings[t.id].ppGoals||0,
@@ -2539,6 +3892,27 @@ function renderStats(){
         const pkPct=t.ppOpps>0?(100-t.pkGoalsAgainst/Math.max(1,t.ppOpps)*100).toFixed(1):'-';
         return`<tr class="${t.id===G.myId?'me':''}"><td>${t.em} ${t.name}</td><td class="c">${t.ppGoals}</td><td class="c">${t.ppOpps}</td><td class="r" style="color:var(--gr)">${ppPct}%</td><td class="r" style="color:var(--ac)">${pkPct}%</td></tr>`;
       }).join('')+'</tbody></table>';
+  } else if(tab==='chl'){
+    // CHL pistepörssi — only own team players with CHL stats
+    const myPl=G.players.filter(p=>p.team===G.myId&&p.pos!=='M'&&((p.chlGoals||0)+(p.chlAssists||0)>0))
+      .sort((a,b)=>((b.chlGoals||0)+(b.chlAssists||0))-((a.chlGoals||0)+(a.chlAssists||0)));
+    if(!myPl.length){
+      html='<p style="color:var(--mu);text-align:center;padding:12px">Ei vielä CHL-tilastoja</p>';
+    } else {
+      html=`<div style="font-size:.72rem;color:var(--ac);font-family:'Barlow Condensed',sans-serif;padding:4px 0 6px">🏆 CHL — OMAN JOUKKUEEN PISTEPÖRSSI</div>`+
+        '<table class="tbl"><thead><tr><th>#</th><th>Pelaaja</th><th class="c">O</th><th class="c">M</th><th class="c">S</th><th class="c">P</th></tr></thead><tbody>'+
+        myPl.map((p,i)=>`<tr class="me"><td>${i+1}</td><td>${p.name}</td><td class="c">${p.chlGames||0}</td><td class="c">${p.chlGoals||0}</td><td class="c">${p.chlAssists||0}</td><td class="c" style="color:var(--ac);font-weight:700">${(p.chlGoals||0)+(p.chlAssists||0)}</td></tr>`).join('')+
+        '</tbody></table>';
+    }
+    // Add CHL summary
+    html+=`<div style="margin-top:10px;padding:8px;background:rgba(255,255,255,.04);border-radius:6px;font-size:.75rem">
+      <div style="color:var(--ac);font-family:'Barlow Condensed',sans-serif;margin-bottom:4px">CHL YHTEENVETO</div>
+      <div style="display:flex;gap:16px;color:var(--mu)">
+        <div>Pelattu: <span style="color:var(--tx)">${G.chl.fixtures.filter(f=>(f.home===G.myId||f.away===G.myId)&&f.played).length}/6</span></div>
+        <div>Maalit: <span style="color:var(--tx)">${G.chl.myGoals||0}–${G.chl.myGoalsAgainst||0}</span></div>
+        <div>Sija: <span style="color:var(--ac)">${getCHLSorted().findIndex(t=>t.id===G.myId)+1}./24</span></div>
+      </div>
+    </div>`;
   }
   document.getElementById('sa-content').innerHTML=html;
 }
@@ -2669,6 +4043,9 @@ function renderPlayoffNext(){
     `<strong>${t1.em} ${t1.name}</strong> vs <strong>${t2.em} ${t2.name}</strong><br>`+
     `<span style="color:var(--ac);font-family:Barlow Condensed;font-size:.9rem">${myM.w1}–${myM.w2}</span> `+
     `<span style="color:var(--mu);font-size:.68rem">(paras 3/5)</span></div>`+
+    `<button class="btn bsm" style="margin-bottom:6px;font-size:.7rem;padding:4px 8px" onclick="showScoutReport('${myM.t1===G.myId?myM.t2:myM.t1}')">👁️ Skouttiraportti</button>`+
+    getTacticButtons()+
+    '<div style="font-size:.66rem;color:var(--mu);margin-bottom:7px">Taktiikka: <span id="tac-lbl2" style="color:var(--ac)">'+G.tactic+'</span></div>'+
     '<button class="btn bp bw" id="play-btn" onclick="playNext()">▶ PELAA PLAYOFF-OTTELU</button>';
 }
 
@@ -2928,6 +4305,12 @@ function newSeason(){
   G.lastMatchResult=null;G.news=[];G.crisis=false;G.crisisWeeks=0;
   G.transferWindowOpen=true;
   G.aiTrainingBoost={};G.ppLineup={};G.pkLineup={};G.chTab='reg';G.trainingCalendar={};G.trainingSelectedWeek=G.week;
+  G.trainingStreak={};G.seasonRatingBoost={attack:0,defense:0};G.seasonTacticBoost={};G.fitnessBonus=0;
+  G.activeTrainingPlan=null; // coach persists, scout reset (kausimaksu)
+  G.scout='self';
+  G.chl={active:false,teams:[],fixtures:[],standings:{},playoffs:null,myQualified:false,phase:'regular',myGoals:0,myGoalsAgainst:0};
+  document.getElementById('nav-chl').style.display='none';
+  initCHL();
   TEAMS.filter(t=>t.id!==G.myId).forEach(t=>{G.aiMorale[t.id]=65;});
 
   G.fixtures=genSchedule(true);
@@ -2970,6 +4353,5 @@ function notify(msg){
 
 renderSetup();
 </script>
-
 </body>
 </html>
