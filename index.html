@@ -439,9 +439,20 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
       </div>
 
       <div class="pnl">
-        <div class="pt">🎓 Valmentaja</div>
-        <div style="font-size:.7rem;color:var(--mu);margin-bottom:6px">Valmentajan taso vaikuttaa kuinka nopeasti pitkäaikaiset harjoitusvaikutukset aktivoituvat.</div>
-        <div id="coach-info"></div>
+        <div class="pt">👨‍🏫 Staff</div>
+        <div style="font-size:.7rem;color:var(--mu);margin-bottom:8px">Sinä olet manageri ja päävalmentaja. Voit palkata apuhenkilöstöä joukkueen ympärille.</div>
+
+        <div style="font-size:.72rem;color:var(--ac);margin-bottom:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em">🎓 APUVALMENTAJA</div>
+        <div style="font-size:.65rem;color:var(--mu);margin-bottom:4px">Vaikuttaa kuinka nopeasti pitkäaikaiset harjoitusvaikutukset aktivoituvat.</div>
+        <div id="coach-info" style="margin-bottom:10px"></div>
+
+        <div style="font-size:.72rem;color:var(--ac);margin-bottom:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em">🏋️ FYSIIKKAVALMENTAJA</div>
+        <div style="font-size:.65rem;color:var(--mu);margin-bottom:4px">Vaikuttaa pelaajien rasituksen palautumiseen ja fysiikkaan.</div>
+        <div id="fitness-coach-info" style="margin-bottom:10px"></div>
+
+        <div style="font-size:.72rem;color:var(--ac);margin-bottom:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em">🩺 LÄÄKINTÄTIIMI</div>
+        <div style="font-size:.65rem;color:var(--mu);margin-bottom:4px">Vaikuttaa loukkaantumisten harvinaisuuteen ja toipumisaikaan.</div>
+        <div id="medical-team-info"></div>
       </div>
 
       <div class="pnl">
@@ -750,25 +761,63 @@ const SPONSOR_PENALTY_TYPES=[
   {id:'missPO',  icon:'⚠️', label:'Ei pääse playoffeihin',      amount:-80000, minTier:3},
 ];
 
-const LEAGUE_SALARY_CAP_BASE = 4200000; // A-liigan salary cap (€/v)
-const LEAGUE_SALARY_CAP_B = 1200000;    // B-liigan salary cap (~28% of A)
-const LEAGUE_SALARY_CAP_M = 500000;     // Mestiksen salary cap (~12% of A)
-const LEAGUE_SALARY_CAP_S = 200000;     // Suomi-sarjan salary cap (~5% of A)
+// ══════════════════════════════════════
+// PER-TEAM SALARY CAPS (hallituksen budjetit)
+// Each team has its own cap set by the team board, based on previous season performance.
+// Initial caps are based on real-world 2025-26 SM-liiga budgets.
+// ══════════════════════════════════════
 
-// Helper: get the player's current salary cap based on their league
+// Default starting caps per team (€/year) — used if not in TEAM_INITIAL_CAPS
+const DEFAULT_CAP_BY_LEAGUE = {
+  A: 2500000,  // Mid-range A-liiga default
+  B: 1000000,  // Mid-range Mestis default
+  M: 400000,   // Mid-range Suomi-sarja default
+  S: 150000    // Mid-range II-divisioona default
+};
+
+// Real-world starting caps for 2025-26 (from talousraportti)
+const TEAM_INITIAL_CAPS = {
+  // A-liiga (SM-liiga 2025-26 budgets)
+  tappara:3500000, ilves:3300000, karpat:3250000, hifk:3150000, lukko:3050000, jyp:2950000,
+  kalpa:2500000, tps:2400000, pelicans:2400000, assa:2350000, hpk:2200000, espoo:2000000,
+  kookoo:2000000, saipa:2000000, sport:1700000, mikkeli:1500000,
+  // New A-liiga members (transition season 2026-27)
+  jokerit:2200000, hokki:1200000,
+  // B-liiga (Mestis budgets — vary by team profile)
+  roki:1100000, ipk:900000, ketterä:800000, kiekkovan:1000000, tuto:850000,
+  kiekkopojat:950000, hermes:850000, keupaht:750000, peliitat:900000, kiekkovs:750000,
+  // Mestis (Suomi-sarja budgets ~250-600k€)
+  sapko:550000, koovee:500000, titaanit:480000, sapa:450000, ipv:400000, ahmat:400000,
+  narukerä:430000, heinola:420000, ols:380000, lappee:370000, diskos:360000, jaakotkat:340000,
+  // Suomi-sarja (II-divisioona ~80-200k€)
+  jokp2:180000, hyvkiekko:150000, espunited:170000, jokerit2:160000, karhuht:140000,
+  vesahockey:155000, bulldogs:165000, sasvantaa:140000, kalpa2:170000, reipas:155000
+};
+
+// Helper: get the player's current salary cap (per team)
 function getMyCap(){
-  if(!G||!G.myLeague) return LEAGUE_SALARY_CAP_BASE;
-  const cap=G.salCapByLeague||{};
-  return cap[G.myLeague]||LEAGUE_SALARY_CAP_BASE;
+  if(!G||!G.myId) return 2500000;
+  return (G.teamCaps&&G.teamCaps[G.myId])||initialCapForTeam(G.myId);
 }
 // Helper: get a specific team's cap
 function getTeamCap(teamId){
-  const t=TEAMS.find(x=>x.id===teamId);
-  if(!t) return LEAGUE_SALARY_CAP_BASE;
-  const cap=G.salCapByLeague||{};
-  return cap[t.league]||LEAGUE_SALARY_CAP_BASE;
+  if(!G.teamCaps) return initialCapForTeam(teamId);
+  return G.teamCaps[teamId]||initialCapForTeam(teamId);
 }
-const LEAGUE_CAP_GROWTH = 0.025; // +2.5% per kausi
+// Helper: starting cap for a team (used as fallback)
+function initialCapForTeam(teamId){
+  if(TEAM_INITIAL_CAPS[teamId]) return TEAM_INITIAL_CAPS[teamId];
+  const t=TEAMS.find(x=>x.id===teamId);
+  if(!t) return 2500000;
+  return DEFAULT_CAP_BY_LEAGUE[t.league]||2500000;
+}
+
+// Backward compat: old code paths use these constants
+const LEAGUE_SALARY_CAP_BASE = 4200000;
+const LEAGUE_SALARY_CAP_B = 1200000;
+const LEAGUE_SALARY_CAP_M = 500000;
+const LEAGUE_SALARY_CAP_S = 200000;
+const LEAGUE_CAP_GROWTH = 0.025;
 
 // ══════════════════════════════════════
 // LEAGUE STRUCTURE — Three tiers
@@ -943,14 +992,39 @@ const TRAINING_PLANS=[
   {id:'custom',   icon:'🎨', name:'Mukautettu', desc:'Tyhjä kalenteri — valitse itse joka viikolle', pattern:null},
 ];
 
-// Coaching staff
+// ══════════════════════════════════════
+// STAFF — Pelaaja on manageri/päävalmentaja itse.
+// Voi palkata: apuvalmentaja, fysiikkavalmentaja, lääkintätiimi, skoutti.
+// ══════════════════════════════════════
+
+// Apuvalmentaja — vaikuttaa harjoittelustreakiin ja rasitukseen
 const COACHES=[
-  {id:'assistant', icon:'👤', name:'Apuvalmentaja',     wage:0,    desc:'Ei erikoisbonuksia. Oletusvaihtoehto.',
+  {id:'assistant', icon:'👤', name:'Aloitteleva apuvalmentaja',  wage:0,    desc:'Ei erikoisbonuksia. Oletusvaihtoehto.',
     streakReduction:0, fatigueBonus:0},
-  {id:'experienced', icon:'🎓', name:'Kokenut valmentaja', wage:3000, desc:'Streak 1 vähemmän (4→3, 5→4)',
+  {id:'experienced', icon:'🎓', name:'Kokenut apuvalmentaja',     wage:3000, desc:'Streak 1 vähemmän (4→3, 5→4)',
     streakReduction:1, fatigueBonus:0},
-  {id:'elite',     icon:'🏆', name:'Huippuvalmentaja',  wage:8000, desc:'Streak 2 vähemmän + rasitusbonus -1 kaikille',
+  {id:'elite',     icon:'🏆', name:'Huippuluokan apuvalmentaja', wage:8000, desc:'Streak 2 vähemmän + rasitusbonus -1 kaikille',
     streakReduction:2, fatigueBonus:1},
+];
+
+// Fysiikkavalmentaja — UUSI. Vaikuttaa pelaajien rasituksen palautumiseen ja fysiikkaan
+const FITNESS_COACHES=[
+  {id:'none',       icon:'⚪', name:'Ei fysiikkavalmentajaa', wage:0,    desc:'Ei lisäbonuksia. Pelaajien rasitus palautuu normaalisti.',
+    fatigueRecovery:0, attrBoost:0},
+  {id:'experienced',icon:'💪', name:'Kokenut fysiikkavalmentaja', wage:2500, desc:'Pelaajien rasitus palautuu 25% nopeammin viikoittain.',
+    fatigueRecovery:0.25, attrBoost:0},
+  {id:'elite',      icon:'🏋️', name:'Huippuluokan fysiikkavalmentaja', wage:6000, desc:'Rasitus palautuu 40% nopeammin + +1 fysiikkaboost otteluissa.',
+    fatigueRecovery:0.40, attrBoost:1},
+];
+
+// Lääkintätiimi — UUSI. Vaikuttaa loukkaantumisten todennäköisyyteen ja kestoon
+const MEDICAL_TEAMS=[
+  {id:'basic',      icon:'🩹', name:'Perustason lääkintä', wage:0,    desc:'Normaalit loukkaantumiset.',
+    injuryDurationMult:1.0, injuryChanceMult:1.0},
+  {id:'good',       icon:'🩺', name:'Hyvä lääkintätiimi',  wage:2000, desc:'Loukkaantumisaika -20%.',
+    injuryDurationMult:0.8, injuryChanceMult:1.0},
+  {id:'elite',      icon:'⚕️', name:'Huippuluokan lääkintätiimi', wage:5000, desc:'Loukkaantumisaika -30% + loukkaantumisia 25% harvemmin.',
+    injuryDurationMult:0.7, injuryChanceMult:0.75},
 ];
 
 // Scouts — opponent intelligence
@@ -959,6 +1033,14 @@ const SCOUTS=[
   {id:'junior', icon:'👁️', name:'Junior-skoutti',   cost:30000, desc:'Att/Def/MV ±5 tarkkuus, top 3 pelaajaa, taktiikkavinkki'},
   {id:'head',   icon:'🎯', name:'Pää-skoutti',      cost:80000, desc:'Tarkat luvut, top 5 pelaajaa + rasitus, suora taktiikkasuositus'},
 ];
+
+// Helper getters
+function getFitnessCoach(){
+  return FITNESS_COACHES.find(c=>c.id===(G.fitnessCoach||'none'))||FITNESS_COACHES[0];
+}
+function getMedicalTeam(){
+  return MEDICAL_TEAMS.find(c=>c.id===(G.medicalTeam||'basic'))||MEDICAL_TEAMS[0];
+}
 
 const TACTICS=[
   {id:'trap',      name:'Trap',        icon:'🔒', desc:'Tiivis puolustus. Lyö hyökkäävää, häviää forecheckille.',
@@ -2110,9 +2192,14 @@ function renderSeasonPreviewLeague(league){
         <div style="font-family:'Barlow Condensed',sans-serif;color:var(--ac);font-size:1rem;font-weight:700">${p.rating}</div>
       </div>`;
     });
-    const capYear=(G.salCapByLeague&&G.salCapByLeague[league])||LEAGUE_SALARY_CAP_BASE;
+    // Average team budget in this league (from per-team caps)
+    const lgTeamCaps=lgTeams.map(t=>(G.teamCaps&&G.teamCaps[t.id])||initialCapForTeam(t.id));
+    const avgCap=lgTeamCaps.length?Math.round(lgTeamCaps.reduce((s,c)=>s+c,0)/lgTeamCaps.length):0;
+    const minCap=lgTeamCaps.length?Math.min(...lgTeamCaps):0;
+    const maxCap=lgTeamCaps.length?Math.max(...lgTeamCaps):0;
     bestHtml+=`<div style="margin-top:8px;padding:6px;background:rgba(255,255,255,.04);border-radius:4px;font-size:.72rem;color:var(--mu)">
-      💰 Sarjan salary cap: <span style="color:var(--ac)">${fmt(capYear)}/v</span>
+      💰 Joukkuebudjetit: <span style="color:var(--ac)">${fmt(minCap)} – ${fmt(maxCap)}</span><br>
+      <span style="font-size:.62rem">Keskiarvo: ${fmt(avgCap)}/v</span>
     </div>`;
   } else {
     // Setup screen — show predicted top players from this league
@@ -2253,13 +2340,14 @@ function startGame(){
     history:[],news:[],
     crisis:false,crisisWeeks:0,
     transferWindowOpen:true,
-    salCap:LEAGUE_SALARY_CAP_BASE, // legacy field (kept for backward compat — equals A-liiga cap)
+    salCap:LEAGUE_SALARY_CAP_BASE, // legacy field (kept for backward compat)
     salCapByLeague:{
       A:LEAGUE_SALARY_CAP_BASE,
       B:LEAGUE_SALARY_CAP_B,
       M:LEAGUE_SALARY_CAP_M,
       S:LEAGUE_SALARY_CAP_S
     },
+    teamCaps:{}, // Per-team salary caps — initialized below after G is set
     lastMatchResult:null,
     aiMorale:{},aiTrainingBoost:{},
     ppLineup:{},pkLineup:{},chTab:'reg',
@@ -2280,6 +2368,8 @@ function startGame(){
     seasonTacticBoost:{},
     fitnessBonus:0,
     coach:'assistant',
+    fitnessCoach:'none',
+    medicalTeam:'basic',
     scout:'self',
     activeTrainingPlan:null,
     chl:{active:false,teams:[],fixtures:[],standings:{},playoffs:null,myQualified:false,phase:'regular',myGoals:0,myGoalsAgainst:0},
@@ -2294,6 +2384,12 @@ function startGame(){
     G.players.push(...genSquad(t.id,getTeamRatingBase(t.id)));
   });
   G.freeAgents=genFreeAgents();
+
+  // Initialize per-team salary caps with real-world starting values
+  G.teamCaps={};
+  TEAMS.forEach(t=>{
+    G.teamCaps[t.id]=initialCapForTeam(t.id);
+  });
 
   // Initialize each league's data (4 tiers)
   G.leagueA.teams=getLeagueTeams('A').map(t=>t.id);
@@ -2480,6 +2576,8 @@ function renderIncomingOffers(){
 function renderTraining(){
   renderTrainingPlans();
   renderCoach();
+  renderFitnessCoach();
+  renderMedicalTeam();
   renderScout();
   renderTrainingCalendar();
   renderTrainingCards();
@@ -3510,6 +3608,58 @@ function hireCoach(coachId){
   renderCoach();
 }
 
+function hireFitnessCoach(coachId){
+  const coach=FITNESS_COACHES.find(c=>c.id===coachId);
+  if(!coach) return;
+  G.fitnessCoach=coachId;
+  notify(`${coach.icon} ${coach.name} palkattu`);
+  renderTransfers();
+  renderFitnessCoach();
+}
+
+function hireMedicalTeam(teamId){
+  const team=MEDICAL_TEAMS.find(c=>c.id===teamId);
+  if(!team) return;
+  G.medicalTeam=teamId;
+  notify(`${team.icon} ${team.name} palkattu`);
+  renderTransfers();
+  renderMedicalTeam();
+}
+
+function renderFitnessCoach(){
+  const el=document.getElementById('fitness-coach-info');
+  if(!el) return;
+  const cur=getFitnessCoach();
+  el.innerHTML=`<div style="font-size:.78rem;margin-bottom:6px">
+    Nykyinen: <span style="color:var(--ac)">${cur.icon} ${cur.name}</span>
+    ${cur.wage>0?`<span style="color:var(--mu);font-size:.68rem"> (${fmt(cur.wage)}/vk)</span>`:''}
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:4px">
+    ${FITNESS_COACHES.map(c=>{
+      const isActive=c.id===(G.fitnessCoach||'none');
+      const canAfford=c.wage===0||G.budget>=c.wage*4;
+      return`<button class="btn bsm" style="font-size:.66rem;padding:4px 6px;${isActive?'background:var(--ac);color:#000':'background:rgba(255,255,255,.06)'};${!canAfford?'opacity:.5':''}" onclick="hireFitnessCoach('${c.id}')" title="${c.desc}${c.wage>0?' · '+fmt(c.wage)+'/vk':''}">${c.icon} ${c.name}</button>`;
+    }).join('')}
+  </div>`;
+}
+
+function renderMedicalTeam(){
+  const el=document.getElementById('medical-team-info');
+  if(!el) return;
+  const cur=getMedicalTeam();
+  el.innerHTML=`<div style="font-size:.78rem;margin-bottom:6px">
+    Nykyinen: <span style="color:var(--ac)">${cur.icon} ${cur.name}</span>
+    ${cur.wage>0?`<span style="color:var(--mu);font-size:.68rem"> (${fmt(cur.wage)}/vk)</span>`:''}
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:4px">
+    ${MEDICAL_TEAMS.map(c=>{
+      const isActive=c.id===(G.medicalTeam||'basic');
+      const canAfford=c.wage===0||G.budget>=c.wage*4;
+      return`<button class="btn bsm" style="font-size:.66rem;padding:4px 6px;${isActive?'background:var(--ac);color:#000':'background:rgba(255,255,255,.06)'};${!canAfford?'opacity:.5':''}" onclick="hireMedicalTeam('${c.id}')" title="${c.desc}${c.wage>0?' · '+fmt(c.wage)+'/vk':''}">${c.icon} ${c.name}</button>`;
+    }).join('')}
+  </div>`;
+}
+
 function getCoach(){
   return COACHES.find(c=>c.id===(G.coach||'assistant'));
 }
@@ -4101,9 +4251,14 @@ function applyTraining(){
   if(opt&&opt.cost>0) G.budget=Math.max(0,G.budget-opt.cost);
 
   const coach=getCoach();
+  const fitCoach=getFitnessCoach();
 
-  // Reduce fatigue for all my players (with coach fatigue bonus)
-  const fatigueRed=(e.fatigueRed||8)+(coach.fatigueBonus||0);
+  // Reduce fatigue for all my players (with coach fatigue bonus + fitness coach recovery)
+  let fatigueRed=(e.fatigueRed||8)+(coach.fatigueBonus||0);
+  // Fitness coach speeds up recovery
+  if(fitCoach.fatigueRecovery>0){
+    fatigueRed=Math.round(fatigueRed*(1+fitCoach.fatigueRecovery));
+  }
   G.players.filter(p=>p.team===G.myId).forEach(p=>{
     p.fatigue=clamp((p.fatigue||0)-fatigueRed,0,100);
   });
@@ -4551,8 +4706,13 @@ function processFinances(){
   const spInc=sponsorIncome();
   const tickInc=ticketIncome();
   const coach=getCoach();
+  const fitCoach=getFitnessCoach();
+  const medTeam=getMedicalTeam();
   const coachCost=(coach.wage||0)*4; // monthly cost
-  const net=tickInc+spInc-wages-coachCost;
+  const fitCost=(fitCoach.wage||0)*4;
+  const medCost=(medTeam.wage||0)*4;
+  const totalStaffCost=coachCost+fitCost+medCost;
+  const net=tickInc+spInc-wages-totalStaffCost;
   G.budget+=net;
 
   // Crisis check
@@ -4894,10 +5054,15 @@ function simGoals(tid,isHome,vsId){
     matchupDef=matchup.defBonus;
   }
 
+  // Fitness coach gives small physical edge (player team only)
+  let fitBonus=0;
+  if(tid===G.myId){
+    const fitCoach=getFitnessCoach();
+    fitBonus=(fitCoach.attrBoost||0)*0.05; // small but noticeable
+  }
+
   // Net: own attack vs opponent defense + matchup
-  // (att-60)/18: strong att=72 → +0.67, weak att=53 → -0.39
-  // (def-60)*0.4: strong def=72 → -0.48, weak def=50 → +0.40
-  const target=clamp((att-60)/18+2.5+hm-(def-60)*0.4/10+matchupAtt-matchupDef*0.5,0.8,4.2);
+  const target=clamp((att-60)/18+2.5+hm-(def-60)*0.4/10+matchupAtt-matchupDef*0.5+fitBonus,0.8,4.2);
   let g=0;for(let i=0;i<10;i++) if(Math.random()<target/10) g++;
   return g;
 }
@@ -5388,14 +5553,27 @@ function developPlayers(){
     }
 
     const fatigueInjBonus=p.fatigue>70?0.004:p.fatigue>40?0.001:0;
-    if(!p.injured&&Math.random()<injBase+fatigueInjBonus){
+    // Apply medical team's injury chance reduction (only for player's own team)
+    let effInjBase=injBase;
+    if(p.team===G.myId){
+      const med=getMedicalTeam();
+      effInjBase*=(med.injuryChanceMult||1.0);
+    }
+    if(!p.injured&&Math.random()<effInjBase+fatigueInjBonus){
       p.injured=true;
       // Severity based on fatigue and random
       const roll=Math.random();
       const sevBonus=p.fatigue>70?0.2:0;
-      if(roll<0.45-sevBonus){p.injuryWeeks=rnd(1,2);p.injurySeverity='light';}
-      else if(roll<0.80-sevBonus){p.injuryWeeks=rnd(3,4);p.injurySeverity='moderate';}
-      else{p.injuryWeeks=rnd(5,8);p.injurySeverity='severe';}
+      let weeks;
+      if(roll<0.45-sevBonus){weeks=rnd(1,2);p.injurySeverity='light';}
+      else if(roll<0.80-sevBonus){weeks=rnd(3,4);p.injurySeverity='moderate';}
+      else{weeks=rnd(5,8);p.injurySeverity='severe';}
+      // Apply medical team's duration reduction (only for player's own team)
+      if(p.team===G.myId){
+        const med=getMedicalTeam();
+        weeks=Math.max(1,Math.round(weeks*(med.injuryDurationMult||1.0)));
+      }
+      p.injuryWeeks=weeks;
       if(p.team===G.myId){
         const sevTxt={light:'🟡 Lievä',moderate:'🟠 Kohtalainen',severe:'🔴 Vakava'}[p.injurySeverity];
         notify(`🚑 ${p.name} loukkaantui! ${sevTxt} — ${p.injuryWeeks} vk`);
@@ -6075,7 +6253,7 @@ function renderTransfers(){
   const trB=document.getElementById('tr-b');
   trB.textContent=fmt(G.budget);
   trB.style.color=G.budget<0?'var(--rd)':'';
-  document.getElementById('tr-c').textContent=fmt(getMyCap())+'/v ('+G.myLeague+'-liiga)';
+  document.getElementById('tr-c').textContent=fmt(getMyCap())+'/v (hallituksen budjetti)';
   document.getElementById('tr-w').textContent=fmt(wages)+'/kk';
   document.getElementById('tr-ti').textContent=fmt(ticketIncome())+'/ottelu';
   document.getElementById('tr-sp').textContent=fmt(sponsorIncome())+'/kk';
@@ -6729,17 +6907,29 @@ function aiGenerateBuyOffers(player){
 
     // Calculate offer fee — lower if player wants out
     let aiFeeMult=0.85+Math.random()*0.4+t.prestige/50;
-    // Lowball offers for trade-requesters
     if(player.tradeRequest) aiFeeMult*=0.85;
-    else if(player.contractYears<=1) aiFeeMult*=0.92; // expiring contracts cheaper
-    // FOR SALE: slightly higher offers (active bidding war)
+    else if(player.contractYears<=1) aiFeeMult*=0.92;
     if(player.forSale) aiFeeMult*=1.07;
-    const fee=Math.round(askingFee*aiFeeMult/10000)*10000;
+    let fee=Math.round(askingFee*aiFeeMult/10000)*10000;
+
+    // REALISM CAPS: AI team can only afford fees within their financial means
+    // 1. Hard cap by tier (max single transfer fee a team in that tier would realistically pay)
+    const tierMaxFee={A:600000,B:120000,M:40000,S:15000}[t.league]||600000;
+    // 2. Soft cap: AI won't spend more than ~50% of their current budget on a single player
+    const teamBudget=t.budget||100000;
+    const budgetCap=Math.round(teamBudget*0.5);
+
+    const maxAffordable=Math.min(tierMaxFee,budgetCap);
+    if(fee>maxAffordable){
+      // If fee would have to be slashed below 60% of asking, AI gives up rather than insult-offer
+      if(maxAffordable<askingFee*0.4) return;
+      fee=Math.round(maxAffordable/10000)*10000;
+    }
 
     // Check if AI can afford the new contract too
     const newWage=Math.round(calcDemandedWage(player)*1.1/500)*500;
     const aiWages=G.players.filter(p=>p.team===t.id).reduce((s,p)=>s+(p.wage||0),0);
-    if((aiWages+newWage)*12>getTeamCap(t.id)*1.02) return;
+    if((aiWages+newWage)*12>getTeamCap(t.id)) return;
 
     offers.push({teamId:t.id,teamName:t.name,teamEm:t.em,teamPrestige:t.prestige,fee});
   });
@@ -6759,6 +6949,9 @@ function acceptIncomingOffer(pid,buyingTeamId){
 
   // Process sale
   G.budget+=offer.fee;
+  // Deduct from AI team's budget
+  const buyingTeam=TEAMS.find(t=>t.id===buyingTeamId);
+  if(buyingTeam) buyingTeam.budget-=offer.fee;
   // Move player to AI team (use realistic wage)
   Object.keys(G.lineup).forEach(k=>{if(G.lineup[k]===pid) delete G.lineup[k];});
   // Track previous team happiness
@@ -6952,7 +7145,7 @@ function aiGenerateOffers(player){
 
     // Check AI team's cap
     const aiWages=G.players.filter(p=>p.team===t.id).reduce((s,p)=>s+(p.wage||0),0);
-    if((aiWages+wage)*12>getTeamCap(t.id)*1.02) return; // AI respects cap (with small tolerance)
+    if((aiWages+wage)*12>getTeamCap(t.id)) return; // AI respects cap (with small tolerance)
 
     const years=rnd(player.age>=30?3:1,player.age>=30?4:3);
     offers.push({teamId:t.id,teamName:t.name,teamEm:t.em,teamPrestige:t.prestige,wage,years});
@@ -7918,6 +8111,194 @@ function simAndEndSeason(){
 // ══════════════════════════════════════
 // PROMOTION / RELEGATION between leagues
 // ══════════════════════════════════════
+// ══════════════════════════════════════
+// BOARD RECALCULATES SALARY CAPS
+// Called at end of season. Each team's board reviews:
+//   - Sijoitus (40%): League position
+//   - Tilikausi (30%): Profit/loss in budget
+//   - Sponsorit (15%): Sponsor income growth
+//   - Yleisö (10%): Stadium attendance
+//   - CHL (5%): European success (A-liiga only)
+// ══════════════════════════════════════
+function recalculateTeamCaps(){
+  if(!G.teamCaps) G.teamCaps={};
+
+  TEAMS.forEach(t=>{
+    if(t.league==='OUT'){
+      // Team left the system — set cap to 0 to prevent further use
+      G.teamCaps[t.id]=0;
+      return;
+    }
+
+    const oldCap=G.teamCaps[t.id]||initialCapForTeam(t.id);
+    const oldLeague=G.standings[t.id]&&G.leagueA.standings[t.id]?'A':
+                     G.standings[t.id]&&G.leagueB.standings[t.id]?'B':
+                     G.standings[t.id]&&G.leagueM.standings[t.id]?'M':
+                     G.standings[t.id]&&G.leagueS.standings[t.id]?'S':null;
+
+    // Calculate per-factor multipliers
+    let posMult=1.0;     // 40% weight — league position
+    let financeMult=1.0; // 30% weight — budget delta
+    let sponsorMult=1.0; // 15% weight — sponsor income growth
+    let occMult=1.0;     // 10% weight — attendance
+    let chlMult=1.0;     // 5% weight — CHL (A-liiga only)
+
+    // === 1. POSITION (40%) ===
+    // Use the league standings the team WAS in (before promotion/relegation)
+    // After processPromotionRelegation, t.league has changed but standings are still old
+    let standings=null;
+    if(G.leagueA.standings[t.id]) standings=G.leagueA.standings[t.id];
+    else if(G.leagueB.standings[t.id]) standings=G.leagueB.standings[t.id];
+    else if(G.leagueM.standings[t.id]) standings=G.leagueM.standings[t.id];
+    else if(G.leagueS.standings[t.id]) standings=G.leagueS.standings[t.id];
+
+    // Find which league's standings has this team — from those, get position
+    let lgKey=null;
+    ['A','B','M','S'].forEach(l=>{
+      const data={A:G.leagueA,B:G.leagueB,M:G.leagueM,S:G.leagueS}[l];
+      if(data.standings[t.id]) lgKey=l;
+    });
+    if(lgKey){
+      const sorted=getSorted(lgKey);
+      const pos=sorted.findIndex(x=>x.id===t.id)+1;
+      const total=sorted.length;
+      const posPct=pos/total; // 0.0 = best, 1.0 = worst
+      // Top of league: +12%, mid: 0%, bottom: -10%
+      if(posPct<=0.10) posMult=1.12;       // Top 10%
+      else if(posPct<=0.25) posMult=1.07;  // Top quarter
+      else if(posPct<=0.50) posMult=1.03;  // Top half
+      else if(posPct<=0.75) posMult=0.99;  // Bottom half
+      else if(posPct<=0.90) posMult=0.94;  // Bottom quarter
+      else posMult=0.88;                    // Last
+    }
+
+    // === 2. FINANCES (30%) ===
+    // For player: actual budget. For AI: simulated based on standings + occupancy
+    if(t.id===G.myId){
+      // Real budget for player — was budget positive at end of season?
+      const teamBudget=G.budget;
+      if(teamBudget>500000) financeMult=1.10;       // Strong surplus
+      else if(teamBudget>100000) financeMult=1.05;  // Moderate surplus
+      else if(teamBudget>=0) financeMult=1.01;       // Break-even
+      else if(teamBudget>-100000) financeMult=0.96;  // Small loss
+      else financeMult=0.88;                         // Big loss
+    } else {
+      // For AI: simulate finances based on team's budget property
+      const aiBudget=t.budget||100000;
+      const expectedBudget=initialCapForTeam(t.id)*0.05; // ~5% of cap as floor
+      if(aiBudget>expectedBudget*3) financeMult=1.08;
+      else if(aiBudget>expectedBudget*1.5) financeMult=1.04;
+      else if(aiBudget>expectedBudget*0.5) financeMult=1.01;
+      else if(aiBudget>0) financeMult=0.97;
+      else financeMult=0.90;
+    }
+
+    // === 3. SPONSORS (15%) ===
+    // Player team: based on sponsor income vs starting income
+    if(t.id===G.myId){
+      const sponsorInc=sponsorIncome();
+      const baselineInc=15000; // monthly baseline
+      if(sponsorInc>baselineInc*2) sponsorMult=1.08;
+      else if(sponsorInc>baselineInc*1.3) sponsorMult=1.04;
+      else if(sponsorInc>baselineInc*0.8) sponsorMult=1.01;
+      else sponsorMult=0.97;
+    } else {
+      // For AI: use position as proxy (good teams get more sponsors)
+      sponsorMult=posMult>1.05?1.04:posMult>0.95?1.01:0.98;
+    }
+
+    // === 4. ATTENDANCE (10%) ===
+    if(t.id===G.myId){
+      const occ=G.stadium?.occupancy||t.occ||0.7;
+      if(occ>=0.90) occMult=1.06;
+      else if(occ>=0.75) occMult=1.03;
+      else if(occ>=0.60) occMult=1.00;
+      else if(occ>=0.45) occMult=0.97;
+      else occMult=0.93;
+    } else {
+      // AI: use team's static occ
+      const occ=t.occ||0.7;
+      if(occ>=0.85) occMult=1.04;
+      else if(occ>=0.70) occMult=1.02;
+      else if(occ>=0.55) occMult=1.00;
+      else occMult=0.97;
+    }
+
+    // === 5. CHL (5%) — A-liiga only ===
+    if(lgKey==='A'&&t.id===G.myId&&G.chl&&G.chl.active){
+      // Reaching higher rounds boosts board confidence
+      const chlPhase=G.chl.phase||'regular';
+      if(chlPhase==='champion'||chlPhase==='final') chlMult=1.10;
+      else if(chlPhase==='sf') chlMult=1.06;
+      else if(chlPhase==='qf') chlMult=1.04;
+      else if(chlPhase==='r16') chlMult=1.02;
+      else chlMult=1.00;
+    } else if(lgKey==='A'&&t.id!==G.myId){
+      // For AI A-liiga teams, simulate based on prestige
+      const prestige=G.prestige[t.id]||t.prestige||5;
+      chlMult=prestige>=8?1.04:prestige>=6?1.02:1.00;
+    }
+
+    // === COMBINE WITH WEIGHTS ===
+    const weightedDelta=
+      0.40*(posMult-1)+
+      0.30*(financeMult-1)+
+      0.15*(sponsorMult-1)+
+      0.10*(occMult-1)+
+      0.05*(chlMult-1);
+
+    let newCap=Math.round(oldCap*(1+weightedDelta));
+
+    // === EXTRA: League change adjustments ===
+    // After promotion/relegation, t.league has changed. Apply additional shock.
+    if(oldLeague&&oldLeague!==t.league){
+      const leagueOrder={A:4,B:3,M:2,S:1};
+      const oldOrder=leagueOrder[oldLeague]||0;
+      const newOrder=leagueOrder[t.league]||0;
+      if(newOrder>oldOrder){
+        // Promotion: cap jumps significantly
+        newCap=Math.round(newCap*(newOrder===4?2.2:newOrder===3?1.8:1.6));
+      } else if(newOrder<oldOrder){
+        // Relegation: cap drops significantly
+        newCap=Math.round(newCap*(oldOrder===4?0.55:oldOrder===3?0.65:0.7));
+      }
+    }
+
+    // Floor: don't go below 50% of league default; ceiling: don't exceed 200% of league default
+    const lgDefault=DEFAULT_CAP_BY_LEAGUE[t.league]||2500000;
+    newCap=clamp(newCap,Math.round(lgDefault*0.5),Math.round(lgDefault*2.0));
+
+    G.teamCaps[t.id]=newCap;
+
+    // News for player's team
+    if(t.id===G.myId){
+      const change=newCap-oldCap;
+      const pct=Math.round((newCap/oldCap-1)*100);
+      const pctStr=pct>=0?`+${pct}%`:`${pct}%`;
+      const icon=pct>=5?'📈':pct>=0?'➡️':pct>=-5?'⚠️':'📉';
+      addNews(pct>=0?'green':'red',`${icon} Hallitus asetti uuden palkkabudjetin: ${fmt(newCap)} (${pctStr})`);
+
+      // Detailed breakdown
+      const breakdown=[];
+      if(Math.abs(posMult-1)>=0.02) breakdown.push(`Sijoitus: ${posMult>=1?'+':''}${Math.round((posMult-1)*100)}%`);
+      if(Math.abs(financeMult-1)>=0.02) breakdown.push(`Talous: ${financeMult>=1?'+':''}${Math.round((financeMult-1)*100)}%`);
+      if(Math.abs(sponsorMult-1)>=0.02) breakdown.push(`Sponsorit: ${sponsorMult>=1?'+':''}${Math.round((sponsorMult-1)*100)}%`);
+      if(Math.abs(occMult-1)>=0.02) breakdown.push(`Yleisö: ${occMult>=1?'+':''}${Math.round((occMult-1)*100)}%`);
+      if(Math.abs(chlMult-1)>=0.02) breakdown.push(`CHL: ${chlMult>=1?'+':''}${Math.round((chlMult-1)*100)}%`);
+      if(breakdown.length) addNews('','📊 Hallituksen perustelut: '+breakdown.join(' · '));
+    }
+  });
+
+  // Legacy field for any old code paths
+  G.salCap=G.teamCaps[G.myId]||initialCapForTeam(G.myId);
+  G.salCapByLeague={
+    A:DEFAULT_CAP_BY_LEAGUE.A,
+    B:DEFAULT_CAP_BY_LEAGUE.B,
+    M:DEFAULT_CAP_BY_LEAGUE.M,
+    S:DEFAULT_CAP_BY_LEAGUE.S
+  };
+}
+
 function processPromotionRelegation(){
   // Get final standings for each league (last completed season)
   const aSorted=getSorted('A');
@@ -8068,16 +8449,8 @@ function newSeason(){
 
   G.seasonCount=(G.seasonCount||0)+1;
 
-  // Salary cap grows each season — for all 4 leagues
-  const growth=Math.pow(1+LEAGUE_CAP_GROWTH,G.seasonCount);
-  G.salCapByLeague={
-    A:Math.round(LEAGUE_SALARY_CAP_BASE*growth),
-    B:Math.round(LEAGUE_SALARY_CAP_B*growth),
-    M:Math.round(LEAGUE_SALARY_CAP_M*growth),
-    S:Math.round(LEAGUE_SALARY_CAP_S*growth),
-  };
-  G.salCap=G.salCapByLeague.A; // Legacy field
-  addNews('green',`📈 Salary capit nousivat: ${leagueName('A')}=${fmt(G.salCapByLeague.A)} · ${leagueName('B')}=${fmt(G.salCapByLeague.B)} · ${leagueName('M')}=${fmt(G.salCapByLeague.M)}`);
+  // Recalculate per-team salary caps based on board's evaluation
+  recalculateTeamCaps();
 
   // Update prestige based on last season results — per league
   TEAMS.forEach(t=>{
