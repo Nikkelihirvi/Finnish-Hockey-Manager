@@ -683,6 +683,62 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
       <div class="mper" id="m-per">Aloitetaan...</div>
       <div id="m-type" style="font-size:.66rem;color:var(--mu);margin-top:2px"></div>
     </div>
+
+    <!-- ANIMATED VIEW (Canvas) -->
+    <div id="m-canvas-wrap" style="display:none;background:linear-gradient(160deg,#0d1420 0%,#080c14 100%);border:1px solid #1a2332;border-radius:8px;padding:0;margin-bottom:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.5)">
+
+      <!-- Styled scoreboard header -->
+      <div id="m-scoreboard" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:linear-gradient(180deg,#0a0f18 0%,#0d1622 100%);border-bottom:1px solid #1a2332">
+        <!-- Home team -->
+        <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0">
+          <span id="m-sb-home-em" style="font-size:1.1rem"></span>
+          <span id="m-sb-home" style="font-family:'Bebas Neue',sans-serif;font-size:.95rem;color:#fff;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></span>
+        </div>
+        <!-- Score + time -->
+        <div style="display:flex;align-items:center;gap:10px;padding:0 8px">
+          <span id="m-sb-hs" style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:#fb6e1e;line-height:1">0</span>
+          <div style="text-align:center;min-width:54px">
+            <div id="m-sb-clock" style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;color:#fff;letter-spacing:.05em;line-height:1">00:00</div>
+            <div id="m-sb-period" style="font-size:.54rem;color:#7a8aa0;letter-spacing:.08em;margin-top:1px">1. ERÄ</div>
+          </div>
+          <span id="m-sb-as" style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:#2ecc71;line-height:1">0</span>
+        </div>
+        <!-- Away team -->
+        <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;justify-content:flex-end">
+          <span id="m-sb-away" style="font-family:'Bebas Neue',sans-serif;font-size:.95rem;color:#fff;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right"></span>
+          <span id="m-sb-away-em" style="font-size:1.1rem"></span>
+        </div>
+      </div>
+
+      <!-- Shots-on-goal bar -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;padding:3px 10px;background:#0a0f18;border-bottom:1px solid #141d2a;font-size:.6rem">
+        <span id="m-sb-hshots" style="color:#fb6e1e;font-family:'Barlow Condensed',sans-serif;font-size:.78rem">0</span>
+        <span style="color:#5a6a80;letter-spacing:.1em">LAUKAUKSET</span>
+        <span id="m-sb-ashots" style="color:#2ecc71;font-family:'Barlow Condensed',sans-serif;font-size:.78rem">0</span>
+      </div>
+
+      <!-- Possession bar -->
+      <div id="m-poss-row" style="display:none;align-items:center;justify-content:center;gap:14px;padding:3px 10px;background:#0a0f18;border-bottom:1px solid #141d2a;font-size:.6rem">
+        <span id="m-sb-hposs" style="color:#fb6e1e;font-family:'Barlow Condensed',sans-serif;font-size:.78rem">50%</span>
+        <span style="color:#5a6a80;letter-spacing:.1em">KIEKONHALLINTA</span>
+        <span id="m-sb-aposs" style="color:#2ecc71;font-family:'Barlow Condensed',sans-serif;font-size:.78rem">50%</span>
+      </div>
+
+      <div style="padding:6px;position:relative">
+        <canvas id="m-canvas" style="display:block;width:100%;background:#0a1420;border-radius:4px"></canvas>
+        <div id="m-pp-indicator" style="display:none;position:absolute;top:12px;left:50%;transform:translateX(-50%);background:rgba(8,12,20,.85);border:1px solid currentColor;border-radius:4px;padding:2px 10px;font-family:'Bebas Neue',sans-serif;font-size:.8rem;letter-spacing:.06em;z-index:5;pointer-events:none"></div>
+        <div id="m-anim-controls" style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:.66rem">
+          <div id="m-anim-clock" style="color:var(--ac);font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em">0' · 1. erä</div>
+          <div style="display:flex;gap:4px">
+            <button class="btn bsm" id="m-speed-1" style="font-size:.6rem;padding:3px 8px;background:var(--ac);color:#000" onclick="MatchRenderer.setSpeed(1)">1x</button>
+            <button class="btn bsm" id="m-speed-2" style="font-size:.6rem;padding:3px 8px;background:rgba(255,255,255,.08)" onclick="MatchRenderer.setSpeed(2)">2x</button>
+            <button class="btn bsm" id="m-speed-4" style="font-size:.6rem;padding:3px 8px;background:rgba(255,255,255,.08)" onclick="MatchRenderer.setSpeed(4)">4x</button>
+            <button class="btn bsm" style="font-size:.6rem;padding:3px 8px;background:rgba(255,255,255,.08)" onclick="MatchRenderer.skip()">⏭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="pnl"><div class="pt">⚡ Tapahtumat</div><div class="glog" id="glog"></div></div>
     <button class="btn bp bw" id="m-close" style="display:none;margin-top:8px" onclick="closeMatch()">JATKA →</button>
   </div>
@@ -750,7 +806,14 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;}
 // ══════════════════════════════════════
 const SALARY_CAP = 3500000; // realistic for mid-table
 const TICKET_PRICE = 22;
-const EXPAND_STEPS=[{seats:500,cost:150000},{seats:1000,cost:280000},{seats:2000,cost:500000},{seats:5000,cost:1100000}];
+// Stadium expansion: realistic cost per seat (~2500-4500€) and build time in weeks.
+// Construction takes real time — seats become available only when the project finishes.
+const EXPAND_STEPS=[
+  {seats:500,  cost:1300000,  weeks:10},
+  {seats:1000, cost:2800000,  weeks:20},
+  {seats:2000, cost:6000000,  weeks:36},
+  {seats:5000, cost:17000000, weeks:64},
+];
 const ACADEMY_LEVELS=[
   {name:'Perustaso',cost:50000,quality:50,label:'Perustaso'},
   {name:'Kehittyvä',cost:120000,quality:62,label:'Kehittyvä'},
@@ -759,13 +822,19 @@ const ACADEMY_LEVELS=[
   {name:'Maailmanluokka',cost:800000,quality:90,label:'Maailmanluokka'},
 ];
 const PRIZE_MONEY=[320000,240000,180000,140000,110000,90000,75000,65000,55000,48000,42000,38000,35000,32000,30000];
+// minLeagueIdx: lowest league level this sponsor appears at (S=1, M=2, B=3, A=4)
+// Higher-tier sponsors only approach teams in higher leagues — realism.
 const SPONSOR_TYPES=[
-  {name:'Paikallinen yritys',icon:'🏪',income:8000,minPos:15,stability:.7},
-  {name:'Alueellinen yritys',icon:'🏢',income:18000,minPos:12,stability:.75},
-  {name:'Kansallinen yritys',icon:'🏭',income:35000,minPos:8,stability:.8},
-  {name:'Pääsponsori',icon:'⭐',income:65000,minPos:5,stability:.85},
-  {name:'Platinasponsori',icon:'💎',income:110000,minPos:1,stability:.9},
+  {name:'Paikallinen yritys',icon:'🏪',income:8000,minPos:15,stability:.7,minLeagueIdx:1},
+  {name:'Alueellinen yritys',icon:'🏢',income:18000,minPos:12,stability:.75,minLeagueIdx:1},
+  {name:'Kansallinen yritys',icon:'🏭',income:35000,minPos:8,stability:.8,minLeagueIdx:2},
+  {name:'Pääsponsori',icon:'⭐',income:65000,minPos:5,stability:.85,minLeagueIdx:3},
+  {name:'Platinasponsori',icon:'💎',income:110000,minPos:1,stability:.9,minLeagueIdx:4},
 ];
+
+// League-level income multiplier — lower leagues have smaller sponsorship budgets
+const LEAGUE_SPONSOR_MULT={A:1.0, B:0.7, M:0.5, S:0.3};
+const LEAGUE_IDX={A:4, B:3, M:2, S:1};
 
 // Bonus condition types - drawn from this pool when generating sponsor offers
 const SPONSOR_BONUS_TYPES=[
@@ -1234,7 +1303,15 @@ const STYLE_ATTR_BOOSTS={
 function mkPlayer(tid,pos,boost=0,isYouth=false,teamStyle=null){
   const rating=clamp(rnd(isYouth?40:53,isYouth?68:81)+boost,35,96);
   const age=isYouth?rnd(16,19):rnd(19,37);
-  const wage=Math.round(clamp((rating-50)*350+rnd(-1000,1000),2000,22000)/500)*500;
+  // Base wage from rating (monthly €). League level then scales it: a Mestis
+  // player earns a fraction of an SM-liiga player even at the same rating,
+  // so each league's total payroll stays realistic vs its salary cap.
+  const baseWage=clamp((rating-50)*350+rnd(-1000,1000),2000,22000);
+  const tTeam=(typeof TEAMS!=='undefined')?TEAMS.find(x=>x.id===tid):null;
+  const lg=tTeam?tTeam.league:'A';
+  const leagueWageMult={A:1.35, B:0.45, M:0.22, S:0.062}[lg]||1.0;
+  const wageFloor=(lg==='S'||lg==='M')?300:500;
+  const wage=Math.round(clamp(baseWage*leagueWageMult,wageFloor,22000)/250)*250;
   const contractYears=rnd(1,3);
 
   // Profile selection — use team style if provided
@@ -1285,11 +1362,20 @@ function mkPlayer(tid,pos,boost=0,isYouth=false,teamStyle=null){
 
   const devSpeed=0.5+Math.random()*1.0;
 
+  // Jersey number — goalies favor 1/30/31/35, skaters spread 2-99
+  let jerseyNum;
+  if(pos==='M'){
+    jerseyNum=pick([1,30,31,32,35,29,40,50]);
+  } else {
+    jerseyNum=rnd(2,98);
+  }
+
   return{id:Math.random().toString(36).slice(2,9),name:pname(isYouth),pos,age,rating:finalRating,wage,foreign:!isYouth&&Math.random()<0.1,
     team:tid,fatigue:0,goals:0,assists:0,gamesPlayed:0,chlGoals:0,chlAssists:0,chlGames:0,
     mvGoalsAgainst:0,mvGames:0,captain:false,injured:false,injuryWeeks:0,
     contractYears,isYouth:isYouth||false,profile,
     potential,devSpeed,attrs,
+    jerseyNum,
     happiness:65,
     happinessHistory:[],
     tradeRequest:false,
@@ -2361,6 +2447,9 @@ function startGame(){
     playoffs:null,fxTab:'mine',saTab:'sc',lineup:{},
     matchdaySquad:null, // Array of 22 player IDs for next match (null=auto)
     chlSquad:null,      // Separate registered roster for CHL (null=auto, same as Liiga)
+    matchView:'animated', // 'animated' (Canvas) or 'text' (event log)
+    matchTimeout:false,   // Player calls timeout before match (one-time fatigue/morale boost)
+    aggressiveFinish:false, // Pull-goalie aggressive style if trailing late
     trainingId:null,trainingBoost:{},
     stadium:{name:td.stadium,capacity:td.cap,occupancy:td.occ},
     faRefreshWeek:1,
@@ -2454,7 +2543,7 @@ function startGame(){
   });
 
   // Starting sponsors
-  G.sponsors=[{...SPONSOR_TYPES[0],id:'sp0',active:true,weeksLeft:24}];
+  G.sponsors=[{...SPONSOR_TYPES[0],income:Math.round(SPONSOR_TYPES[0].income*(LEAGUE_SPONSOR_MULT[G.myLeague]||1.0)),id:'sp0',active:true,weeksLeft:24}];
   genSponsorOffers();
   initCHL();
   initJuniors();
@@ -4952,6 +5041,50 @@ function saveMatchdaySquad(){
   renderOverview();
 }
 
+// Toggle between animated (canvas) and text view for match playback
+function matchViewToggle(){
+  const isAnim=(G.matchView==='animated');
+  return `<div style="display:flex;gap:4px;margin-bottom:6px;font-size:.62rem;align-items:center">
+    <span style="color:var(--mu)">Ottelunäkymä:</span>
+    <button class="btn bsm" style="font-size:.6rem;padding:2px 6px;${isAnim?'background:var(--ac);color:#000':'background:rgba(255,255,255,.08)'}" onclick="setMatchView('animated')">🎬 Animoitu</button>
+    <button class="btn bsm" style="font-size:.6rem;padding:2px 6px;${!isAnim?'background:var(--ac);color:#000':'background:rgba(255,255,255,.08)'}" onclick="setMatchView('text')">📋 Teksti</button>
+  </div>`;
+}
+
+function setMatchView(view){
+  G.matchView=view;
+  renderOverview();
+  notify(view==='animated'?'🎬 Animoitu näkymä':'📋 Tekstinäkymä');
+}
+
+// Pre-match coaching decisions: timeout + aggressive finish
+function matchTacticsPanel(){
+  const timeoutUsed=G.matchTimeout;
+  const aggressive=G.aggressiveFinish;
+  return `<div style="background:rgba(255,255,255,.04);padding:6px;border-radius:4px;margin-bottom:6px;font-size:.64rem">
+    <div style="color:var(--ac);font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em;margin-bottom:5px">🎯 VALMENTAJAN PÄÄTÖKSET</div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="btn bsm" style="font-size:.6rem;padding:3px 7px;${timeoutUsed?'background:var(--ac);color:#000':'background:rgba(255,255,255,.08)'}" onclick="toggleMatchTimeout()" title="Aikalisä: palauttaa pelaajien rasitusta ja nostaa moraalia ennen ottelua">⏱️ Aikalisä${timeoutUsed?' ✓':''}</button>
+      <button class="btn bsm" style="font-size:.6rem;padding:3px 7px;${aggressive?'background:var(--ac);color:#000':'background:rgba(255,255,255,.08)'}" onclick="toggleAggressiveFinish()" title="Aggressiivinen loppupeli: jos häviöllä lopussa, vaihda maalivahti kentälle kuudenneksi kenttäpelaajaksi. Riski/palkkio.">🥅 Tyhjä maali tappiolla${aggressive?' ✓':''}</button>
+    </div>
+    <div style="color:var(--mu);font-size:.56rem;margin-top:4px;font-style:italic">
+      ${timeoutUsed?'⏱️ Aikalisä käytössä: pelaajat virkeämpiä tähän otteluun. ':''}${aggressive?'🥅 Pelaat tyhjällä maalilla jos olet tappiolla viime minuuteilla. ':''}${!timeoutUsed&&!aggressive?'Valitse valmentajan päätökset ennen ottelua.':''}
+    </div>
+  </div>`;
+}
+
+function toggleMatchTimeout(){
+  G.matchTimeout=!G.matchTimeout;
+  notify(G.matchTimeout?'⏱️ Aikalisä valmiina otteluun':'Aikalisä peruttu');
+  renderOverview();
+}
+
+function toggleAggressiveFinish(){
+  G.aggressiveFinish=!G.aggressiveFinish;
+  notify(G.aggressiveFinish?'🥅 Aggressiivinen loppupeli päällä':'Aggressiivinen loppupeli pois');
+  renderOverview();
+}
+
 function matchdaySquadStatus(){
   const squad=getMatchdaySquad();
   const isAuto=!G.matchdaySquad||G.matchdaySquad.length===0;
@@ -5071,6 +5204,7 @@ function renderNextMatch(){
         `<strong>${isHome?opp.nation+' '+opp.name:myT.em+' '+myT.name}</strong><br>`+
         `<span style="color:var(--mu);font-size:.68rem">${isHome?'Kotijää':'Vierasjää'} · CHL runkosarja</span></div>`+
         chlSquadStatusCompact()+
+        matchViewToggle()+
         `<button class="btn bsm" style="margin-bottom:6px;font-size:.7rem;padding:4px 8px" onclick="showScoutReport('${oppId}')">👁️ Skouttiraportti</button>`+
         getTacticButtons()+
         '<div style="font-size:.66rem;color:var(--mu);margin-bottom:7px">Taktiikka: <span id="tac-lbl2" style="color:var(--ac)">'+G.tactic+'</span></div>'+
@@ -5091,6 +5225,8 @@ function renderNextMatch(){
       `<strong>${ht.em} ${ht.name}</strong> vs <strong>${at.em} ${at.name}</strong><br>`+
       `<span style="color:var(--mu);font-size:.68rem">Viikko ${next.week} · Ottelu ${myPlayed+1}/${totalGames}${isCHLWeek?' · 🏆 CHL-viikko':''}</span></div>`+
       matchdaySquadStatus()+
+      matchViewToggle()+
+      matchTacticsPanel()+
       `<button class="btn bsm" style="margin-bottom:6px;font-size:.7rem;padding:4px 8px" onclick="showScoutReport('${next.home===G.myId?next.away:next.home}')">👁️ Skouttiraportti</button>`+
       getTacticButtons()+
       '<div style="font-size:.66rem;color:var(--mu);margin-bottom:7px">Taktikka: <span id="tac-lbl2" style="color:var(--ac)">'+G.tactic+'</span></div>'+
@@ -5236,6 +5372,7 @@ function playNext(){
     squad.forEach(p=>{p.fatigue=clamp((p.fatigue||0)-fatigueRed,0,100);});
   });
   triggerRandomEvent();
+  advanceStadiumProject();
   const chlWeekCheck=G.week; // save before increment
   G.week++;
   updateHdr();
@@ -5754,26 +5891,384 @@ function simSpecialTeams(homeTid,awayTid){
 // ══════════════════════════════════════
 // SIMULATE FIXTURE
 // ══════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+// DETAILED EVENT-BASED MATCH SIMULATION (Hybrid: player's match only)
+// Simulates the match minute-by-minute as a stream of events.
+// Power play affects scoring chance in real time; penalties have timing
+// and duration; PP goals end the penalty early.
+// Returns {hg, ag, ot, so, events:[...], homePen, awayPen, homePP, awayPP}
+// Does NOT update stats itself — caller applies stats from the result,
+// keeping it compatible with the existing stat pipeline.
+// ════════════════════════════════════════════════════════════════
+function simMatchDetailed(homeTid, awayTid, opts){
+  opts=opts||{};
+  // periodTactics: optional ['tac1','tac2','tac3'] per period (mid-match changes).
+  const homePeriodTactics=opts.homePeriodTactics||null;
+  const awayPeriodTactics=opts.awayPeriodTactics||null;
+
+  // ─── Base scoring rates (per-minute expected goals, 5v5) ───
+  const homeAtt=teamAttStr(homeTid,true);
+  const awayAtt=teamAttStr(awayTid,false);
+  const homeDef=teamDefStr(homeTid);
+  const awayDef=teamDefStr(awayTid);
+
+  // Default tactics (constant) — may be overridden per period for home
+  const homeTacDefault=getTacticForTeam(homeTid), awayTac=getTacticForTeam(awayTid);
+
+  // ─── POSSESSION CONTROL MODEL (C) ───
+  const tacControlMod={trap:-0.10,forecheck:0.07,cycle:0.09,dump:0.0,attack:0.05};
+  function controlShareFor(homeTac, awayTacP){
+    const homeIso=(homeAtt-awayDef);
+    const awayIso=(awayAtt-homeDef);
+    const diff=(homeIso-awayIso)/48;
+    const hTacMod=tacControlMod[homeTac]||0;
+    const aTacMod=tacControlMod[awayTacP]||0;
+    let share=0.50+diff*0.5+(hTacMod-aTacMod)+0.02;
+    return clamp(share,0.34,0.63);
+  }
+
+  // Scoring conversion when a team controls (depends on opp defense + own attack).
+  // Home attack is modulated slightly by tactic (attack/forecheck raise, trap lowers).
+  function controlledScoringRate(oppDef, attackerAtt, tacAttMod){
+    const edge=(attackerAtt+tacAttMod-60)/14 - (oppDef-60)/14;
+    return clamp(0.115+edge*0.014,0.045,0.220);
+  }
+  const tacAttMods={trap:-3,forecheck:2,cycle:2,dump:1,attack:4};
+
+  // ─── Penalty timing ───
+  const events=[];
+  const homePenCount=rnd(1,4);
+  const awayPenCount=rnd(1,4);
+  function genPenalties(team, count){
+    const arr=[];
+    for(let i=0;i<count;i++){ arr.push({team, min:rnd(2,57), duration:2}); }
+    return arr;
+  }
+  const allPenalties=[...genPenalties('home',homePenCount),...genPenalties('away',awayPenCount)]
+    .sort((a,b)=>a.min-b.min);
+
+  // ─── Minute-by-minute simulation ───
+  let hg=0, ag=0;
+  let homePPgoals=0, awayPPgoals=0;
+  let homeControlMin=0, awayControlMin=0;
+  let controlTimeline=[]; // per-minute: {min, home:bool} for real-time possession display
+  let box=[];
+  let penIdx=0;
+  let penaltyId=0;
+
+  for(let min=1; min<=60; min++){
+    const periodIdx=min<=20?0:(min<=40?1:2);
+    // Home/away tactic this minute (per-period if provided)
+    let homeTac=homeTacDefault;
+    if(homePeriodTactics){ homeTac=homePeriodTactics[periodIdx]||homeTacDefault; }
+    let awayTacP=awayTac;
+    if(awayPeriodTactics){ awayTacP=awayPeriodTactics[periodIdx]||awayTac; }
+    const baseHomeControl=controlShareFor(homeTac, awayTacP);
+    const homeScoreRate=controlledScoringRate(awayDef,homeAtt,(tacAttMods[homeTac]||0));
+    const awayScoreRate=controlledScoringRate(homeDef,awayAtt,(tacAttMods[awayTacP]||0));
+
+    // Activate penalties starting this minute
+    while(penIdx<allPenalties.length && allPenalties[penIdx].min<=min){
+      const pen=allPenalties[penIdx];
+      const pid='pen'+(penaltyId++);
+      box.push({team:pen.team, endMin:min+pen.duration, id:pid});
+      events.push({type:'penalty', side:pen.team, min:pen.min, duration:pen.duration, penId:pid});
+      penIdx++;
+    }
+    // Expire penalties by time → emit penaltyEnd
+    const expiring=box.filter(b=>b.endMin<=min);
+    expiring.forEach(b=>{
+      events.push({type:'penaltyEnd', side:b.team, min, penId:b.id, reason:'time'});
+    });
+    box=box.filter(b=>b.endMin>min);
+
+    // Man advantage
+    const homeInBox=box.filter(b=>b.team==='home').length;
+    const awayInBox=box.filter(b=>b.team==='away').length;
+    const homeSkaters=Math.max(3,5-homeInBox);
+    const awaySkaters=Math.max(3,5-awayInBox);
+
+    // This minute's control share (man advantage shifts heavily)
+    let homeControl=baseHomeControl;
+    if(homeSkaters>awaySkaters){
+      homeControl=awaySkaters<=3?0.86:0.74;
+    } else if(awaySkaters>homeSkaters){
+      homeControl=homeSkaters<=3?0.14:0.26;
+    }
+    const homeHadControlThisMin=Math.random()<homeControl;
+    if(homeHadControlThisMin) homeControlMin++; else awayControlMin++;
+    controlTimeline.push({min, home:homeHadControlThisMin});
+
+    // Scoring: controlling side gets the chance
+    const homeHasControl=Math.random()<homeControl;
+    let hRate=0, aRate=0;
+    if(homeHasControl){
+      let mult=1.0;
+      if(homeSkaters>awaySkaters) mult=(awaySkaters<=3?2.9:2.0);
+      hRate=homeScoreRate*mult*0.62;
+      aRate=awayScoreRate*0.06;
+    } else {
+      let mult=1.0;
+      if(awaySkaters>homeSkaters) mult=(homeSkaters<=3?2.9:2.0);
+      aRate=awayScoreRate*mult*0.62;
+      hRate=homeScoreRate*0.06;
+    }
+
+    // Roll for goals
+    if(Math.random()<hRate){
+      hg++;
+      const isPP=homeSkaters>awaySkaters;
+      if(isPP){ homePPgoals++; }
+      events.push({type:'goal', side:'home', min, isPP});
+      if(isPP){
+        const idx=box.findIndex(b=>b.team==='away');
+        if(idx>=0){ events.push({type:'penaltyEnd', side:'away', min, penId:box[idx].id, reason:'ppgoal'}); box.splice(idx,1); }
+      }
+    }
+    if(Math.random()<aRate){
+      ag++;
+      const isPP=awaySkaters>homeSkaters;
+      if(isPP){ awayPPgoals++; }
+      events.push({type:'goal', side:'away', min, isPP});
+      if(isPP){
+        const idx=box.findIndex(b=>b.team==='home');
+        if(idx>=0){ events.push({type:'penaltyEnd', side:'home', min, penId:box[idx].id, reason:'ppgoal'}); box.splice(idx,1); }
+      }
+    }
+
+    // Goalie saves
+    if(Math.random()<0.06) events.push({type:'save', side:Math.random()<0.5?'home':'away', min});
+  }
+
+  // Close out any penalties still active at end of regulation (avoid stuck players)
+  box.forEach(b=>{
+    events.push({type:'penaltyEnd', side:b.team, min:60, penId:b.id, reason:'time'});
+  });
+  box=[];
+
+  // ─── Overtime / Shootout if tied ───
+  let ot=false, so=false;
+  if(hg===ag){
+    if(Math.random()<0.55){
+      ot=true;
+      const winSide=Math.random()<0.5?'home':'away';
+      if(winSide==='home') hg++; else ag++;
+      events.push({type:'goal', side:winSide, min:rnd(61,65), isOT:true});
+    } else {
+      so=true;
+      const winSide=Math.random()<0.5?'home':'away';
+      if(winSide==='home') hg++; else ag++;
+      events.push({type:'goal', side:winSide, min:65, isSO:true});
+    }
+  }
+
+  events.sort((a,b)=>(a.min||0)-(b.min||0));
+
+  return {
+    hg, ag, ot, so, events,
+    homePen:homePenCount, awayPen:awayPenCount,
+    homePP:homePPgoals, awayPP:awayPPgoals,
+    homeControl:homeControlMin, awayControl:awayControlMin,
+    controlTimeline
+  };
+}
+
+// Re-simulate a player's match with updated per-period tactics, preserving
+// events from periods already played. Called when the player changes tactics
+// at an intermission. `playedThroughMin` = how many minutes are already shown.
+function reSimRemainingPeriods(f, periodTactics, playedThroughMin){
+  if(!f._reSimData) return;
+  const detOpts={};
+  const myIsHome=(f._reSimData.home===G.myId);
+  // The engine drives home-side period tactics; if player is away, mirror by
+  // using away as "home" perspective is complex — for now support player-as-either
+  // by passing the player's tactics to whichever side they are.
+  if(myIsHome){
+    detOpts.homePeriodTactics=periodTactics.slice();
+  } else {
+    detOpts.awayPeriodTactics=periodTactics.slice();
+  }
+  const fresh=simMatchDetailed(f._reSimData.home, f._reSimData.away, detOpts);
+
+  // Keep events up to playedThroughMin from the OLD stream; take later events from fresh.
+  const oldKept=(f.detailedEvents||[]).filter(e=>(e.min||0)<=playedThroughMin);
+  const freshLater=fresh.events.filter(e=>(e.min||0)>playedThroughMin);
+
+  // Fix penalties that span the boundary: a penalty STARTED before the boundary
+  // whose penaltyEnd was in the discarded old-future (or is in fresh with a new id).
+  // Find penalties in oldKept that have no matching penaltyEnd in oldKept → close them at boundary.
+  const oldStarts=oldKept.filter(e=>e.type==='penalty');
+  const oldEnds=oldKept.filter(e=>e.type==='penaltyEnd');
+  oldStarts.forEach(s=>{
+    if(!oldEnds.find(en=>en.penId===s.penId)){
+      // This penalty had no end before the boundary → close it at the boundary
+      oldKept.push({type:'penaltyEnd', side:s.side, min:playedThroughMin, penId:s.penId, reason:'time'});
+    }
+  });
+  // Also drop any orphan penaltyEnd in freshLater whose penalty start is not in freshLater
+  const freshStarts=freshLater.filter(e=>e.type==='penalty').map(e=>e.penId);
+  const freshLaterClean=freshLater.filter(e=>{
+    if(e.type==='penaltyEnd') return freshStarts.includes(e.penId);
+    return true;
+  });
+
+  const merged=oldKept.concat(freshLaterClean).sort((a,b)=>(a.min||0)-(b.min||0));
+
+  // Recompute final score from merged goal events (regular + OT/SO already in stream)
+  let hg=0, ag=0;
+  merged.forEach(e=>{ if(e.type==='goal'){ if(e.side==='home')hg++; else ag++; } });
+
+  // Update fixture
+  f.detailedEvents=merged;
+  f.hg=hg; f.ag=ag;
+  f.ot=fresh.ot; f.so=fresh.so;
+  f.homePP=merged.filter(e=>e.type==='goal'&&e.isPP&&e.side==='home').length;
+  f.awayPP=merged.filter(e=>e.type==='goal'&&e.isPP&&e.side==='away').length;
+  // Merge control timeline: keep played minutes from old, take future from fresh
+  const oldControl=(f.controlTimeline||[]).filter(c=>c.min<=playedThroughMin);
+  const freshControl=(fresh.controlTimeline||[]).filter(c=>c.min>playedThroughMin);
+  const mergedControl=oldControl.concat(freshControl).sort((a,b)=>a.min-b.min);
+  f.controlTimeline=mergedControl;
+  // Recompute totals from merged control
+  f.homeControl=mergedControl.filter(c=>c.home).length;
+  f.awayControl=mergedControl.filter(c=>!c.home).length;
+  if(f._statsArgs){ f._statsArgs.hg=hg; f._statsArgs.ag=ag; f._statsArgs.detailedResult=fresh; }
+  return {hg, ag};
+}
+
 function simFix(f,live){
   if(f.preseason) return;
-  let hg=simGoals(f.home,true,f.away);
-  let ag=simGoals(f.away,false,f.home);
 
-  // Add special teams goals
-  const st=simSpecialTeams(f.home,f.away);
-  hg+=st.homeExtra;
-  ag+=st.awayExtra;
-  f.homePen=st.homePen;f.awayPen=st.awayPen;
-  f.homePP=st.homeExtra;f.awayPP=st.awayExtra;
-  f.ot=false;f.so=false;
-  if(hg===ag){
+  // ─── PLAYER COACHING DECISIONS (only for player's match) ───
+  const isMyMatch=(f.home===G.myId||f.away===G.myId);
+  let myTimeoutBonus=0;       // extra scoring chance from timeout
+  if(isMyMatch&&G.matchTimeout){
+    // Timeout: reduce fatigue of matchday squad → small performance boost
+    const squadIds=getMatchdaySquad();
+    G.players.filter(p=>p.team===G.myId&&squadIds.includes(p.id)).forEach(p=>{
+      p.fatigue=clamp((p.fatigue||0)-8,0,100);
+    });
+    G.morale=clamp(G.morale+3,0,100);
+    myTimeoutBonus=0.15; // slight edge this match
+  }
+
+  // ─── GOAL SIMULATION ───
+  // Player's own match uses the detailed event-based engine (richer, drives animation).
+  // AI matches use the fast lightweight engine (preserves league balance & performance).
+  let hg, ag;
+  let detailedResult=null;
+
+  if(isMyMatch){
+    detailedResult=simMatchDetailed(f.home,f.away);
+    hg=detailedResult.hg;
+    ag=detailedResult.ag;
+    // Apply timeout bonus (chance for +1 goal for player's team)
+    if(myTimeoutBonus>0&&Math.random()<myTimeoutBonus){
+      if(f.home===G.myId) hg++; else ag++;
+      // Add a late goal event to the stream
+      detailedResult.events.push({type:'goal',side:f.home===G.myId?'home':'away',min:rnd(50,59)});
+      detailedResult.events.sort((a,b)=>(a.min||0)-(b.min||0));
+    }
+    f.homePen=detailedResult.homePen;f.awayPen=detailedResult.awayPen;
+    f.homePP=detailedResult.homePP;f.awayPP=detailedResult.awayPP;
+    f.ot=detailedResult.ot;f.so=detailedResult.so;
+    f.homeControl=detailedResult.homeControl;f.awayControl=detailedResult.awayControl;
+    f.controlTimeline=detailedResult.controlTimeline;
+    // Store event stream for renderer/text-log
+    f.detailedEvents=detailedResult.events;
+  } else {
+    // AI match — original fast engine
+    hg=simGoals(f.home,true,f.away);
+    ag=simGoals(f.away,false,f.home);
+    const st=simSpecialTeams(f.home,f.away);
+    hg+=st.homeExtra;
+    ag+=st.awayExtra;
+    f.homePen=st.homePen;f.awayPen=st.awayPen;
+    f.homePP=st.homeExtra;f.awayPP=st.awayExtra;
+    f.ot=false;f.so=false;
+  }
+
+  // ─── AGGRESSIVE FINISH (pull goalie) ───
+  // If player is trailing by 1-2 goals and chose aggressive finish,
+  // model the empty-net gamble: chance to tie OR concede empty-net goal.
+  f.emptyNetDrama=null;
+  if(isMyMatch&&G.aggressiveFinish){
+    const myG=f.home===G.myId?hg:ag;
+    const oppG=f.home===G.myId?ag:hg;
+    const trailing=oppG-myG;
+    if(trailing>=1&&trailing<=2){
+      const roll=Math.random();
+      if(roll<0.30){
+        if(f.home===G.myId) hg+=1; else ag+=1;
+        f.emptyNetDrama='success';
+        if(detailedResult) detailedResult.events.push({type:'goal',side:f.home===G.myId?'home':'away',min:rnd(58,60),emptyNet:true});
+      } else if(roll<0.62){
+        if(f.home===G.myId) ag+=1; else hg+=1;
+        f.emptyNetDrama='conceded';
+        if(detailedResult) detailedResult.events.push({type:'goal',side:f.home===G.myId?'away':'home',min:rnd(58,60),emptyNetAgainst:true});
+      } else {
+        f.emptyNetDrama='neutral';
+      }
+    }
+  }
+
+  // Keep detailedEvents in sync after empty-net additions
+  if(detailedResult){
+    detailedResult.events.sort((a,b)=>(a.min||0)-(b.min||0));
+    f.detailedEvents=detailedResult.events;
+  }
+
+  // OT/SO handling — detailed engine already resolved ties; only AI needs this
+  if(!isMyMatch && hg===ag){
     if(Math.random()<0.55){f.ot=true;if(Math.random()<0.5)hg++;else ag++;}
     else{f.so=true;if(Math.random()<0.5)hg++;else ag++;}
   }
-  f.hg=hg;f.ag=ag;f.played=true;
-  // Only update standings for SM-liiga teams (not Mestis)
+  // Safety: if player match still tied (e.g. after empty-net), resolve it
+  if(isMyMatch && hg===ag){
+    const winSide=Math.random()<0.5?'home':'away';
+    if(Math.random()<0.55){
+      f.ot=true; if(winSide==='home')hg++;else ag++;
+      if(detailedResult) detailedResult.events.push({type:'goal',side:winSide,min:rnd(61,65),isOT:true});
+    } else {
+      f.so=true; if(winSide==='home')hg++;else ag++;
+      if(detailedResult) detailedResult.events.push({type:'goal',side:winSide,min:65,isSO:true});
+    }
+    if(detailedResult) f.detailedEvents=detailedResult.events;
+  }
+  // ─── Apply match statistics ───
+  // For the player's match shown live with the per-period engine, defer stats
+  // to the END of the animation (so mid-match tactic changes can re-sim later
+  // periods). For AI matches and text-view, apply immediately as before.
+  const deferStats = isMyMatch && live && detailedResult && (G.matchView==='animated');
+  if(deferStats){
+    // Set score on fixture now (needed for animation display + finalize),
+    // but defer the heavy stat application (standings/scorers/+-) to match end.
+    f.hg=hg; f.ag=ag; f.played=false;
+    f._pendingStats=true;
+    f._statsArgs={hg, ag, isMyMatch, detailedResult};
+    f._reSimData={home:f.home, away:f.away};
+    G._periodTactics=[G.tactic,G.tactic,G.tactic];
+  } else {
+    applyMatchStats(f, hg, ag, isMyMatch, detailedResult);
+  }
+
+  if(live) showMatchAnim(f);
+}
+
+// Finalize a deferred player match: apply the (possibly re-simulated) result's stats.
+function finalizeMatchStats(f){
+  if(!f._pendingStats) return;
+  const a=f._statsArgs;
+  applyMatchStats(f, f.hg, f.ag, a.isMyMatch, a.detailedResult);
+  f._pendingStats=false;
+}
+
+// All post-match stat updates, extracted so a period-by-period player match
+// can call it once at the very end. Behaviour identical to the old inline code.
+function applyMatchStats(f, hg, ag, isMyMatch, detailedResult){
   const hs=G.standings[f.home];
   const as=G.standings[f.away];
+  f.hg=hg;f.ag=ag;f.played=true;
   if(hs){hs.GF+=hg;hs.GA+=ag;hs.played++;}
   if(as){as.GF+=ag;as.GA+=hg;as.played++;}
   if(hs&&as){
@@ -5786,6 +6281,20 @@ function simFix(f,live){
     }
   }
   assignScorers(f.home,hg);assignScorers(f.away,ag);
+
+  // PP/PK standings stats for player's match (detailed engine bypasses simSpecialTeams)
+  if(isMyMatch&&detailedResult){
+    if(hs){
+      hs.ppGoals=(hs.ppGoals||0)+f.homePP;
+      hs.ppOpps=(hs.ppOpps||0)+f.awayPen;
+      hs.pkGoalsAgainst=(hs.pkGoalsAgainst||0)+f.awayPP;
+    }
+    if(as){
+      as.ppGoals=(as.ppGoals||0)+f.awayPP;
+      as.ppOpps=(as.ppOpps||0)+f.homePen;
+      as.pkGoalsAgainst=(as.pkGoalsAgainst||0)+f.homePP;
+    }
+  }
 
   // +/- stats: each player on a team gets +1 per goal scored, -1 per goal conceded
   // Apply to active matchday squad for player team, and top-rated players for AI
@@ -5874,8 +6383,18 @@ function simFix(f,live){
     const myG=f.home===G.myId?hg:ag,oppG=f.home===G.myId?ag:hg;
     const won=myG>oppG;
     G.lastMatchResult={won,myG,oppG,home:f.home,away:f.away};
+
+    // Empty-net drama news
+    if(f.emptyNetDrama==='success'){
+      addNews('green','🥅 Maalivahdin vaihto kannatti! Tasoitus tyhjällä maalilla!');
+    } else if(f.emptyNetDrama==='conceded'){
+      addNews('red','🥅 Tyhjä maali kostautui — vastustaja iski tyhjään!');
+    }
+
+    // Reset one-time coaching decisions after the match
+    if(G.matchTimeout){ G.matchTimeout=false; }
+    // aggressiveFinish persists (it's a style setting), but could be reset too
   }
-  if(live) showMatchAnim(f);
 }
 
 function assignScorers(tid,goals,isPlayoff){
@@ -6402,7 +6921,1819 @@ function developPlayers(){
 // ══════════════════════════════════════
 // MATCH ANIMATION
 // ══════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+// MATCH RENDERER MODULE
+// Top-down Canvas 2D visualization of hockey match.
+// Engine is source of truth; renderer visualizes events on top.
+// ════════════════════════════════════════════════════════════════
+const MatchRenderer = (function(){
+  // ─── State ───
+  let canvas=null, ctx=null;
+  let rinkW=0, rinkH=0;       // Logical rink size (in "units")
+  let pxScale=1;              // CSS pixels per unit
+  let dpr=1;                  // Device pixel ratio
+  let running=false;
+  let rafId=null;
+  let speed=1;
+  let lastFrame=0;
+  let gameMin=0;              // Current match minute (0-65)
+  let homeColor='#1a4d8f', awayColor='#c0392b';
+  let players=[];             // Array of {id,x,y,tx,ty,team,role,name}
+  let puck={x:0,y:0,tx:0,ty:0,carrierId:null};
+  let matchData=null;         // Reference to current fixture
+  let onComplete=null;        // Callback when match ends
+
+  // Event queue — populated by queueEvents(), processed when gameMin reaches event.min
+  let eventQueue=[];          // Array of events to process
+  let eventIndex=0;           // Next event to process
+  let activeEffects=[];       // Visual effects currently playing (goal flash, etc.)
+  let pendingScript=null;     // Multi-step animation (e.g. goal sequence)
+
+  // ─── Rink dimensions (logical units, IIHF spec ratio ≈ 60×30m → 2:1) ───
+  const RINK_RATIO=2.05;      // width/height (approximate)
+  const UNITS_W=200;          // Logical width in units
+  const UNITS_H=UNITS_W/RINK_RATIO; // ~97.5
+
+  // Rink reference points (in logical units)
+  const Rink={
+    width:UNITS_W,
+    height:UNITS_H,
+    cornerR:14,            // Corner radius
+    centerX:UNITS_W/2,
+    centerY:UNITS_H/2,
+    blueLineLeft:UNITS_W*0.36,
+    blueLineRight:UNITS_W*0.64,
+    redLineGoalLeft:UNITS_W*0.07,
+    redLineGoalRight:UNITS_W*0.93,
+    goalW:6,
+    goalH:12,
+    faceoffSpots:[
+      // left zone
+      {x:UNITS_W*0.20,y:UNITS_H*0.27},
+      {x:UNITS_W*0.20,y:UNITS_H*0.73},
+      // center
+      {x:UNITS_W*0.50,y:UNITS_H*0.50},
+      // right zone
+      {x:UNITS_W*0.80,y:UNITS_H*0.27},
+      {x:UNITS_W*0.80,y:UNITS_H*0.73},
+      // neutral zone
+      {x:UNITS_W*0.40,y:UNITS_H*0.27},
+      {x:UNITS_W*0.40,y:UNITS_H*0.73},
+      {x:UNITS_W*0.60,y:UNITS_H*0.27},
+      {x:UNITS_W*0.60,y:UNITS_H*0.73},
+    ]
+  };
+
+  // ─── INIT ───
+  function init(matchFixture, callbackOnComplete){
+    matchData=matchFixture;
+    onComplete=callbackOnComplete;
+    canvas=document.getElementById('m-canvas');
+    if(!canvas) return false;
+    ctx=canvas.getContext('2d');
+    resize();
+    window.addEventListener('resize',resize);
+    // Re-measure after layout settles (modal becomes visible)
+    setTimeout(resize,120);
+    setTimeout(resize,350);
+
+    // Determine team colors with contrast resolution
+    const homeT=TEAMS.find(t=>t.id===matchData.home);
+    const awayT=TEAMS.find(t=>t.id===matchData.away);
+    const resolved=resolveTeamColors(homeT,awayT);
+    homeColor=resolved.homeColor;
+    awayColor=resolved.awayColor;
+
+    // Populate styled scoreboard header
+    const setT=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+    setT('m-sb-home',(homeT?homeT.name:'Koti').toUpperCase());
+    setT('m-sb-away',(awayT?awayT.name:matchData.oppName||'Vieras').toUpperCase());
+    setT('m-sb-home-em',homeT?homeT.em:'🏒');
+    setT('m-sb-away-em',awayT?awayT.em:'🏒');
+    setT('m-sb-hs','0'); setT('m-sb-as','0');
+    setT('m-sb-hshots','0'); setT('m-sb-ashots','0');
+    // Possession — show row if we have a control timeline; starts 50/50 and updates in real time
+    const possRow=document.getElementById('m-poss-row');
+    if(matchData.controlTimeline&&matchData.controlTimeline.length){
+      setT('m-sb-hposs','50%');
+      setT('m-sb-aposs','50%');
+      const hp=document.getElementById('m-sb-hposs'); if(hp) hp.style.color=homeColor;
+      const ap=document.getElementById('m-sb-aposs'); if(ap) ap.style.color=awayColor;
+      if(possRow) possRow.style.display='flex';
+    } else {
+      if(possRow) possRow.style.display='none';
+    }
+    setT('m-sb-clock','00:00'); setT('m-sb-period','1. ERÄ');
+    // Apply team colors to score numbers
+    const hsEl=document.getElementById('m-sb-hs'); if(hsEl) hsEl.style.color=homeColor;
+    const asEl=document.getElementById('m-sb-as'); if(asEl) asEl.style.color=awayColor;
+    const hShotsEl=document.getElementById('m-sb-hshots'); if(hShotsEl) hShotsEl.style.color=homeColor;
+    const aShotsEl=document.getElementById('m-sb-ashots'); if(aShotsEl) aShotsEl.style.color=awayColor;
+    // Reset shot counters
+    homeShots=0; awayShots=0;
+
+    // Build initial player positions (face-off start)
+    buildInitialFormation();
+
+    speed=1;
+    updateSpeedButtons();
+    gameMin=0;
+    periodNum=1;
+    intermissionActive=false;
+    matchEnded=false;
+    eventQueue=[];
+    eventIndex=0;
+    activeEffects=[];
+    pendingScript=null;
+    faceoffHold=0;
+    goalBanner=null;
+    penaltyBox=[];
+    ppSide=null;
+    pulledGoalieSide=null;
+    updatePPIndicator();
+    // Clean any leftover overlay
+    const oldOverlay=document.getElementById('m-canvas-intermission');
+    if(oldOverlay) oldOverlay.remove();
+    running=true;
+    lastFrame=performance.now();
+    rafId=requestAnimationFrame(loop);
+    return true;
+  }
+
+  function destroy(){
+    running=false;
+    if(rafId) cancelAnimationFrame(rafId);
+    rafId=null;
+    window.removeEventListener('resize',resize);
+    const overlay=document.getElementById('m-canvas-intermission');
+    if(overlay) overlay.remove();
+  }
+
+  function setSpeed(s){
+    speed=s;
+    updateSpeedButtons();
+  }
+  function skip(){
+    // Skip to end of match: close canvas overlay and let text view (if any) finish on its own
+    // The text-log timer-based animation also runs in parallel; we only stop the canvas
+    matchEnded=true;
+    gameMin=60;
+    // Process remaining events instantly so score updates correctly
+    while(eventIndex<eventQueue.length){
+      const ev=eventQueue[eventIndex];
+      if(ev.type==='goal'){
+        const sc=document.getElementById('m-sc');
+        if(sc){
+          const parts=sc.textContent.split('–').map(s=>parseInt(s.trim())||0);
+          if(ev.side==='home') parts[0]++; else parts[1]++;
+          sc.textContent=parts[0]+' – '+parts[1];
+        }
+      }
+      eventIndex++;
+    }
+    endRegularPeriods();
+  }
+
+  function updateSpeedButtons(){
+    [1,2,4].forEach(s=>{
+      const el=document.getElementById('m-speed-'+s);
+      if(!el) return;
+      const active=(s===speed);
+      el.style.background=active?'var(--ac)':'rgba(255,255,255,.08)';
+      el.style.color=active?'#000':'';
+    });
+  }
+
+  // ─── Sizing & DPR ───
+  function resize(){
+    if(!canvas) return;
+    dpr=window.devicePixelRatio||1;
+    // Determine logical CSS width — prefer canvas parent, fall back to window
+    let avail=0;
+    const parent=canvas.parentElement;
+    if(parent&&parent.clientWidth>20) avail=parent.clientWidth-12;
+    if(avail<=20){
+      const wrap=document.getElementById('m-canvas-wrap');
+      if(wrap&&wrap.clientWidth>20) avail=wrap.clientWidth-24;
+    }
+    if(avail<=20){
+      // Fallback to window width
+      avail=Math.min((window.innerWidth||420)-40,440);
+    }
+    const maxW=Math.min(avail,440);
+    rinkW=maxW;
+    rinkH=Math.round(maxW/RINK_RATIO);
+    pxScale=rinkW/UNITS_W;
+    canvas.style.width=rinkW+'px';
+    canvas.style.height=rinkH+'px';
+    canvas.width=Math.round(rinkW*dpr);
+    canvas.height=Math.round(rinkH*dpr);
+    if(ctx){ ctx.setTransform(dpr,0,0,dpr,0,0); }
+  }
+
+  // Logical units → CSS px
+  function ux(x){return x*pxScale;}
+  function uy(y){return y*pxScale;}
+
+  function teamColor(t){
+    if(!t) return null;
+    // Real Finnish team colors (primary jersey color)
+    const colorMap={
+      hifk:'#cf1c2f',      // punainen
+      tps:'#000000',       // musta-valkoinen → musta
+      ilves:'#185c2b',     // vihreä
+      tappara:'#fb6e1e',   // oranssi
+      karpat:'#000000',    // musta-keltainen → musta (keltainen alt)
+      jyp:'#6a3d9a',       // violetti
+      pelicans:'#fb923c',  // oranssi
+      saipa:'#000000',     // musta-keltainen
+      sport:'#0a7d3c',     // vihreä
+      lukko:'#1a4d8f',     // sininen
+      assa:'#c01a2f',      // punainen
+      hpk:'#e8820c',       // oranssi
+      kalpa:'#f1c40f',     // keltainen
+      kookoo:'#1a9ed4',    // vaaleansininen
+      mikkeli:'#6b3aa0',   // violetti (Jukurit)
+      espoo:'#1a4d8f',     // sininen
+      jokerit:'#c01a2f',   // punainen
+      hokki:'#1a9ed4'      // sininen
+    };
+    const tid=t.id?t.id.toLowerCase():'';
+    if(colorMap[tid]) return colorMap[tid];
+    if(t.league==='A') return '#1a4d8f';
+    if(t.league==='B') return '#185c2b';
+    if(t.league==='M') return '#8a5cf6';
+    return '#666';
+  }
+
+  // Alternate (away) color for a team — used when colors clash
+  function teamAltColor(t){
+    if(!t) return '#ddd';
+    const altMap={
+      tps:'#1a4d8f', karpat:'#fcc007', saipa:'#fcc007', tappara:'#1a3a6e',
+      hifk:'#1a2a4a', ilves:'#f1c40f', jokerit:'#1a3a6e', assa:'#1a3a6e'
+    };
+    const tid=t.id?t.id.toLowerCase():'';
+    return altMap[tid]||'#e8e8e8'; // default: near-white away jersey
+  }
+
+  // Parse hex to RGB
+  function hexToRgb(hex){
+    hex=hex.replace('#','');
+    if(hex.length===3) hex=hex.split('').map(c=>c+c).join('');
+    return {r:parseInt(hex.slice(0,2),16),g:parseInt(hex.slice(2,4),16),b:parseInt(hex.slice(4,6),16)};
+  }
+
+  // Perceptual color distance (weighted Euclidean in RGB)
+  function colorDistance(c1,c2){
+    const a=hexToRgb(c1), b=hexToRgb(c2);
+    const rmean=(a.r+b.r)/2;
+    const dr=a.r-b.r, dg=a.g-b.g, db=a.b-b.b;
+    // Weighted for human perception
+    return Math.sqrt((2+rmean/256)*dr*dr + 4*dg*dg + (2+(255-rmean)/256)*db*db);
+  }
+
+  // Resolve home/away colors ensuring sufficient contrast
+  function resolveTeamColors(homeT,awayT){
+    let hc=teamColor(homeT)||'#1a4d8f';
+    let ac=teamColor(awayT)||'#c0392b';
+    // If too similar, switch away team to its alternate color
+    if(colorDistance(hc,ac)<120){
+      ac=teamAltColor(awayT);
+      // If alt still clashes, force white or yellow
+      if(colorDistance(hc,ac)<120){
+        ac=colorDistance(hc,'#ffffff')>colorDistance(hc,'#fcc007')?'#ffffff':'#fcc007';
+      }
+    }
+    return {homeColor:hc,awayColor:ac};
+  }
+
+  // ─── Initial formation (face-off at center) ───
+  function buildInitialFormation(){
+    players=[];
+
+    function placeTeam(teamId,isHome){
+      const all=G.players.filter(p=>p.team===teamId&&!p.injured);
+      const goalies=all.filter(p=>p.pos==='M').sort((a,b)=>b.rating-a.rating);
+      const defs=all.filter(p=>p.pos==='P').sort((a,b)=>b.rating-a.rating);
+      const fwds=all.filter(p=>p.pos==='V').sort((a,b)=>b.rating-a.rating);
+      const goalie=goalies[0];
+      const D1=defs[0], D2=defs[1];
+      const LW=fwds[0], C=fwds[1], RW=fwds[2];
+
+      // Fallback names if team has empty positions (e.g. CHL opponent)
+      const fallbackTeam=TEAMS.find(t=>t.id===teamId);
+      const fallbackName=fallbackTeam?fallbackTeam.name:'Joukkue';
+
+      function addPlayer(p,role){
+        const id=p?p.id:'fb-'+teamId+'-'+role;
+        const name=p?p.name:fallbackName;
+        const fatigue=p?(p.fatigue||0):0;
+        const rating=p?(p.rating||70):70;
+        // Jersey number — use player's, or generate stable fallback for old saves
+        let jerseyNum;
+        if(p&&p.jerseyNum){ jerseyNum=p.jerseyNum; }
+        else if(role==='G'){ jerseyNum=pick([1,30,35]); }
+        else {
+          // Stable fallback from id hash so it doesn't change each frame
+          const hash=id.split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+          jerseyNum=2+(hash%96);
+        }
+        // Individual skating speed from rating (faster players lerp quicker)
+        const skateSpeed=0.85+((rating-65)/35)*0.3; // ~0.85 to 1.15
+        players.push({
+          id,name,role,team:teamId,isHome,jerseyNum,
+          x:0,y:0,tx:0,ty:0,
+          vx:0,vy:0,                              // D: momentum
+          anchorX:0,anchorY:0,                    // A: formation anchor point
+          driftPhase:Math.random()*Math.PI*2,     // A: individual drift phase
+          driftPhase2:Math.random()*Math.PI*2,    // secondary drift (different freq)
+          driftSpeed:0.6+Math.random()*0.8,       // A: individual drift rate
+          skateSpeed,                             // C: individual speed
+          // Positional personality: each player favours a slightly different spot + reaction
+          posBiasX:(Math.random()-0.5)*0.06,      // persistent X offset from role anchor
+          posBiasY:(Math.random()-0.5)*0.08,      // persistent Y offset
+          reactLag:0.78+Math.random()*0.30,       // how fast they chase a new target (0.78-1.08)
+          wanderX:Math.random()*Math.PI*2,        // slow wander phase
+          wanderY:Math.random()*Math.PI*2,
+          wanderSpeedX:0.3+Math.random()*0.5,
+          wanderSpeedY:0.3+Math.random()*0.5,
+          fatigue,rating
+        });
+      }
+      addPlayer(goalie,'G');
+      addPlayer(D1,'LD');
+      addPlayer(D2,'RD');
+      addPlayer(LW,'LW');
+      addPlayer(C,'C');
+      addPlayer(RW,'RW');
+    }
+
+    placeTeam(matchData.home,true);
+    placeTeam(matchData.away,false);
+
+    // Apply face-off formation to both
+    applyFormation('home','faceoff');
+    applyFormation('away','faceoff');
+
+    // Snap positions to anchor (so they start in place, not lerping from 0,0)
+    players.forEach(p=>{
+      p.x=p.anchorX; p.y=p.anchorY;
+      p.tx=p.anchorX; p.ty=p.anchorY;
+      p.vx=0; p.vy=0;
+      p.pulledGoalie=false; p.penalized=false; p.extraAttacker=false;
+    });
+
+    // Puck at center, no carrier yet (face-off)
+    puck={x:Rink.centerX,y:Rink.centerY,tx:Rink.centerX,ty:Rink.centerY,carrierId:null,passing:false,pendingCarrier:null};
+
+    // Start in center zone, home possession (will roll after a second)
+    possession='home';
+    zone='center';
+    situationTimer=1500;
+    lastEventTimer=0;
+    faceoffHold=1300; // hold face-off positions ~1.3s before play flows
+  }
+
+  // ─── Formations: positional templates by game situation ───
+  // For each formation, define relative positions (0-1 normalized) for each role.
+  // x: 0=left goal, 1=right goal
+  // y: 0=top, 1=bottom
+  // Side flips for away team automatically.
+  const Formations={
+    // Home team attacking in opponent's zone (right side)
+    attack:{
+      G:  {x:0.07, y:0.50},
+      LD: {x:0.55, y:0.30},
+      RD: {x:0.55, y:0.70},
+      LW: {x:0.78, y:0.20},
+      C:  {x:0.82, y:0.50},
+      RW: {x:0.78, y:0.80}
+    },
+    // Home team defending in own zone (left side)
+    defense:{
+      G:  {x:0.07, y:0.50},
+      LD: {x:0.18, y:0.35},
+      RD: {x:0.18, y:0.65},
+      LW: {x:0.25, y:0.25},
+      C:  {x:0.28, y:0.50},
+      RW: {x:0.25, y:0.75}
+    },
+    // Neutral zone, transitioning forward
+    neutralAttack:{
+      G:  {x:0.07, y:0.50},
+      LD: {x:0.42, y:0.35},
+      RD: {x:0.42, y:0.65},
+      LW: {x:0.55, y:0.25},
+      C:  {x:0.58, y:0.50},
+      RW: {x:0.55, y:0.75}
+    },
+    // Neutral zone, falling back
+    neutralDefense:{
+      G:  {x:0.07, y:0.50},
+      LD: {x:0.32, y:0.35},
+      RD: {x:0.32, y:0.65},
+      LW: {x:0.42, y:0.25},
+      C:  {x:0.45, y:0.50},
+      RW: {x:0.42, y:0.75}
+    },
+    // Centered face-off start
+    faceoff:{
+      G:  {x:0.07, y:0.50},
+      LD: {x:0.32, y:0.40},
+      RD: {x:0.32, y:0.60},
+      LW: {x:0.45, y:0.35},
+      C:  {x:0.48, y:0.50},
+      RW: {x:0.45, y:0.65}
+    }
+  };
+
+  // Game flow state — which side has possession and where they are
+  let possession='home';      // 'home' or 'away'
+  let zone='center';          // 'attack','defense','center'
+  let situationTimer=0;       // ms remaining in current play
+  let lastEventTimer=0;       // ms since last visible action
+  let faceoffHold=0;          // ms to hold face-off formation before tactical positioning
+  let homeShots=0, awayShots=0; // shots on goal counter for scoreboard
+  let penaltyBox=[]; // active penalties in renderer: {side, penId, player}
+  let ppSide=null;   // which side currently has man advantage (null/'home'/'away')
+  let pulledGoalieSide=null; // side that has pulled their goalie (extra attacker)
+
+  // Apply a formation to a team
+  function applyFormation(team, formationName){
+    const isHome=(team==='home');
+    const form=Formations[formationName];
+    if(!form) return;
+    const teamPlayers=players.filter(p=>(p.isHome===isHome));
+    teamPlayers.forEach(p=>{
+      const ref=form[p.role];
+      if(!ref) return;
+      // Flip x for away team (mirror across center)
+      const fx=isHome?ref.x:(1-ref.x);
+      const fy=ref.y;
+      // Set ANCHOR point (drift happens around this); target derives from anchor+drift
+      p.anchorX=fx*UNITS_W+(Math.random()-0.5)*4;
+      p.anchorY=fy*UNITS_H+(Math.random()-0.5)*3;
+    });
+  }
+
+  // Face-off at a specific spot (e.g. defensive zone after a penalty).
+  // Shifts the whole face-off formation so the puck-drop happens at that spot.
+  function faceoffAtSpot(spotX, spotY){
+    // Apply base face-off formation first
+    applyFormation('home','faceoff');
+    applyFormation('away','faceoff');
+    // Compute offset from center to the target spot
+    const dx=spotX-Rink.centerX;
+    const dy=spotY-Rink.centerY;
+    // Shift all non-goalie, non-penalized players by the offset (clamped to rink)
+    players.forEach(p=>{
+      if(p.role==='G'||p.penalized) return;
+      p.anchorX=clamp(p.anchorX+dx,UNITS_W*0.10,UNITS_W*0.90);
+      p.anchorY=clamp(p.anchorY+dy,UNITS_H*0.16,UNITS_H*0.84);
+      p.x=p.anchorX; p.y=p.anchorY; p.vx=0; p.vy=0;
+    });
+    // Puck to the spot
+    puck.x=spotX; puck.y=spotY;
+    puck.tx=spotX; puck.ty=spotY;
+    puck.carrierId=null; puck.pendingCarrier=null; puck.passing=false;
+    faceoffHold=1200;
+  }
+
+  // Choose next game situation
+  // ═══ TACTICAL POSITIONING (Goal 2: puck leads, players react) ═══
+  // Called every frame. Sets each player's anchor based on puck position & possession.
+  function computeTacticalPositions(){
+    const possIsHome=(possession==='home');
+    const puckXN=puck.x/UNITS_W;
+    const puckYN=puck.y/UNITS_H;
+
+    players.forEach(p=>{
+      if(p.penalized) return;
+      // Pulled goalie acting as extra attacker positions like a forward;
+      // a normal goalie stays in net (handled by goalie tracking).
+      if(p.role==='G'&&!p.extraAttacker) return;
+
+      const isPossessing=(p.isHome===possIsHome);
+      const attackDir=p.isHome?1:-1;
+      const oppGoalXN=p.isHome?0.93:0.07;
+      const ownGoalXN=p.isHome?0.07:0.93;
+
+      let ax, ay;
+
+      if(isPossessing){
+        // OFFENSE: support puck, push toward opponent goal
+        if(p.id===puck.carrierId){
+          ax=puckXN+attackDir*0.10;
+          ay=puckYN;
+        } else {
+          const role=p.role;
+          if(role==='C'){
+            ax=puckXN-attackDir*0.05; ay=0.5+(puckYN-0.5)*0.3;
+          } else if(role==='LW'){
+            ax=puckXN+attackDir*0.06; ay=0.28;
+          } else if(role==='RW'){
+            ax=puckXN+attackDir*0.06; ay=0.72;
+          } else if(role==='LD'){
+            // Defenseman supports from behind: at the blue line in O-zone,
+            // but stays behind the puck through the neutral zone (no offside, good outlet).
+            const blueLineN=p.isHome?0.64:0.36;
+            const behindPuck=puckXN-attackDir*0.10;
+            ax=p.isHome?Math.min(blueLineN,behindPuck):Math.max(blueLineN,behindPuck);
+            ay=0.40;
+          } else if(role==='RD'){
+            const blueLineN=p.isHome?0.64:0.36;
+            const behindPuck=puckXN-attackDir*0.10;
+            ax=p.isHome?Math.min(blueLineN,behindPuck):Math.max(blueLineN,behindPuck);
+            ay=0.60;
+          } else { ax=puckXN; ay=puckYN; }
+        }
+      } else {
+        // DEFENSE: position between puck and own goal
+        const role=p.role;
+        if(role==='LD'||role==='RD'){
+          ax=ownGoalXN+(puckXN-ownGoalXN)*0.45;
+          ay=(role==='LD'?0.38:0.62)+(puckYN-0.5)*0.25;
+        } else if(role==='C'){
+          ax=ownGoalXN+(puckXN-ownGoalXN)*0.62;
+          ay=0.5+(puckYN-0.5)*0.4;
+        } else {
+          ax=ownGoalXN+(puckXN-ownGoalXN)*0.72;
+          ay=role==='LW'?0.30:0.70;
+        }
+      }
+
+      ax=clamp(ax,0.10,0.90);
+      ay=clamp(ay,0.16,0.84);
+
+      // ─── Per-player positional personality + slow wander (organic variation) ───
+      // Persistent bias so each player favours a slightly different spot
+      ax+=p.posBiasX;
+      ay+=p.posBiasY;
+      // Slow, irregular wander that evolves over time (different per player)
+      p.wanderX+=p.wanderSpeedX*0.004;
+      p.wanderY+=p.wanderSpeedY*0.004;
+      ax+=Math.sin(p.wanderX)*0.022+Math.sin(p.wanderX*2.3)*0.011;
+      ay+=Math.cos(p.wanderY)*0.028+Math.cos(p.wanderY*1.7)*0.014;
+      if(ppSide){
+        const onPP=(p.isHome&&ppSide==='home')||(!p.isHome&&ppSide==='away');
+        const onPK=(p.isHome&&ppSide==='away')||(!p.isHome&&ppSide==='home');
+        if(onPP){
+          // Power play: push into offensive zone, spread wide (umbrella)
+          ax=ax+attackDir*0.05;
+          if(p.role==='LW') ay=ay-0.05;       // wider
+          else if(p.role==='RW') ay=ay+0.05;
+        } else if(onPK){
+          // Penalty kill: collapse toward own goal, tight box
+          ax=ownGoalXN+(ax-ownGoalXN)*0.70;   // pull 30% closer to own goal
+          ay=0.5+(ay-0.5)*0.75;               // tighten vertically
+        }
+        ax=clamp(ax,0.08,0.92);
+        ay=clamp(ay,0.16,0.84);
+      }
+
+      // ─── SOFT OFFSIDE RULE ───
+      // Attacking forwards may not cross the attacking blue line before the puck.
+      // Blue lines at 36% and 64% of rink width.
+      if(isPossessing&&(p.role==='LW'||p.role==='RW'||p.role==='C')&&p.id!==puck.carrierId){
+        const attackBlueLine=p.isHome?0.64:0.36; // the blue line they attack across
+        if(p.isHome){
+          // Home attacks right; can't go past 0.64 unless puck has
+          if(puckXN<attackBlueLine&&ax>attackBlueLine-0.02){
+            ax=attackBlueLine-0.02; // hold up at the line
+          }
+        } else {
+          // Away attacks left; can't go below 0.36 unless puck has
+          if(puckXN>attackBlueLine&&ax<attackBlueLine+0.02){
+            ax=attackBlueLine+0.02;
+          }
+        }
+      }
+
+      p.anchorX=ax*UNITS_W;
+      p.anchorY=ay*UNITS_H;
+    });
+  }
+
+  function rollNextSituation(){
+    // Possession can flip (~30%) — turnovers happen
+    if(Math.random()<0.30){
+      possession=(possession==='home'?'away':'home');
+      pickPuckCarrier();
+    }
+    // Ensure there's always a carrier (unless puck is mid-flight)
+    if(!puck.carrierId&&!puck.passing){
+      pickPuckCarrier();
+    }
+    // Positioning is now continuous (computeTacticalPositions every frame).
+    situationTimer=1500+Math.random()*1500;
+  }
+
+  function pickPuckCarrier(){
+    const possIsHome=(possession==='home');
+    const possessors=players.filter(p=>p.isHome===possIsHome&&p.role!=='G'&&!p.penalized);
+    if(possessors.length===0) return;
+    // Prefer the player closest to the puck (natural — whoever's nearest picks it up)
+    possessors.sort((a,b)=>{
+      const da=Math.hypot(a.x-puck.x,a.y-puck.y);
+      const db=Math.hypot(b.x-puck.x,b.y-puck.y);
+      return da-db;
+    });
+    // Pick from the 2 closest (slight randomness)
+    const carrier=possessors[Math.random()<0.7?0:Math.min(1,possessors.length-1)];
+    puck.carrierId=carrier.id;
+    puck.pendingCarrier=null;
+    puck.passing=false;
+  }
+
+  // Pass the puck to another teammate (visual flourish)
+  function doPass(){
+    if(!puck.carrierId||puck.passing) return;
+    const carrier=players.find(p=>p.id===puck.carrierId);
+    if(!carrier) return;
+    const teammates=players.filter(p=>p.isHome===carrier.isHome&&p.id!==carrier.id&&p.role!=='G'&&!p.penalized);
+    if(!teammates.length) return;
+    const attackDir=carrier.isHome?1:-1;
+    // Score each teammate as a pass option. Forward progress is good, but
+    // a point pass back to a defenseman is a real, common play — give D a bonus
+    // so the puck cycles to the blue line instead of only ever going forward.
+    teammates.forEach(t=>{
+      const forward=(t.x-carrier.x)*attackDir; // + ahead, - behind
+      let score=forward*0.6+Math.random()*28;
+      // Defensemen at the point are valuable passing options (cycle/point shot)
+      if(t.role==='LD'||t.role==='RD') score+=22;
+      // Slight penalty for very long cross-ice passes (less realistic)
+      const lateralDist=Math.abs(t.y-carrier.y);
+      score-=lateralDist*0.15;
+      t._passScore=score;
+    });
+    teammates.sort((a,b)=>b._passScore-a._passScore);
+    const target=teammates[0];
+    puck.carrierId=null;
+    puck.pendingCarrier=target.id;
+    puck.tx=target.x;
+    puck.ty=target.y;
+    puck.passing=true;
+    target.vx+=(target.isHome?0.3:-0.3);
+  }
+  function loop(now){
+    if(!running) return;
+    const dt=Math.min(60,now-lastFrame); // cap dt
+    lastFrame=now;
+
+    update(dt);
+    render();
+
+    rafId=requestAnimationFrame(loop);
+  }
+
+  function update(dt){
+    // Normalize dt to ~16ms frames for consistent physics
+    const dtN=Math.min(3,dt/16)*speed;
+
+    // Goal 2: continuously position players relative to puck (unless in special sequence)
+    // Skip while holding face-off formation (start of game/period/after goal)
+    if(faceoffHold>0){
+      faceoffHold-=dt*speed;
+    } else if(!intermissionActive&&!matchEnded&&!pendingScript){
+      computeTacticalPositions();
+    }
+
+    players.forEach(p=>{
+      // ─── Compute target (anchor + individual drift) ───
+      if(p.role==='G'&&!intermissionActive&&!p.pulledGoalie){
+        // Goalie: track puck Y, stay at goal X
+        const goalCenterX=p.isHome?Rink.redLineGoalLeft:Rink.redLineGoalRight;
+        const trackY=Rink.centerY+(puck.y-Rink.centerY)*0.35;
+        p.tx=goalCenterX+(p.isHome?2:-2);
+        p.ty=clamp(trackY,Rink.centerY-8,Rink.centerY+8);
+      } else if(!p.penalized){
+        // A: Drift around tactical anchor — multi-frequency for organic, non-uniform motion
+        p.driftPhase+=p.driftSpeed*0.012*dtN;
+        p.driftPhase2+=p.driftSpeed*0.019*dtN; // secondary, different rate
+        const driftAmp=speed>=4?1.6:speed>=2?2.2:2.8;
+        // Combine two waves of different frequency/phase so no two players move alike
+        const driftX=Math.cos(p.driftPhase)*driftAmp + Math.cos(p.driftPhase2*1.7)*driftAmp*0.4;
+        const driftY=Math.sin(p.driftPhase*1.3)*driftAmp*0.7 + Math.sin(p.driftPhase2)*driftAmp*0.35;
+        p.tx=p.anchorX+driftX;
+        p.ty=p.anchorY+driftY;
+      }
+
+      // ─── D: Momentum-based skating (per-player reaction lag for variety) ───
+      // Acceleration toward target — reactLag makes some players chase faster than others
+      const accel=0.020*p.skateSpeed*(p.reactLag||1);
+      const axd=(p.tx-p.x)*accel;
+      const ayd=(p.ty-p.y)*accel;
+      p.vx+=axd*dtN;
+      p.vy+=ayd*dtN;
+      // Friction (ice glide)
+      const friction=Math.pow(0.86,dtN);
+      p.vx*=friction;
+      p.vy*=friction;
+      // Cap max speed
+      const sp=Math.hypot(p.vx,p.vy);
+      const maxSp=2.8*p.skateSpeed;
+      if(sp>maxSp){ p.vx=p.vx/sp*maxSp; p.vy=p.vy/sp*maxSp; }
+      // Apply velocity
+      p.x+=p.vx*dtN;
+      p.y+=p.vy*dtN;
+    });
+
+    // ─── Puck movement ───
+    if(puck.passing){
+      // E: Puck flies freely during pass (visible travel)
+      const pdx=puck.tx-puck.x, pdy=puck.ty-puck.y;
+      const pdist=Math.hypot(pdx,pdy);
+      if(pdist>1){
+        // Move at constant high speed toward target
+        const pspeed=Math.min(pdist,4.5*dtN);
+        puck.x+=(pdx/pdist)*pspeed;
+        puck.y+=(pdy/pdist)*pspeed;
+      } else {
+        // Arrived — assign to pending carrier
+        if(puck.pendingCarrier){
+          puck.carrierId=puck.pendingCarrier;
+          puck.pendingCarrier=null;
+        }
+        puck.passing=false;
+      }
+    } else if(puck.carrierId){
+      const carrier=players.find(p=>p.id===puck.carrierId);
+      if(carrier){
+        // Puck sits just ahead of carrier in their motion direction
+        const moveDir=Math.hypot(carrier.vx,carrier.vy);
+        let offX=carrier.isHome?2.2:-2.2, offY=0;
+        if(moveDir>0.3){
+          offX=(carrier.vx/moveDir)*2.5;
+          offY=(carrier.vy/moveDir)*2.5;
+        }
+        puck.tx=carrier.x+offX;
+        puck.ty=carrier.y+offY;
+        puck.x+=(puck.tx-puck.x)*0.35*dtN;
+        puck.y+=(puck.ty-puck.y)*0.35*dtN;
+      }
+    } else {
+      puck.x+=(puck.tx-puck.x)*0.08*dtN;
+      puck.y+=(puck.ty-puck.y)*0.08*dtN;
+    }
+
+    // Situation flow: progress timer, change every situationTimer ms (real-time)
+    situationTimer-=dt*speed;
+    if(situationTimer<=0){
+      rollNextSituation();
+    }
+
+    // If carrier reaches deep into attacking zone, force a turnover or pass-out
+    // (prevents puck getting stuck pinned at the goal)
+    if(puck.carrierId&&!puck.passing){
+      const carrier=players.find(p=>p.id===puck.carrierId);
+      if(carrier){
+        const carrierXN=carrier.x/UNITS_W;
+        const deepInZone=carrier.isHome?(carrierXN>0.86):(carrierXN<0.14);
+        if(deepInZone&&Math.random()<0.05){
+          // Either turnover to defense or pass back out
+          if(Math.random()<0.5){
+            possession=(possession==='home'?'away':'home');
+            pickPuckCarrier();
+          } else {
+            doPass();
+          }
+        }
+      }
+    }
+
+    // Mini-events between major situations: pass the puck around
+    lastEventTimer+=dt*speed;
+    if(lastEventTimer>650+Math.random()*400){
+      if(Math.random()<0.55) doPass();
+      lastEventTimer=0;
+    }
+
+    // ─── GAME CLOCK ───
+    // 1 game minute = ~3000ms at 1x speed → 60min match = ~3 minutes animation
+    // Skip clock during intermissions (they're handled separately)
+    if(!intermissionActive&&!matchEnded){
+      gameMin+=(dt*speed)/3000;
+      // Process events whose time has come
+      while(eventIndex<eventQueue.length&&eventQueue[eventIndex].min<=gameMin){
+        triggerEvent(eventQueue[eventIndex]);
+        eventIndex++;
+      }
+      // Check for period boundaries
+      if(periodNum===1&&gameMin>=20){
+        gameMin=20;
+        startIntermission(1);
+      } else if(periodNum===2&&gameMin>=40){
+        gameMin=40;
+        startIntermission(2);
+      } else if(periodNum===3&&gameMin>=60){
+        gameMin=60;
+        endRegularPeriods();
+      } else if(periodNum===4&&gameMin>=65){
+        // OT ended (event likely fired during 61-65)
+        gameMin=65;
+        // If still events remaining, process them; else end
+        while(eventIndex<eventQueue.length){
+          triggerEvent(eventQueue[eventIndex]);
+          eventIndex++;
+        }
+        endRegularPeriods();
+      }
+      updateClockDisplay();
+    }
+
+    // Update visual effects (goal flash, save flash, etc.)
+    activeEffects=activeEffects.filter(eff=>{
+      eff.life-=dt*speed;
+      // Update particle position
+      if(eff.type==='particle'){
+        eff.x+=eff.vx*0.5*speed;
+        eff.y+=eff.vy*0.5*speed;
+        // Gravity-like drag
+        eff.vx*=0.96;
+        eff.vy*=0.96;
+      }
+      return eff.life>0;
+    });
+
+    // Pending scripted animations (multi-step)
+    if(pendingScript){
+      pendingScript.elapsed+=dt*speed;
+      if(pendingScript.elapsed>=pendingScript.duration){
+        pendingScript.onDone&&pendingScript.onDone();
+        pendingScript=null;
+      }
+    }
+  }
+
+  // ─── PERIOD INTERMISSIONS ───
+  let periodNum=1;
+  let intermissionActive=false;
+  let matchEnded=false;
+
+  function startIntermission(periodEnded){
+    intermissionActive=true;
+    // Move players to "bench" area (off screen) — just snap them to off-rink positions
+    // Actually keep them on screen but freeze movement during intermission
+    // Show intermission overlay on the canvas
+    showCanvasIntermission(periodEnded);
+  }
+
+  function showCanvasIntermission(periodEnded){
+    // We will render a translucent overlay on next render call.
+    // For player's game, also trigger the existing tactic-change pause UI in the event log.
+    const isMyGame=(matchData.home===G.myId||matchData.away===G.myId);
+    if(isMyGame&&typeof showIntermissionPause==='function'){
+      // Use existing intermission pause from Round 2 (text mode)
+      const homeScore=parseInt((document.getElementById('m-sc')?.textContent||'0 – 0').split('–')[0])||0;
+      const awayScore=parseInt((document.getElementById('m-sc')?.textContent||'0 – 0').split('–')[1])||0;
+      const myIsHome=matchData.home===G.myId;
+      // Inject pause event into existing text-log flow
+      // The text-log animation should pause at the same point — but timing may differ from canvas.
+      // For Phase 3, just show our own canvas-overlay pause.
+    }
+    // Show "Resume" button overlay
+    const wrap=document.getElementById('m-canvas-wrap');
+    if(!wrap) return;
+    let overlay=document.getElementById('m-canvas-intermission');
+    if(!overlay){
+      overlay=document.createElement('div');
+      overlay.id='m-canvas-intermission';
+      overlay.style.cssText='position:absolute;inset:0;background:rgba(4,6,12,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:6px;z-index:10;text-align:center;padding:12px';
+      wrap.style.position='relative';
+      wrap.appendChild(overlay);
+    }
+    overlay.innerHTML=`
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--ac);margin-bottom:6px">⏸ ${periodEnded}. ERÄN TAUKO</div>
+      <div style="font-size:1rem;color:var(--tx);margin-bottom:12px">${document.getElementById('m-sc')?.textContent||'0 – 0'}</div>
+      <button class="btn bp bw" onclick="MatchRenderer.resumeFromIntermission()">▶ JATKA ${periodEnded+1}. ERÄÄN</button>
+    `;
+  }
+
+  function resumeFromIntermission(){
+    const overlay=document.getElementById('m-canvas-intermission');
+    if(overlay) overlay.remove();
+    intermissionActive=false;
+    periodNum++;
+    // Reset to faceoff
+    applyFormation('home','faceoff');
+    applyFormation('away','faceoff');
+    // Snap players to face-off positions immediately
+    players.forEach(p=>{ if(p.role!=='G'){ p.x=p.anchorX; p.y=p.anchorY; p.vx=0; p.vy=0; } });
+    puck.x=Rink.centerX; puck.y=Rink.centerY;
+    puck.tx=Rink.centerX; puck.ty=Rink.centerY; puck.carrierId=null; puck.pendingCarrier=null; puck.passing=false;
+    situationTimer=1200;
+    faceoffHold=1300;
+    // Also resume text-log pause if present
+    const textPause=document.getElementById('intermission-pause');
+    if(textPause){
+      textPause.remove();
+      if(G._currentMatchNext) G._currentMatchNext();
+    }
+  }
+
+  function endRegularPeriods(){
+    // Check if there are OT/SO events still in queue (gameMin was 60 but events remain)
+    const remainingEvents=eventQueue.slice(eventIndex);
+    const hasOT=remainingEvents.some(e=>e.isOT);
+    const hasSO=remainingEvents.some(e=>e.isSO);
+
+    if(hasOT){
+      // Continue into OT
+      periodNum=4;
+      // OT formation: 3v3 simplified — just keep current formation but center it
+      applyFormation('home','faceoff');
+      applyFormation('away','faceoff');
+      players.forEach(p=>{ if(p.role!=='G'){ p.x=p.anchorX; p.y=p.anchorY; p.vx=0; p.vy=0; } });
+      puck.x=Rink.centerX; puck.y=Rink.centerY;
+      puck.tx=Rink.centerX; puck.ty=Rink.centerY; puck.carrierId=null; puck.pendingCarrier=null; puck.passing=false;
+      situationTimer=1000;
+      faceoffHold=1200;
+      // Continue clock to 65 for OT events to fire
+      return;
+    }
+    if(hasSO){
+      periodNum=5;
+      // Process remaining SO events instantly
+      while(eventIndex<eventQueue.length){
+        triggerEvent(eventQueue[eventIndex]);
+        eventIndex++;
+      }
+      // Don't return — fall through to match-ended overlay
+    }
+
+    matchEnded=true;
+    const wrap=document.getElementById('m-canvas-wrap');
+    if(!wrap) return;
+    let overlay=document.getElementById('m-canvas-intermission');
+    if(!overlay){
+      overlay=document.createElement('div');
+      overlay.id='m-canvas-intermission';
+      overlay.style.cssText='position:absolute;inset:0;background:rgba(4,6,12,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:6px;z-index:10;text-align:center;padding:12px';
+      wrap.style.position='relative';
+      wrap.appendChild(overlay);
+    }
+    const suf=hasOT?' (JA)':hasSO?' (RL)':'';
+    overlay.innerHTML=`
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--ac);margin-bottom:6px">🏁 LOPPUPISTE${suf}</div>
+      <div style="font-size:1.1rem;color:var(--tx);margin-bottom:8px">${document.getElementById('m-sc')?.textContent||'0 – 0'}</div>
+      <div style="font-size:.7rem;color:var(--mu)">Ottelu päättyy — sulje tämä ikkuna jatkaaksesi</div>
+    `;
+  }
+
+  // ═══ EVENT PROCESSING ═══
+
+  // Queue events from match fixture (called by showMatchAnim with the same timeline as text-log)
+  function queueEvents(timeline){
+    // Filter only events that we visualize
+    eventQueue=timeline.filter(e=>
+      e.type==='goal'||e.type==='penalty'||e.type==='penaltyEnd'||e.type==='save'||e.type==='injury'||e.type==='pullGoalie'
+    ).slice().sort((a,b)=>(a.min||0)-(b.min||0));
+    eventIndex=0;
+  }
+
+  // Trigger visualization for an event
+  function triggerEvent(e){
+    if(e.type==='goal') triggerGoal(e);
+    else if(e.type==='penalty') triggerPenalty(e);
+    else if(e.type==='penaltyEnd') triggerPenaltyEnd(e);
+    else if(e.type==='save') triggerSave(e);
+    else if(e.type==='injury') triggerInjury(e);
+    else if(e.type==='pullGoalie') triggerPullGoalie(e);
+  }
+
+  // Recompute who has the man advantage based on penaltyBox
+  function updatePowerPlayState(){
+    const homeInBox=penaltyBox.filter(b=>b.side==='home').length;
+    const awayInBox=penaltyBox.filter(b=>b.side==='away').length;
+    if(homeInBox>awayInBox) ppSide='away';      // away has advantage
+    else if(awayInBox>homeInBox) ppSide='home'; // home has advantage
+    else ppSide=null;
+    updatePPIndicator();
+  }
+
+  // Update the on-screen power play indicator
+  function updatePPIndicator(){
+    const el=document.getElementById('m-pp-indicator');
+    if(!el) return;
+    if(!ppSide){ el.style.display='none'; return; }
+    const ppTeam=ppSide==='home'?matchData.home:matchData.away;
+    const t=TEAMS.find(x=>x.id===ppTeam);
+    const homeInBox=penaltyBox.filter(b=>b.side==='home').length;
+    const awayInBox=penaltyBox.filter(b=>b.side==='away').length;
+    const adv=Math.abs(homeInBox-awayInBox);
+    const label=adv>=2?'5–3 YLIVOIMA':'YLIVOIMA';
+    el.style.display='block';
+    el.style.color=ppSide==='home'?homeColor:awayColor;
+    el.textContent='⚡ '+(t?t.name:'')+' '+label;
+  }
+
+  // PULL GOALIE: goalie skates to bench, becomes 6th attacker (extra attacker)
+  function triggerPullGoalie(e){
+    const sideIsHome=(e.side==='home');
+    const goalie=players.find(p=>p.isHome===sideIsHome&&p.role==='G');
+    if(goalie){
+      // Goalie leaves the net and becomes an extra attacker pushing up-ice
+      goalie.pulledGoalie=true;
+      goalie.extraAttacker=true; // computeTacticalPositions will treat as forward
+      // Pulling team presses hard — set possession to them
+      possession=sideIsHome?'home':'away';
+    }
+    pulledGoalieSide=e.side;
+    // Flash near own net indicating empty net
+    activeEffects.push({
+      type:'penaltyFlash',
+      x:sideIsHome?Rink.redLineGoalLeft:Rink.redLineGoalRight,
+      y:Rink.centerY,
+      life:1500/Math.max(1,speed),
+      maxLife:1500/Math.max(1,speed)
+    });
+    // Show indicator
+    const el=document.getElementById('m-pp-indicator');
+    if(el){
+      const t=TEAMS.find(x=>x.id===(sideIsHome?matchData.home:matchData.away));
+      el.style.display='block';
+      el.style.color=sideIsHome?homeColor:awayColor;
+      el.textContent='🥅 '+(t?t.name:'')+' MAALIVAHTI POIS';
+    }
+  }
+
+  // GOAL: orchestrate scoring sequence (build-up → shot → goal → celebration)
+  function triggerGoal(e){
+    const sideIsHome=(e.side==='home');
+    const goalX=sideIsHome?Rink.redLineGoalRight:Rink.redLineGoalLeft;
+    const goalY=Rink.centerY+(Math.random()-0.5)*4;
+
+    // Pick scorer + assists from the attacking team's on-ice forwards/defenders
+    const teamPlayers=players.filter(p=>p.isHome===sideIsHome&&p.role!=='G');
+    const scorerCandidates=teamPlayers.filter(p=>p.role==='LW'||p.role==='C'||p.role==='RW');
+    const scorerP=scorerCandidates.length?pick(scorerCandidates):(teamPlayers.length?teamPlayers[0]:null);
+    let assistStr='';
+    if(scorerP){
+      const others=teamPlayers.filter(p=>p!==scorerP);
+      const numAssists=Math.random()<0.5?2:(Math.random()<0.7?1:0);
+      const assisters=[];
+      for(let i=0;i<numAssists&&others.length;i++){
+        const idx=Math.floor(Math.random()*others.length);
+        assisters.push('#'+others[idx].jerseyNum);
+        others.splice(idx,1);
+      }
+      assistStr=assisters.join(', ');
+    }
+    // Set goal banner
+    const teamColorBanner=sideIsHome?homeColor:awayColor;
+    goalBanner={
+      scorer:scorerP?scorerP.name:'Tuntematon',
+      scorerNum:scorerP?scorerP.jerseyNum:'?',
+      assists:assistStr,
+      color:teamColorBanner,
+      life:3200/Math.max(1,speed),
+      maxLife:3200/Math.max(1,speed)
+    };
+
+    // Phase 1: Pull all attacking team players to attack zone
+    possession=sideIsHome?'home':'away';
+    zone='attack';
+    if(sideIsHome){
+      applyFormation('home','attack');
+      applyFormation('away','defense');
+    } else {
+      applyFormation('home','defense');
+      applyFormation('away','attack');
+    }
+
+    // Phase 2: Quickly shoot puck to goal
+    puck.tx=goalX;
+    puck.ty=goalY;
+    puck.passing=true;
+    setTimeout(()=>{ puck.passing=false; },400);
+
+    // Phase 3: Goal flash + celebration
+    activeEffects.push({
+      type:'goalFlash',
+      x:goalX,
+      y:goalY,
+      life:2200/Math.max(1,speed),
+      maxLife:2200/Math.max(1,speed),
+      sideIsHome
+    });
+
+    // Phase 4: Celebration particles around goal scorer (delayed slightly so puck arrives first)
+    setTimeout(()=>{
+      // Burst of particles
+      for(let i=0;i<14;i++){
+        const angle=Math.random()*Math.PI*2;
+        const speed=1.2+Math.random()*1.8;
+        activeEffects.push({
+          type:'particle',
+          x:goalX,
+          y:goalY,
+          vx:Math.cos(angle)*speed,
+          vy:Math.sin(angle)*speed,
+          life:1200/Math.max(1,speed),
+          maxLife:1200/Math.max(1,speed),
+          color:sideIsHome?homeColor:awayColor
+        });
+      }
+      // Celebrating players cluster near goal — pull a few forwards toward goal
+      const teamPlayers=players.filter(p=>p.isHome===sideIsHome&&p.role!=='G');
+      // Pick 2-3 closest forwards to cluster around goal
+      const forwards=teamPlayers.filter(p=>p.role==='LW'||p.role==='C'||p.role==='RW');
+      forwards.forEach((p,idx)=>{
+        if(idx<3){
+          p.anchorX=goalX+(sideIsHome?-8:8)+(Math.random()-0.5)*6;
+          p.anchorY=goalY+(Math.random()-0.5)*8;
+        }
+      });
+    },350/Math.max(1,speed));
+
+    // NOTE: score display is updated by the text-log goal handler (single source
+    // of truth), so the renderer does NOT touch m-sc / m-sb-hs here (avoids double-count).
+    // A goal is also a shot on goal
+    if(sideIsHome) homeShots++; else awayShots++;
+    updateShotsDisplay();
+
+    // After celebration: reset to face-off
+    pendingScript={
+      duration:1900/Math.max(1,speed),
+      elapsed:0,
+      onDone:()=>{
+        puck.tx=Rink.centerX;
+        puck.ty=Rink.centerY;
+        puck.x=Rink.centerX;
+        puck.y=Rink.centerY;
+        puck.carrierId=null;
+        puck.pendingCarrier=null;
+        puck.passing=false;
+        // After goal: opposing team starts with puck
+        possession=sideIsHome?'away':'home';
+        // Any pulled goalie returns to net after a goal
+        players.forEach(p=>{ if(p.extraAttacker){ p.extraAttacker=false; p.pulledGoalie=false; } });
+        pulledGoalieSide=null;
+        applyFormation('home','faceoff');
+        applyFormation('away','faceoff');
+        players.forEach(p=>{ if(p.role!=='G'){ p.x=p.anchorX; p.y=p.anchorY; p.vx=0; p.vy=0; } });
+        situationTimer=1500;
+        faceoffHold=1200;
+      }
+    };
+  }
+
+  // PENALTY: penalized player skates to the box, triggers power play
+  function triggerPenalty(e){
+    const sideIsHome=(e.side==='home');
+    // Find a non-penalized skater from that side
+    const teamPlayers=players.filter(p=>p.isHome===sideIsHome&&p.role!=='G'&&!p.penalized);
+    if(!teamPlayers.length) return;
+    const offender=teamPlayers[Math.floor(Math.random()*teamPlayers.length)];
+    // Send to penalty box (side edge near center, off the ice)
+    offender.penalized=true;
+    offender.anchorX=Rink.centerX+(Math.random()-0.5)*10;
+    offender.anchorY=-7; // above the rink = penalty box
+    offender.tx=offender.anchorX; offender.ty=offender.anchorY;
+    // Flash yellow at their position
+    activeEffects.push({
+      type:'penaltyFlash', x:offender.x, y:offender.y,
+      life:1200/Math.max(1,speed), maxLife:1200/Math.max(1,speed)
+    });
+    // Track in renderer box (linked to engine penId)
+    penaltyBox.push({side:e.side, penId:e.penId||('r'+Math.random()), playerId:offender.id});
+    updatePowerPlayState();
+
+    // Face-off in the penalized team's defensive zone after a short whistle pause.
+    // Offending side defends its own zone: home defends left (spots 0/1), away defends right (spots 3/4).
+    const zoneSpots=sideIsHome?[0,1]:[3,4];
+    const spotIdx=zoneSpots[Math.floor(Math.random()*zoneSpots.length)];
+    const spot=Rink.faceoffSpots[spotIdx];
+    if(spot){
+      // Brief delay so the penalty flash shows first, then re-spot the face-off
+      pendingScript={
+        duration:900/Math.max(1,speed),
+        elapsed:0,
+        onDone:()=>{ faceoffAtSpot(spot.x,spot.y); possession=sideIsHome?'away':'home'; }
+      };
+    }
+  }
+
+  // PENALTY END: player returns from box
+  function triggerPenaltyEnd(e){
+    // Find the matching box entry
+    let idx=-1;
+    if(e.penId){ idx=penaltyBox.findIndex(b=>b.penId===e.penId); }
+    if(idx<0){ idx=penaltyBox.findIndex(b=>b.side===e.side); } // fallback by side
+    if(idx<0) return;
+    const entry=penaltyBox[idx];
+    penaltyBox.splice(idx,1);
+    // Return the player to the ice
+    const p=players.find(pl=>pl.id===entry.playerId);
+    if(p){ p.penalized=false; }
+    updatePowerPlayState();
+  }
+
+  // SAVE: brief flash at goalie
+  function triggerSave(e){
+    const sideIsHome=(e.side==='home');
+    const goalie=players.find(p=>p.isHome===sideIsHome&&p.role==='G');
+    if(!goalie) return;
+    activeEffects.push({
+      type:'saveFlash',
+      x:goalie.x,
+      y:goalie.y,
+      life:800/Math.max(1,speed),
+      maxLife:800/Math.max(1,speed)
+    });
+    // A save means the OTHER team took a shot
+    if(sideIsHome) awayShots++; else homeShots++;
+    updateShotsDisplay();
+    // Puck deflects briefly off goalie
+    puck.tx=goalie.x+(sideIsHome?6:-6);
+    puck.ty=goalie.y+(Math.random()-0.5)*8;
+    puck.passing=true;
+    setTimeout(()=>{ puck.passing=false; },400);
+  }
+
+  function updateShotsDisplay(){
+    const h=document.getElementById('m-sb-hshots'); if(h) h.textContent=homeShots;
+    const a=document.getElementById('m-sb-ashots'); if(a) a.textContent=awayShots;
+  }
+
+  // INJURY: player stays down briefly
+  function triggerInjury(e){
+    activeEffects.push({
+      type:'injuryFlash',
+      x:Rink.centerX+(Math.random()-0.5)*40,
+      y:Rink.centerY+(Math.random()-0.5)*30,
+      life:1500/Math.max(1,speed),
+      maxLife:1500/Math.max(1,speed)
+    });
+  }
+
+  function updateClockDisplay(){
+    const min=Math.min(65,Math.floor(gameMin));
+    let period, periodShort;
+    if(periodNum===1){ period='1. erä'; periodShort='1. ERÄ'; }
+    else if(periodNum===2){ period='2. erä'; periodShort='2. ERÄ'; }
+    else if(periodNum===3){ period='3. erä'; periodShort='3. ERÄ'; }
+    else if(periodNum===4){ period='⚡ JATKOAIKA'; periodShort='JATKOAIKA'; }
+    else if(periodNum===5){ period='🎯 RANGAISTUSLAUKAUKSET'; periodShort='RL-KISA'; }
+    else { period='Loppu'; periodShort='LOPPU'; }
+
+    const el=document.getElementById('m-anim-clock');
+    if(el) el.textContent=min+"' · "+period;
+
+    // Scoreboard: count-up clock per period (mm:ss within period)
+    const sbClock=document.getElementById('m-sb-clock');
+    if(sbClock){
+      // Minutes within current period (each period 20 min)
+      let periodMin=min;
+      if(periodNum===2) periodMin=min-20;
+      else if(periodNum===3) periodMin=min-40;
+      else if(periodNum>=4) periodMin=min-60;
+      periodMin=Math.max(0,periodMin);
+      // Fake seconds from fractional part
+      const frac=gameMin-Math.floor(gameMin);
+      const secs=Math.floor(frac*60);
+      sbClock.textContent=String(periodMin).padStart(2,'0')+':'+String(secs).padStart(2,'0');
+    }
+    const sbPeriod=document.getElementById('m-sb-period');
+    if(sbPeriod) sbPeriod.textContent=periodShort;
+
+    // Real-time possession: cumulative from control timeline up to current minute
+    if(matchData&&matchData.controlTimeline&&matchData.controlTimeline.length){
+      const elapsed=Math.max(1,Math.min(60,gameMin));
+      let h=0,a=0;
+      for(let i=0;i<matchData.controlTimeline.length;i++){
+        const c=matchData.controlTimeline[i];
+        if(c.min>elapsed) break;
+        if(c.home) h++; else a++;
+      }
+      const tot=h+a;
+      if(tot>0){
+        const hPct=Math.round(h/tot*100);
+        const hp=document.getElementById('m-sb-hposs'); if(hp) hp.textContent=hPct+'%';
+        const ap=document.getElementById('m-sb-aposs'); if(ap) ap.textContent=(100-hPct)+'%';
+      }
+    }
+  }
+
+  let _renderErrorLogged=false;
+  function render(){
+    if(!ctx) return;
+    try{
+      ctx.clearRect(0,0,rinkW,rinkH);
+      drawRink();
+      drawEffectsBelow();
+      drawPlayers();
+      drawPuck();
+      drawEffectsAbove();
+      drawMinimap();
+      drawGoalBanner();
+    }catch(err){
+      if(!_renderErrorLogged){
+        console.error('MatchRenderer render error:',err);
+        _renderErrorLogged=true;
+        // Surface on canvas clock so user can report it
+        const el=document.getElementById('m-anim-clock');
+        if(el) el.textContent='ERR: '+(err.message||err).toString().slice(0,40);
+      }
+    }
+  }
+
+  // ─── MINIMAP (bottom-right corner) ───
+  function drawMinimap(){
+    const mw=ux(UNITS_W)*0.22;      // minimap width
+    const mh=mw/RINK_RATIO;
+    const mx=ux(UNITS_W)-mw-6;       // bottom-right with margin
+    const my=uy(UNITS_H)-mh-6;
+    const sx=mw/UNITS_W, sy=mh/UNITS_H;
+
+    // Background panel
+    ctx.fillStyle='rgba(10,16,26,0.78)';
+    ctx.strokeStyle='rgba(120,140,170,0.4)';
+    ctx.lineWidth=1;
+    roundRect(mx,my,mw,mh,4);
+    ctx.fill(); ctx.stroke();
+
+    // Mini rink lines
+    ctx.strokeStyle='rgba(150,170,200,0.35)';
+    ctx.lineWidth=0.5;
+    // center line
+    ctx.beginPath();
+    ctx.moveTo(mx+Rink.centerX*sx,my);
+    ctx.lineTo(mx+Rink.centerX*sx,my+mh);
+    ctx.stroke();
+    // blue lines
+    [Rink.blueLineLeft,Rink.blueLineRight].forEach(bx=>{
+      ctx.beginPath();
+      ctx.moveTo(mx+bx*sx,my);
+      ctx.lineTo(mx+bx*sx,my+mh);
+      ctx.stroke();
+    });
+
+    // Players as tiny dots
+    players.forEach(p=>{
+      if(!isFinite(p.x)||!isFinite(p.y)) return;
+      ctx.fillStyle=p.role==='G'?'#fcc007':(p.isHome?homeColor:awayColor);
+      ctx.beginPath();
+      ctx.arc(mx+p.x*sx,my+p.y*sy,Math.max(1.2,mw*0.012),0,Math.PI*2);
+      ctx.fill();
+    });
+    // Puck
+    ctx.fillStyle='#000';
+    ctx.beginPath();
+    ctx.arc(mx+puck.x*sx,my+puck.y*sy,Math.max(0.8,mw*0.008),0,Math.PI*2);
+    ctx.fill();
+  }
+
+  // ─── GOAL BANNER (top-left, shows on goal) ───
+  let goalBanner=null; // {scorer, assists, team, life, maxLife}
+  function drawGoalBanner(){
+    if(!goalBanner) return;
+    goalBanner.life-=16*speed;
+    if(goalBanner.life<=0){ goalBanner=null; return; }
+    const a=Math.min(1,goalBanner.life/300); // fade out last 300ms
+    const fadeIn=Math.min(1,(goalBanner.maxLife-goalBanner.life)/200);
+    const alpha=Math.min(a,fadeIn);
+
+    const bw=ux(UNITS_W)*0.40;
+    const bh=uy(UNITS_H)*0.20;
+    const bx=8, by=8;
+    ctx.globalAlpha=alpha;
+    // Panel
+    ctx.fillStyle='rgba(8,12,20,0.88)';
+    ctx.strokeStyle=goalBanner.color;
+    ctx.lineWidth=2;
+    roundRect(bx,by,bw,bh,5);
+    ctx.fill(); ctx.stroke();
+    // "MAALI!" title
+    ctx.fillStyle=goalBanner.color;
+    ctx.font='bold '+Math.max(11,pxScale*3.2)+'px "Bebas Neue", Arial';
+    ctx.textAlign='left';
+    ctx.textBaseline='top';
+    ctx.fillText('MAALI!',bx+8,by+6);
+    // Scorer
+    ctx.fillStyle='#fff';
+    ctx.font='bold '+Math.max(8,pxScale*2)+'px Arial';
+    ctx.fillText('#'+goalBanner.scorerNum+' '+goalBanner.scorer,bx+8,by+bh*0.42);
+    // Assists
+    if(goalBanner.assists){
+      ctx.fillStyle='rgba(180,195,215,0.85)';
+      ctx.font=Math.max(7,pxScale*1.5)+'px Arial';
+      ctx.fillText('Syöttäjät: '+goalBanner.assists,bx+8,by+bh*0.72);
+    }
+    ctx.globalAlpha=1;
+    ctx.textBaseline='alphabetic';
+  }
+
+  // Small color legend so player knows which color is which team
+  function drawLegend(){
+    const homeT=TEAMS.find(t=>t.id===matchData.home);
+    const awayT=TEAMS.find(t=>t.id===matchData.away);
+    const homeName=homeT?homeT.name:'Koti';
+    const awayName=awayT?awayT.name:'Vieras';
+    const dotR=Math.max(3,pxScale*1.5);
+    const fontSize=Math.max(8,pxScale*1.8);
+    ctx.font='bold '+fontSize+'px Arial';
+    ctx.textBaseline='middle';
+    // Home (top-left)
+    ctx.textAlign='left';
+    ctx.fillStyle=homeColor;
+    ctx.beginPath(); ctx.arc(8+dotR,8+dotR,dotR,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,0.4)'; ctx.lineWidth=0.8; ctx.stroke();
+    ctx.fillStyle='#333';
+    ctx.fillText(homeName,8+dotR*2+4,8+dotR);
+    // Away (top-right)
+    ctx.textAlign='right';
+    const awayDotX=ux(UNITS_W)-8-dotR;
+    ctx.fillStyle=awayColor;
+    ctx.beginPath(); ctx.arc(awayDotX,8+dotR,dotR,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,0.4)'; ctx.lineWidth=0.8; ctx.stroke();
+    ctx.fillStyle='#333';
+    ctx.fillText(awayName,awayDotX-dotR-4,8+dotR);
+    ctx.textAlign='left'; // reset
+  }
+
+  // Effects drawn UNDER players (e.g. goal flash on goal)
+  function drawEffectsBelow(){
+    activeEffects.forEach(eff=>{
+      const a=eff.life/eff.maxLife; // 1 → 0 over time
+      if(eff.type==='goalFlash'){
+        // Pulsing red ring at goal
+        const radius=ux(8)+ux(8)*(1-a);
+        ctx.strokeStyle=`rgba(255,80,80,${a*0.9})`;
+        ctx.lineWidth=3;
+        ctx.beginPath();
+        ctx.arc(ux(eff.x),uy(eff.y),radius,0,Math.PI*2);
+        ctx.stroke();
+        // Inner glow
+        ctx.fillStyle=`rgba(255,80,80,${a*0.25})`;
+        ctx.beginPath();
+        ctx.arc(ux(eff.x),uy(eff.y),radius*0.6,0,Math.PI*2);
+        ctx.fill();
+      } else if(eff.type==='saveFlash'){
+        ctx.strokeStyle=`rgba(80,160,255,${a*0.9})`;
+        ctx.lineWidth=2;
+        ctx.beginPath();
+        ctx.arc(ux(eff.x),uy(eff.y),ux(5)+ux(3)*(1-a),0,Math.PI*2);
+        ctx.stroke();
+      } else if(eff.type==='penaltyFlash'){
+        ctx.strokeStyle=`rgba(252,196,7,${a*0.9})`;
+        ctx.lineWidth=2;
+        ctx.beginPath();
+        ctx.arc(ux(eff.x),uy(eff.y),ux(6)+ux(4)*(1-a),0,Math.PI*2);
+        ctx.stroke();
+      }
+    });
+  }
+
+  // Effects drawn ABOVE players (e.g. text labels, glow)
+  function drawEffectsAbove(){
+    activeEffects.forEach(eff=>{
+      const a=eff.life/eff.maxLife;
+      if(eff.type==='goalFlash'){
+        // Big "MAALI!" text
+        ctx.fillStyle=`rgba(255,80,80,${a})`;
+        ctx.font='bold '+Math.max(14,pxScale*5)+'px "Bebas Neue", Arial';
+        ctx.textAlign='center';
+        ctx.textBaseline='middle';
+        ctx.fillText('MAALI!',ux(eff.x),uy(eff.y-10));
+      } else if(eff.type==='injuryFlash'){
+        ctx.fillStyle=`rgba(220,80,80,${a})`;
+        ctx.font='bold '+Math.max(10,pxScale*3)+'px Arial';
+        ctx.textAlign='center';
+        ctx.textBaseline='middle';
+        ctx.fillText('🚑',ux(eff.x),uy(eff.y));
+      } else if(eff.type==='particle'){
+        // Goal celebration particles
+        ctx.fillStyle=eff.color;
+        ctx.globalAlpha=a;
+        const r=Math.max(1.5,pxScale*0.9);
+        ctx.beginPath();
+        ctx.arc(ux(eff.x),uy(eff.y),r,0,Math.PI*2);
+        ctx.fill();
+        ctx.globalAlpha=1;
+      }
+    });
+  }
+
+  // ─── Rink drawing ───
+  function drawRink(){
+    // Ice background with subtle gradient (brighter center, cooler edges)
+    const iceGrad=ctx.createLinearGradient(0,0,0,uy(UNITS_H));
+    iceGrad.addColorStop(0,'#f4f9ff');
+    iceGrad.addColorStop(0.5,'#e9f3fc');
+    iceGrad.addColorStop(1,'#dde9f5');
+    ctx.fillStyle=iceGrad;
+    roundRect(0,0,ux(UNITS_W),uy(UNITS_H),pxScale*Rink.cornerR);
+    ctx.fill();
+
+    // Subtle ice sheen — soft radial highlight in center
+    const sheen=ctx.createRadialGradient(
+      ux(Rink.centerX),uy(Rink.centerY),ux(5),
+      ux(Rink.centerX),uy(Rink.centerY),ux(60)
+    );
+    sheen.addColorStop(0,'rgba(255,255,255,0.35)');
+    sheen.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=sheen;
+    roundRect(0,0,ux(UNITS_W),uy(UNITS_H),pxScale*Rink.cornerR);
+    ctx.fill();
+
+    // Center red line
+    ctx.strokeStyle='#d12030';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(ux(Rink.centerX),0);
+    ctx.lineTo(ux(Rink.centerX),uy(UNITS_H));
+    ctx.stroke();
+
+    // Blue lines
+    ctx.strokeStyle='#2878d8';
+    ctx.lineWidth=2.5;
+    [Rink.blueLineLeft,Rink.blueLineRight].forEach(x=>{
+      ctx.beginPath();
+      ctx.moveTo(ux(x),0);
+      ctx.lineTo(ux(x),uy(UNITS_H));
+      ctx.stroke();
+    });
+
+    // Goal lines (thin red, behind goals)
+    ctx.strokeStyle='#cc0000';
+    ctx.lineWidth=1;
+    [Rink.redLineGoalLeft,Rink.redLineGoalRight].forEach(x=>{
+      ctx.beginPath();
+      ctx.moveTo(ux(x),uy(Rink.centerY-30));
+      ctx.lineTo(ux(x),uy(Rink.centerY+30));
+      ctx.stroke();
+    });
+
+    // Center circle
+    ctx.strokeStyle='#2878d8';
+    ctx.lineWidth=1.3;
+    ctx.beginPath();
+    ctx.arc(ux(Rink.centerX),uy(Rink.centerY),ux(8),0,Math.PI*2);
+    ctx.stroke();
+    // Center spot
+    ctx.fillStyle='#2878d8';
+    ctx.beginPath();
+    ctx.arc(ux(Rink.centerX),uy(Rink.centerY),Math.max(1.8,pxScale*0.9),0,Math.PI*2);
+    ctx.fill();
+
+    // Faceoff spots and circles (zone faceoffs)
+    Rink.faceoffSpots.forEach((s,i)=>{
+      const isZone=(i===0||i===1||i===3||i===4); // 4 zone faceoffs (skip i=2 center, i>=5 neutral)
+      // Circle for zone faceoffs
+      if(isZone){
+        ctx.strokeStyle='#d12030';
+        ctx.lineWidth=1.1;
+        ctx.beginPath();
+        ctx.arc(ux(s.x),uy(s.y),ux(7),0,Math.PI*2);
+        ctx.stroke();
+        // Hash marks (4 small ticks around circle)
+        ctx.lineWidth=1.4;
+        const hashLen=ux(1.6);
+        const hashOff=ux(2.2);
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx,sy])=>{
+          const hx=ux(s.x)+sx*hashOff, hy=uy(s.y)+sy*hashOff;
+          ctx.beginPath();
+          ctx.moveTo(hx,hy-sy*hashLen);
+          ctx.lineTo(hx,hy);
+          ctx.lineTo(hx-sx*hashLen,hy);
+          ctx.stroke();
+        });
+      }
+      // Spot + cross-hair tick
+      ctx.fillStyle='#d12030';
+      ctx.beginPath();
+      ctx.arc(ux(s.x),uy(s.y),Math.max(1.5,pxScale*0.85),0,Math.PI*2);
+      ctx.fill();
+      if(isZone){
+        // small cross through the spot
+        ctx.strokeStyle='#d12030';
+        ctx.lineWidth=0.9;
+        ctx.beginPath();
+        ctx.moveTo(ux(s.x)-ux(2.5),uy(s.y));
+        ctx.lineTo(ux(s.x)+ux(2.5),uy(s.y));
+        ctx.stroke();
+      }
+    });
+
+    // Goal crease (deeper blue, half-circle facing the ice)
+    [Rink.redLineGoalLeft,Rink.redLineGoalRight].forEach(gx=>{
+      const facingRight=gx<Rink.centerX; // left goal's crease opens to the right
+      ctx.fillStyle='rgba(70,150,235,0.30)';
+      ctx.strokeStyle='rgba(40,120,216,0.7)';
+      ctx.lineWidth=1;
+      ctx.beginPath();
+      // Half circle bulging into the ice
+      const startA=facingRight?-Math.PI/2:Math.PI/2;
+      const endA=facingRight?Math.PI/2:Math.PI*1.5;
+      ctx.arc(ux(gx),uy(Rink.centerY),ux(6.5),startA,endA);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    });
+
+    // Goals — white frame with net mesh (like reference)
+    const goalDepth=4, goalHalfH=Rink.goalH/2;
+    [Rink.redLineGoalLeft,Rink.redLineGoalRight].forEach(gx=>{
+      const outward=gx<Rink.centerX?-1:1; // goal points away from center
+      const gx0=ux(gx);
+      const gy0=uy(Rink.centerY-goalHalfH);
+      const gy1=uy(Rink.centerY+goalHalfH);
+      const depthPx=ux(goalDepth)*outward;
+      // Net fill (light)
+      ctx.fillStyle='rgba(220,230,245,0.85)';
+      ctx.beginPath();
+      ctx.moveTo(gx0,gy0);
+      ctx.lineTo(gx0+depthPx,gy0+uy(2)*0);
+      ctx.lineTo(gx0+depthPx,gy1);
+      ctx.lineTo(gx0,gy1);
+      ctx.closePath();
+      ctx.fill();
+      // Net mesh lines
+      ctx.strokeStyle='rgba(120,140,170,0.5)';
+      ctx.lineWidth=0.5;
+      for(let m=1;m<4;m++){
+        const mx=gx0+depthPx*(m/4);
+        ctx.beginPath(); ctx.moveTo(mx,gy0); ctx.lineTo(mx,gy1); ctx.stroke();
+      }
+      for(let m=1;m<3;m++){
+        const my=gy0+(gy1-gy0)*(m/3);
+        ctx.beginPath(); ctx.moveTo(gx0,my); ctx.lineTo(gx0+depthPx,my); ctx.stroke();
+      }
+      // Goal frame (red posts + crossbar)
+      ctx.strokeStyle='#d12030';
+      ctx.lineWidth=2;
+      ctx.beginPath();
+      ctx.moveTo(gx0,gy0);
+      ctx.lineTo(gx0+depthPx,gy0);
+      ctx.moveTo(gx0,gy1);
+      ctx.lineTo(gx0+depthPx,gy1);
+      ctx.stroke();
+      // Front posts (thicker)
+      ctx.lineWidth=2.6;
+      ctx.beginPath();
+      ctx.moveTo(gx0,gy0);
+      ctx.lineTo(gx0,gy1);
+      ctx.stroke();
+    });
+
+    // Rink border
+    ctx.strokeStyle='#2a3344';
+    ctx.lineWidth=2.5;
+    roundRect(1,1,ux(UNITS_W)-2,uy(UNITS_H)-2,pxScale*Rink.cornerR);
+    ctx.stroke();
+  }
+
+  function roundRect(x,y,w,h,r){
+    r=Math.min(r,w/2,h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.lineTo(x+w-r,y);
+    ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+    ctx.lineTo(x+w,y+h-r);
+    ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    ctx.lineTo(x+r,y+h);
+    ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+    ctx.lineTo(x,y+r);
+    ctx.quadraticCurveTo(x,y,x+r,y);
+    ctx.closePath();
+  }
+
+  // ─── Players ───
+  function drawPlayers(){
+    players.forEach(p=>{
+      // Guard: skip players with invalid coordinates (would break the loop)
+      if(!isFinite(p.x)||!isFinite(p.y)) return;
+      const cx=ux(p.x), cy=uy(p.y);
+      const r=Math.max(5,pxScale*2.4);
+      if(!isFinite(cx)||!isFinite(cy)||!isFinite(r)||r<=0) return;
+      const bodyColor=p.isHome?homeColor:awayColor;
+      const bodyRgb=hexToRgb(bodyColor);
+      const luminance=(0.299*bodyRgb.r+0.587*bodyRgb.g+0.114*bodyRgb.b);
+      const isLightBody=luminance>150;
+      const contrastColor=isLightBody?'#15181f':'#fff';
+
+      // Fatigue affects opacity slightly
+      const fatigueAlpha=p.fatigue>=80?0.82:p.fatigue>=50?0.93:1.0;
+      ctx.globalAlpha=fatigueAlpha;
+
+      // ─── Puck-carrier glow (under everything) ───
+      if(p.id===puck.carrierId&&!puck.passing){
+        const glowGrad=ctx.createRadialGradient(cx,cy,r*0.5,cx,cy,r*2.1);
+        glowGrad.addColorStop(0,'rgba(255,225,90,0.55)');
+        glowGrad.addColorStop(1,'rgba(255,225,90,0)');
+        ctx.fillStyle=glowGrad;
+        ctx.beginPath();
+        ctx.arc(cx,cy,r*2.1,0,Math.PI*2);
+        ctx.fill();
+      }
+
+      // ─── Drop shadow (offset down-right, soft) ───
+      ctx.fillStyle='rgba(0,0,0,0.32)';
+      ctx.beginPath();
+      ctx.ellipse(cx+r*0.18,cy+r*0.42,r*0.95,r*0.78,0,0,Math.PI*2);
+      ctx.fill();
+
+      // ─── Outer team-color ring (thick, like reference) ───
+      const ringColor=p.role==='G'?'#fcc007':bodyColor;
+      ctx.fillStyle=ringColor;
+      ctx.beginPath();
+      ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.fill();
+
+      // ─── Inner body with gloss gradient ───
+      const innerR=r*0.74;
+      const grad=ctx.createRadialGradient(
+        cx-innerR*0.35,cy-innerR*0.4,innerR*0.1,
+        cx,cy,innerR
+      );
+      // Lighter top, base color, slightly darker bottom for 3D sphere feel
+      const lighten=(c,amt)=>{
+        const x=hexToRgb(c);
+        return `rgb(${clamp(Math.round(x.r+amt),0,255)},${clamp(Math.round(x.g+amt),0,255)},${clamp(Math.round(x.b+amt),0,255)})`;
+      };
+      grad.addColorStop(0,lighten(bodyColor,55));
+      grad.addColorStop(0.55,bodyColor);
+      grad.addColorStop(1,lighten(bodyColor,-30));
+      ctx.fillStyle=grad;
+      ctx.beginPath();
+      ctx.arc(cx,cy,innerR,0,Math.PI*2);
+      ctx.fill();
+
+      // ─── Specular highlight (small bright spot top-left) ───
+      ctx.fillStyle='rgba(255,255,255,0.45)';
+      ctx.beginPath();
+      ctx.ellipse(cx-innerR*0.32,cy-innerR*0.4,innerR*0.32,innerR*0.22,-0.5,0,Math.PI*2);
+      ctx.fill();
+
+      // ─── Facing line (motion direction) ───
+      const dx=p.tx-p.x, dy=p.ty-p.y;
+      const dist=Math.hypot(dx,dy);
+      if(dist>0.8){
+        const fx=dx/dist, fy=dy/dist;
+        ctx.strokeStyle=isLightBody?'rgba(0,0,0,0.4)':'rgba(255,255,255,0.6)';
+        ctx.lineWidth=Math.max(1,pxScale*0.4);
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.lineTo(cx+fx*r*0.7,cy+fy*r*0.7);
+        ctx.stroke();
+      }
+
+      // ─── Jersey number ───
+      if(pxScale>1.6){
+        ctx.fillStyle=contrastColor;
+        ctx.font='bold '+Math.max(7,pxScale*1.5)+'px Arial';
+        ctx.textAlign='center';
+        ctx.textBaseline='middle';
+        ctx.fillText(p.jerseyNum||'?',cx,cy);
+      }
+      ctx.globalAlpha=1;
+    });
+  }
+
+  // ─── Puck ───
+  function drawPuck(){
+    const cx=ux(puck.x), cy=uy(puck.y);
+    const r=Math.max(2.5,pxScale*1.15);
+    // Shadow
+    ctx.fillStyle='rgba(0,0,0,0.3)';
+    ctx.beginPath();
+    ctx.ellipse(cx+r*0.3,cy+r*0.5,r*0.95,r*0.7,0,0,Math.PI*2);
+    ctx.fill();
+    // Puck body
+    ctx.fillStyle='#0a0a0a';
+    ctx.beginPath();
+    ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.fill();
+    // Subtle top sheen
+    ctx.fillStyle='rgba(255,255,255,0.28)';
+    ctx.beginPath();
+    ctx.ellipse(cx-r*0.25,cy-r*0.3,r*0.4,r*0.25,-0.4,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  // Update clock display
+  function updateClock(min,extra){
+    const el=document.getElementById('m-anim-clock');
+    if(!el) return;
+    const period=min<=20?'1. erä':min<=40?'2. erä':min<=60?'3. erä':min<=65?'JA':'RL';
+    el.textContent=Math.floor(min)+"' · "+period+(extra?' · '+extra:'');
+  }
+
+  return {
+    init, destroy, setSpeed, skip, updateClock, resumeFromIntermission, queueEvents,
+    getCurrentMin:()=>gameMin,
+    isIntermission:()=>intermissionActive,
+    isEnded:()=>matchEnded,
+    // For future phases — exposed for event handling
+    getPlayers:()=>players,
+    getPuck:()=>puck
+  };
+})();
+
 function showMatchAnim(f){
+  G._activeMatchFixture=f;
   const ht=TEAMS.find(x=>x.id===f.home)||{em:'🏒',name:f.home};
   const at=TEAMS.find(x=>x.id===f.away)||{em:'🏒',name:f.oppName||f.away};
   document.getElementById('m-h').textContent=ht.em+' '+ht.name;
@@ -6414,11 +8745,28 @@ function showMatchAnim(f){
   document.getElementById('m-close').style.display='none';
   document.getElementById('mov').style.display='block';
 
+  // Show/hide canvas wrapper based on user preference
+  const useAnimated=(G.matchView==='animated');
+  const canvasWrap=document.getElementById('m-canvas-wrap');
+  if(canvasWrap) canvasWrap.style.display=useAnimated?'block':'none';
+  // In animated view the styled scoreboard shows score+teams, so hide those
+  // duplicates in the old box (keep m-per for status like "LOPPUPISTE").
+  const oldScore=document.getElementById('m-sc');
+  const oldTeams=document.querySelector('#mov .mteams');
+  if(oldScore) oldScore.style.display=useAnimated?'none':'block';
+  if(oldTeams) oldTeams.style.display=useAnimated?'none':'flex';
+
+  // Initialize canvas renderer if animated mode (Phase 1: rink + static players only)
+  if(useAnimated){
+    // Small delay so DOM has rendered the wrapper for sizing
+    setTimeout(()=>{ MatchRenderer.init(f,null); },50);
+  }
+
   const isMyGame=f.home===G.myId||f.away===G.myId;
   const myIsHome=f.home===G.myId;
 
   // ═══ BUILD EVENT TIMELINE ═══
-  const events=[];
+  let events=[];
 
   const hgRegular=f.ot||f.so?f.hg-(f.hg>f.ag?1:0):f.hg;
   const agRegular=f.ot||f.so?f.ag-(f.ag>f.hg?1:0):f.ag;
@@ -6426,26 +8774,37 @@ function showMatchAnim(f){
   const homePP=f.homePP||0;
   const awayPP=f.awayPP||0;
 
-  // Mark the LAST regular goal of the winning team as GWG (if not OT/SO)
-  // Only meaningful if there's a winner without OT/SO
-  let gwgMarked=false;
   const hasRegularWinner=!f.ot&&!f.so&&f.hg!==f.ag;
   const winningSide=hasRegularWinner?(f.hg>f.ag?'home':'away'):null;
-  // We'll mark the last-scoring goal of the winner as GWG by ordering: regular goals are scattered randomly,
-  // so we tag the LAST winning-side goal in sorted order after we sort below
 
-  for(let i=0;i<hgRegular;i++) events.push({type:'goal',side:'home',min:rnd(1,60),isPP:i<homePP});
-  for(let i=0;i<agRegular;i++) events.push({type:'goal',side:'away',min:rnd(1,60),isPP:i<awayPP});
+  if(f.detailedEvents&&f.detailedEvents.length){
+    // ─── Use the detailed event stream from simMatchDetailed (player's match) ───
+    // It already has exact times, PP flags, OT/SO flags, saves, penalties.
+    // Clone so we don't mutate the source, and strip OT/SO goals (re-added below for consistency)
+    events=f.detailedEvents
+      .filter(e=>!e.isOT&&!e.isSO) // OT/SO re-appended later by existing logic
+      .map(e=>Object.assign({},e));
+    // Add highlight saves if the stream has few (detailed engine adds some, but ensure 3+)
+    const saveCount=events.filter(e=>e.type==='save').length;
+    if(saveCount<3){
+      for(let i=saveCount;i<rnd(3,5);i++){
+        events.push({type:'save',side:Math.random()<0.5?'home':'away',min:rnd(3,58)});
+      }
+    }
+  } else {
+    // ─── Fallback: random generation (AI matches shown live, playoffs, CHL) ───
+    for(let i=0;i<hgRegular;i++) events.push({type:'goal',side:'home',min:rnd(1,60),isPP:i<homePP});
+    for(let i=0;i<agRegular;i++) events.push({type:'goal',side:'away',min:rnd(1,60),isPP:i<awayPP});
 
-  const homePen=f.homePen||0;
-  const awayPen=f.awayPen||0;
-  for(let i=0;i<homePen;i++) events.push({type:'penalty',side:'home',min:rnd(2,58)});
-  for(let i=0;i<awayPen;i++) events.push({type:'penalty',side:'away',min:rnd(2,58)});
+    const homePenF=f.homePen||0;
+    const awayPenF=f.awayPen||0;
+    for(let i=0;i<homePenF;i++) events.push({type:'penalty',side:'home',min:rnd(2,58)});
+    for(let i=0;i<awayPenF;i++) events.push({type:'penalty',side:'away',min:rnd(2,58)});
 
-  // SAVES — 3-5 highlight saves per game (random)
-  const savesCount=rnd(3,5);
-  for(let i=0;i<savesCount;i++){
-    events.push({type:'save',side:Math.random()<0.5?'home':'away',min:rnd(3,58)});
+    const savesCount=rnd(3,5);
+    for(let i=0;i<savesCount;i++){
+      events.push({type:'save',side:Math.random()<0.5?'home':'away',min:rnd(3,58)});
+    }
   }
 
   // MID-MATCH INJURIES (from simFix)
@@ -6487,6 +8846,12 @@ function showMatchAnim(f){
   }
   let timeline=injectIntermissions();
 
+  // Empty-net drama (aggressive finish) — show "pull goalie" event around 58'
+  if(f.emptyNetDrama&&f.emptyNetDrama!=='neutral'){
+    const myIsHome2=f.home===G.myId;
+    timeline.push({type:'pullGoalie',side:myIsHome2?'home':'away',min:58});
+  }
+
   // OT/SO goals appended at end
   if(f.ot){
     timeline.push({type:'goal',side:f.hg>f.ag?'home':'away',min:rnd(61,65),isOT:true});
@@ -6494,11 +8859,63 @@ function showMatchAnim(f){
   if(f.so){
     timeline.push({type:'goal',side:f.hg>f.ag?'home':'away',min:65,isSO:true});
   }
+  // Re-sort so pullGoalie lands in correct order
+  timeline=timeline.filter(e=>e.type==='intermission').concat(
+    timeline.filter(e=>e.type!=='intermission').sort((a,b)=>(a.min||0)-(b.min||0))
+  );
+  // Actually keep intermissions in place — re-inject properly
+  timeline.sort((a,b)=>{
+    const am=a.type==='intermission'?a.period*20:(a.min||0);
+    const bm=b.type==='intermission'?b.period*20:(b.min||0);
+    return am-bm;
+  });
+
+  // If animated view is enabled, queue events for canvas renderer
+  // (renderer was initialized at the top of this function)
+  if(useAnimated){
+    setTimeout(()=>{
+      if(typeof MatchRenderer!=='undefined') MatchRenderer.queueEvents(timeline);
+    },80);
+  }
 
   let hs=0,as2=0,ei=0;
   let paused=false;
 
+  // Rebuild the timeline from f.detailedEvents (used after a mid-match re-sim).
+  // Preserves events already shown (index < ei); refreshes upcoming ones.
+  function rebuildTimelineFromEvents(){
+    // Reconstruct base events list from updated detailedEvents
+    const fresh=(f.detailedEvents||[]).filter(e=>!e.isOT&&!e.isSO).map(e=>Object.assign({},e));
+    // Re-tag GWG
+    const winSide=(!f.ot&&!f.so&&f.hg!==f.ag)?(f.hg>f.ag?'home':'away'):null;
+    if(winSide){
+      for(let i=fresh.length-1;i>=0;i--){ if(fresh[i].type==='goal'&&fresh[i].side===winSide){fresh[i].isGWG=true;break;} }
+    }
+    events=fresh;
+    let tl=injectIntermissions();
+    if(f.emptyNetDrama&&f.emptyNetDrama!=='neutral'){
+      tl.push({type:'pullGoalie',side:(f.home===G.myId?'home':'away'),min:58});
+    }
+    if(f.ot) tl.push({type:'goal',side:f.hg>f.ag?'home':'away',min:rnd(61,65),isOT:true});
+    if(f.so) tl.push({type:'goal',side:f.hg>f.ag?'home':'away',min:65,isSO:true});
+    tl.sort((a,b)=>{
+      const am=a.type==='intermission'?a.period*20:(a.min||0);
+      const bm=b.type==='intermission'?b.period*20:(b.min||0);
+      return am-bm;
+    });
+    timeline=tl;
+    // Re-queue events for the renderer (it tracks its own clock, so future events fire correctly)
+    if(useAnimated&&typeof MatchRenderer!=='undefined'&&MatchRenderer.queueEvents){
+      MatchRenderer.queueEvents(timeline);
+    }
+    // Possession updates in real time from f.controlTimeline (updated by re-sim)
+  }
+  // Expose for the intermission resume handler
+  G._resimRebuild=rebuildTimelineFromEvents;
+
   function renderEvent(e){
+    // penaltyEnd is a renderer-only event (returns player from box); no text-log row
+    if(e.type==='penaltyEnd') return;
     const log=document.getElementById('glog');
     const div=document.createElement('div');
     div.className='ge';
@@ -6530,6 +8947,9 @@ function showMatchAnim(f){
     } else if(e.type==='goal'){
       if(e.side==='home')hs++;else as2++;
       document.getElementById('m-sc').textContent=hs+' – '+as2;
+      // Keep the styled scoreboard in sync (single source of truth = text-log)
+      const sbHs=document.getElementById('m-sb-hs'); if(sbHs) sbHs.textContent=hs;
+      const sbAs=document.getElementById('m-sb-as'); if(sbAs) sbAs.textContent=as2;
       let perLabel;
       if(e.isOT) perLabel='JATKOAIKA';
       else if(e.isSO) perLabel='RANGAISTUSLAUKAUSKILPAILU';
@@ -6587,6 +9007,13 @@ function showMatchAnim(f){
       div.style.cssText='padding:3px 6px;background:rgba(220,80,80,.10);border-left:2px solid var(--rd);border-radius:3px;margin:2px 0';
       div.innerHTML=`<span class="gm">${e.min}'</span><span style="color:var(--rd)">🚑 ${teamName} — ${e.name} loukkaantui</span><span style="color:var(--mu);font-size:.62rem"> (${e.weeks}vk)</span>`;
       log.appendChild(div);log.scrollTop=log.scrollHeight;
+    } else if(e.type==='pullGoalie'){
+      const isMe=(e.side==='home'&&f.home===G.myId)||(e.side==='away'&&f.away===G.myId);
+      const teamName=isMe?(TEAMS.find(x=>x.id===G.myId)?.name||'Joukkue'):(e.side==='home'?ht.name:at.name);
+      document.getElementById('m-per').textContent='3. erä — '+e.min+"'";
+      div.style.cssText='padding:3px 6px;background:rgba(252,196,7,.10);border-left:2px solid #fcc007;border-radius:3px;margin:2px 0';
+      div.innerHTML=`<span class="gm">${e.min}'</span><span style="color:#fcc007">🥅 ${teamName} vaihtaa maalivahdin kentälle — tyhjä maali!</span>`;
+      log.appendChild(div);log.scrollTop=log.scrollHeight;
     }
   }
 
@@ -6596,8 +9023,37 @@ function showMatchAnim(f){
       const suf=f.ot?' (JA)':f.so?' (RL)':'';
       document.getElementById('m-per').textContent='LOPPUPISTE 🏁'+suf;
       document.getElementById('m-close').style.display='block';
+      // Finalize deferred stats now that the match is fully shown
+      if(typeof finalizeMatchStats==='function') finalizeMatchStats(f);
+      // Update final score display from possibly re-simulated result
+      const scEl=document.getElementById('m-sc'); if(scEl) scEl.textContent=f.hg+' – '+f.ag;
       return;
     }
+    // SYNC mode: if animated view is active, wait until canvas clock reaches event's minute
+    if(useAnimated&&typeof MatchRenderer!=='undefined'&&MatchRenderer.getCurrentMin){
+      const nextEvent=timeline[ei];
+      // Always show intermissions immediately when canvas is at the period boundary
+      const canvasMin=MatchRenderer.getCurrentMin();
+      // For intermission events: show at period boundaries
+      if(nextEvent.type==='intermission'){
+        const targetMin=nextEvent.period*20;
+        if(canvasMin>=targetMin-0.5){
+          renderEvent(nextEvent);
+          ei++;
+        }
+      } else {
+        // Regular events: show when canvas clock has passed event's minute
+        const eMin=nextEvent.min||0;
+        if(canvasMin>=eMin){
+          renderEvent(nextEvent);
+          ei++;
+        }
+      }
+      // Poll every ~150ms
+      if(!paused) setTimeout(next,150);
+      return;
+    }
+    // Default mode (text-only or no canvas): use fixed timing
     const e=timeline[ei++];
     renderEvent(e);
     if(!paused) setTimeout(next,360+rnd(0,250));
@@ -6671,10 +9127,40 @@ function changeTacticIntermission(newTactic){
 function resumeMatchAfterIntermission(){
   const pause=document.getElementById('intermission-pause');
   if(pause) pause.remove();
+  // V1-C: if player changed tactic, re-simulate remaining periods and rebuild timeline
+  const f=G._activeMatchFixture;
+  if(f&&f._pendingStats&&G._periodTactics){
+    let playedMin=20;
+    if(typeof MatchRenderer!=='undefined'&&MatchRenderer.getCurrentMin){
+      playedMin=Math.max(playedMin,Math.floor(MatchRenderer.getCurrentMin()));
+    }
+    const periodJustEnded=playedMin<=20?1:2;
+    const boundary=periodJustEnded*20;
+    // Did the upcoming tactic actually change from what was simulated?
+    const newTac=G.tactic;
+    let changed=false;
+    for(let p=periodJustEnded;p<3;p++){
+      if(G._periodTactics[p]!==newTac){ G._periodTactics[p]=newTac; changed=true; }
+    }
+    if(changed&&typeof reSimRemainingPeriods==='function'){
+      reSimRemainingPeriods(f, G._periodTactics, boundary);
+      // Rebuild the animation timeline + renderer queue to match the new events
+      if(typeof G._resimRebuild==='function') G._resimRebuild();
+    }
+  }
   if(G._currentMatchNext) G._currentMatchNext();
+  if(typeof MatchRenderer!=='undefined'&&MatchRenderer.isIntermission&&MatchRenderer.isIntermission()){
+    MatchRenderer.resumeFromIntermission();
+  }
 }
 
 function closeMatch(){
+  // Safety: finalize any deferred player-match stats not yet applied
+  if(typeof G._activeMatchFixture==='object'&&G._activeMatchFixture&&G._activeMatchFixture._pendingStats){
+    if(typeof finalizeMatchStats==='function') finalizeMatchStats(G._activeMatchFixture);
+  }
+  // Stop canvas renderer if running
+  if(typeof MatchRenderer!=='undefined') MatchRenderer.destroy();
   document.getElementById('mov').style.display='none';
   // Show press conference
   if(G.lastMatchResult){
@@ -8563,29 +11049,34 @@ function releasePlayer(id){
 // ══════════════════════════════════════
 function genSponsorOffers(){
   const pos=getSorted().findIndex(t=>t.id===G.myId)+1;
+  const myLeague=G.myLeague||'A';
+  const myLeagueIdx=LEAGUE_IDX[myLeague]||4;
+  const incomeMult=LEAGUE_SPONSOR_MULT[myLeague]||1.0;
   G.sponsorOffers=[];
   SPONSOR_TYPES.forEach((s,tier)=>{
+    // Only sponsors available at this league level approach the team
+    if((s.minLeagueIdx||1)>myLeagueIdx) return;
     if(pos<=s.minPos+4&&Math.random()<0.5){
       // Generate bonus conditions based on tier
       const bonuses=[];
       const eligibleBonuses=SPONSOR_BONUS_TYPES.filter(b=>b.minTier<=tier);
-      // Higher tier = more bonuses (0-1 for low, 1-2 for mid, 2 for top)
       const numBonuses=tier>=3?2:(tier>=1?rnd(1,2):rnd(0,1));
       for(let i=0;i<numBonuses&&eligibleBonuses.length>0;i++){
         const idx=rnd(0,eligibleBonuses.length-1);
         const b=eligibleBonuses.splice(idx,1)[0];
-        // Scale bonus amount based on tier
-        const scaledAmount=Math.round(b.amount*(0.6+tier*0.15));
+        // Scale bonus by tier AND league level (lower leagues = smaller bonuses)
+        const scaledAmount=Math.round(b.amount*(0.6+tier*0.15)*incomeMult);
         bonuses.push({...b,amount:scaledAmount});
       }
       // Add penalty for tier 3+
       let penalty=null;
       if(tier>=3&&Math.random()<0.5){
         const p=pick(SPONSOR_PENALTY_TYPES.filter(x=>x.minTier<=tier));
-        if(p) penalty={...p};
+        if(p) penalty={...p,amount:Math.round(p.amount*incomeMult)};
       }
       G.sponsorOffers.push({
         ...s,
+        income:Math.round(s.income*incomeMult), // league-scaled monthly income
         id:'spo'+Math.random().toString(36).slice(2,6),
         weeks:rnd(12,28),
         tier,
@@ -8673,21 +11164,53 @@ function renderStadium(){
   // Stadium view shows per-game income (more intuitive for stadium decisions)
   const perGame=Math.round(s.capacity*s.occupancy*getTicketPrice(G.myLeague));
   document.getElementById('sd-i').textContent=fmt(perGame)+'/ottelu';
-  document.getElementById('sd-exp').innerHTML=EXPAND_STEPS.map((step,i)=>`
+  // Ongoing construction project banner
+  let projHtml='';
+  if(s.project){
+    const p=s.project;
+    const pct=Math.round((p.totalWeeks-p.weeksLeft)/p.totalWeeks*100);
+    projHtml=`<div style="margin-bottom:10px;padding:10px;background:rgba(251,110,30,.10);border:1px solid rgba(251,110,30,.3);border-radius:6px">
+      <div style="font-weight:600;font-size:.82rem;color:var(--ac)">🚧 Laajennus käynnissä: +${p.seats.toLocaleString('fi-FI')} paikkaa</div>
+      <div style="font-size:.7rem;color:var(--mu);margin:4px 0">${p.weeksLeft} viikkoa jäljellä (${pct}% valmis)</div>
+      <div style="height:6px;background:var(--bd);border-radius:3px;overflow:hidden"><div style="height:100%;width:${pct}%;background:var(--ac)"></div></div>
+    </div>`;
+  }
+  document.getElementById('sd-exp').innerHTML=projHtml+EXPAND_STEPS.map((step,i)=>`
     <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bd);">
       <div><div style="font-weight:600;font-size:.84rem">+${step.seats.toLocaleString()} paikkaa</div>
-        <div style="font-size:.68rem;color:var(--mu)">→ ${(s.capacity+step.seats).toLocaleString('fi-FI')} · +${fmt(Math.round(step.seats*s.occupancy*getTicketPrice(G.myLeague)))}/ottelu</div>
+        <div style="font-size:.68rem;color:var(--mu)">→ ${(s.capacity+step.seats).toLocaleString('fi-FI')} · ${step.weeks} vk · +${fmt(Math.round(step.seats*s.occupancy*getTicketPrice(G.myLeague)))}/ottelu</div>
       </div>
-      <button class="btn bs bsm" onclick="expandStadium(${i})" ${G.budget<step.cost||G.crisis?'disabled':''}>${fmt(step.cost)}</button>
+      <button class="btn bs bsm" onclick="expandStadium(${i})" ${G.budget<step.cost||G.crisis||s.project?'disabled':''}>${fmt(step.cost)}</button>
     </div>`).join('');
 }
 function expandStadium(i){
   const step=EXPAND_STEPS[i];
+  if(G.stadium.project){notify('🚧 Laajennus on jo käynnissä!');return;}
   if(G.budget<step.cost){notify('⛔ Ei budjettia!');return;}
   G.budget=Math.max(0,G.budget-step.cost);
-  G.stadium.capacity+=step.seats;
-  notify('🏟️ Halli laajennettu! '+G.stadium.capacity.toLocaleString('fi-FI')+' paikkaa');
+  // Begin a multi-week construction project; seats added only when finished.
+  G.stadium.project={
+    seats:step.seats,
+    weeksLeft:step.weeks,
+    totalWeeks:step.weeks,
+    cost:step.cost,
+  };
+  notify('🚧 Laajennustyöt alkoivat! Valmista '+step.weeks+' viikossa (+'+step.seats.toLocaleString('fi-FI')+' paikkaa)');
+  addNews('','🏟️ '+G.stadium.name+': laajennustyöt aloitettu (+'+step.seats.toLocaleString('fi-FI')+' paikkaa, valmis '+step.weeks+' vk).');
   updateHdr();renderStadium();
+}
+
+// Advance stadium construction by one week (called from the weekly tick)
+function advanceStadiumProject(){
+  const proj=G.stadium&&G.stadium.project;
+  if(!proj) return;
+  proj.weeksLeft--;
+  if(proj.weeksLeft<=0){
+    G.stadium.capacity+=proj.seats;
+    addNews('green','🏟️ '+G.stadium.name+' laajennus valmistui! Uusi kapasiteetti '+G.stadium.capacity.toLocaleString('fi-FI')+' paikkaa.');
+    notify('🎉 Halli laajennettu! '+G.stadium.capacity.toLocaleString('fi-FI')+' paikkaa');
+    G.stadium.project=null;
+  }
 }
 
 // ══════════════════════════════════════
