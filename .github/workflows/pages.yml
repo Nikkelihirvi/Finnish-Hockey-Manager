@@ -1,0 +1,49 @@
+# Finnish Hockey Manager — julkaisu GitHub Pagesiin
+# Tallenna repoon polkuun: .github/workflows/pages.yml
+# Asetuksissa: Settings → Pages → Build and deployment → Source: GitHub Actions
+#
+# Kaikki toiminnot ovat Node.js 24 -versioita, joten Node 20 -varoitusta ei tule.
+
+name: Julkaise GitHub Pagesiin
+
+on:
+  # Julkaisee automaattisesti, kun päähaaraan tulee muutoksia
+  push:
+    branches: [main, master]
+  # Mahdollistaa julkaisun käsin Actions-välilehdeltä
+  workflow_dispatch:
+
+# Pages-julkaisun vaatimat oikeudet
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Vain yksi julkaisu kerrallaan; käynnissä olevaa ei keskeytetä
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hae repon tiedostot
+        uses: actions/checkout@v6
+
+      - name: Valmistele Pages
+        uses: actions/configure-pages@v6
+
+      - name: Lähetä sivuston tiedostot
+        uses: actions/upload-pages-artifact@v5
+        with:
+          # Repon juuri: index.html sekä iPhone-sovelluksen tiedostot
+          # (manifest, sw.js, kuvakkeet). Piilotiedostot kuten .github jäävät pois.
+          path: '.'
+
+      - name: Julkaise
+        id: deployment
+        uses: actions/deploy-pages@v5
